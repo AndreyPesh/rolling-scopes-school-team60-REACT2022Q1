@@ -1,0 +1,66 @@
+@import '../../style/variables.scss';
+
+.footer {
+  background: $green;
+  padding: 20px 0;
+
+  &__container {
+    padding: 0 10vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.team {
+  &__list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2vw;
+  }
+
+  &__item {
+    list-style-type: none;
+    transition: all 0.3s;
+  }
+
+  &__item:hover {
+    transform: translateY(-5px);
+  }
+
+  &__link {
+    font-size: 24px;
+    line-height: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+    text-decoration: none;
+    color: $brown;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-biggest) {
+  .team__link {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-medium) {
+  .team__list {
+    gap: 1vw;
+  }
+
+  .team__link {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-small) {
+  .footer__container,
+  .team__list {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
