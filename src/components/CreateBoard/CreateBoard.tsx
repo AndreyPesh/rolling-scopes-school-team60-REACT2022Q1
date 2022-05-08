@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Modal from './Modal';
+import Modal from '../Modal/Modal';
 
 const CreateBoard = () => {
   const [open, setOpen] = useState<boolean>(false);

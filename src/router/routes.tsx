@@ -1,9 +1,9 @@
-import Main from '../pages/Main';
-import Dashboard from '../pages/Dashboard';
-import Login from '../pages/Login';
-import Signup from '../pages/Signup';
-import EditProfile from '../pages/EditProfile';
-import NoMatch from '../pages/NoMatch';
+import Main from '../pages/Main/Main';
+import Dashboard from '../pages/Dashboard/Dashboard';
+import Login from '../pages/Login/Login';
+import Signup from '../pages/Signup/Signup';
+import EditProfile from '../pages/EditProfile/EditProfile';
+import NoMatch from '../pages/NoMatch/NoMatch';
 
 export enum Path {
   'home' = '/',

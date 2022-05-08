@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { Path } from '../router/routes';
-import CreateBoard from './CreateBoard';
-import Logout from './Logout';
+import { Path } from '../../router/routes';
+import CreateBoard from '../CreateBoard/CreateBoard';
+import Logout from '../Logout/Logout';
 
 const Header = () => (
   <header>

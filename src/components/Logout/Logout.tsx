@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Path } from '../router/routes';
+import { Path } from '../../router/routes';
 
 const Logout = () => {
   const navigate = useNavigate();
