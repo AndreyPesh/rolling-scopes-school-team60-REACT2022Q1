@@ -1,4 +1,3 @@
-// import './App.scss';
 import { Routes, Route } from 'react-router-dom';
 import Welcome from '../pages/Welcome';
 import Layout from './Layout';

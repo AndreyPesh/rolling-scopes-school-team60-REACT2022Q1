@@ -10,7 +10,7 @@ const CreateBoard = () => {
       <button type="button" onClick={handleOpen}>
         create new board
       </button>
-      <Modal open={open} handleClose={handleClose} />
+      <Modal open={open} handleClose={handleClose} content={<h1>Component create board</h1>} />
     </>
   );
 };
