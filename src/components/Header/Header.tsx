@@ -10,15 +10,13 @@ const Header = () => {
   const user = useAppSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
 
-  const userLoginLogout = () => {
-    !user.token ? dispatch(login('user_token')) : dispatch(login(''));
+  const userLogin = () => {
+    dispatch(login('user_token'));
   };
-
   return (
     <header>
       <nav>
-        <ul>{!user.token ? <UnAuthLinks /> : <AuthLinks />}</ul>
-        <button onClick={userLoginLogout}>{!user.token ? 'Login' : 'Logout'}</button>
+        <ul>{!user.token ? <UnAuthLinks userLogin={userLogin} /> : <AuthLinks />}</ul>
       </nav>
     </header>
   );
@@ -48,15 +46,16 @@ const AuthLinks = () => {
   );
 };
 
-const UnAuthLinks = () => {
+const UnAuthLinks: React.FC<{ userLogin: () => void }> = ({ userLogin }) => {
   return (
     <>
       <li>
-        <Link to={`/${Path.login}`}>login</Link>
+        <Link to={`/${Path.login}`}>Sign In</Link>
       </li>
       <li>
-        <Link to={`/${Path.signup}`}>signup</Link>
+        <Link to={`/${Path.signup}`}>Sign Up</Link>
       </li>
+      <button onClick={userLogin}>Login</button>
     </>
   );
 };

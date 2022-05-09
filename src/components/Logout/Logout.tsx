@@ -1,14 +1,14 @@
-import { useNavigate } from 'react-router-dom';
-import { Path } from '../../router/routes';
+import { useAppDispatch } from '../../hooks';
+import { login } from '../../store/slices/user';
 
 const Logout = () => {
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const logout = () => {
-    navigate(Path.home);
+    dispatch(login(''));
   };
   return (
     <button type="button" onClick={logout}>
-      Logout
+      Sign out
     </button>
   );
 };
