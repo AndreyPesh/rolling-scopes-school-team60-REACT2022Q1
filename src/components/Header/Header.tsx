@@ -17,29 +17,7 @@ const Header = () => {
   return (
     <header>
       <nav>
-        <ul>
-          <li>
-            <Link to={`/${Path.main}`}>main</Link>
-          </li>
-          <li>
-            <Link to={`/${Path.dashboard}`}>dashboard</Link>
-          </li>
-          <li>
-            <Link to={`/${Path.login}`}>login</Link>
-          </li>
-          <li>
-            <Link to={`/${Path.signup}`}>signup</Link>
-          </li>
-          <li>
-            <Link to={`/${Path.edit_profile}`}>edit profile</Link>
-          </li>
-          <li>
-            <CreateBoard />
-          </li>
-          <li>
-            <Logout />
-          </li>
-        </ul>
+        <ul>{!user.token ? <UnAuthLinks /> : <AuthLinks />}</ul>
         <button onClick={userLoginLogout}>{!user.token ? 'Login' : 'Logout'}</button>
       </nav>
     </header>
@@ -47,3 +25,38 @@ const Header = () => {
 };
 
 export default Header;
+
+const AuthLinks = () => {
+  return (
+    <>
+      <li>
+        <Link to={`/${Path.main}`}>main</Link>
+      </li>
+      <li>
+        <Link to={`/${Path.dashboard}`}>dashboard</Link>
+      </li>
+      <li>
+        <Link to={`/${Path.edit_profile}`}>edit profile</Link>
+      </li>
+      <li>
+        <CreateBoard />
+      </li>
+      <li>
+        <Logout />
+      </li>
+    </>
+  );
+};
+
+const UnAuthLinks = () => {
+  return (
+    <>
+      <li>
+        <Link to={`/${Path.login}`}>login</Link>
+      </li>
+      <li>
+        <Link to={`/${Path.signup}`}>signup</Link>
+      </li>
+    </>
+  );
+};
