@@ -1,10 +1,10 @@
-import { useAppDispatch } from '../../hooks';
-import { login } from '../../store/slices/user';
+import useToken from '../../hooks/useToken';
+import { RESET_TOKEN } from '../../utils/constants';
 
 const Logout = () => {
-  const dispatch = useAppDispatch();
+  const { setToken } = useToken();
   const logout = () => {
-    dispatch(login(''));
+    setToken(RESET_TOKEN);
   };
   return (
     <button type="button" onClick={logout}>

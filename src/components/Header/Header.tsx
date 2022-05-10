@@ -1,22 +1,19 @@
 import { Link } from 'react-router-dom';
+import useToken from '../../hooks/useToken';
 import { Path } from '../../router/routes';
-import { RootState } from '../../store';
-import { login } from '../../store/slices/user';
-import { useAppDispatch, useAppSelector } from '../../hooks';
 import CreateBoard from '../CreateBoard/CreateBoard';
 import Logout from '../Logout/Logout';
 
 const Header = () => {
-  const user = useAppSelector((state: RootState) => state.user);
-  const dispatch = useAppDispatch();
+  const { token, setToken } = useToken();
 
   const userLogin = () => {
-    dispatch(login('user_token'));
+    setToken('new_token');
   };
   return (
     <header>
       <nav>
-        <ul>{!user.token ? <UnAuthLinks userLogin={userLogin} /> : <AuthLinks />}</ul>
+        <ul>{!token ? <UnAuthLinks userLogin={userLogin} /> : <AuthLinks />}</ul>
       </nav>
     </header>
   );
