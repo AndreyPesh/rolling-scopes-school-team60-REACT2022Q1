@@ -1,0 +1,47 @@
+@import '../../style/variables.scss';
+
+.header {
+  background: $green;
+  padding: 20px 0;
+
+  &__container {
+    padding: 0 10vw;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__nav_list {
+    display: flex;
+    justify-content: end;
+    gap: 3vw;
+  }
+
+  &__nav_item {
+    list-style: none;
+  }
+
+  &__nav_item a {
+    color: $brown;
+    text-decoration: none;
+    font-size: 24px;
+  }
+
+  &__nav_item a:hover {
+    color: $dark-brown;
+  }
+}
+
+.burger__wrap {
+  display: none;
+}
+
+@media screen and (max-width: $screen-max-width-small) {
+  .burger__wrap {
+    display: block;
+  }
+
+  .header__nav {
+    display: none;
+  }
+}

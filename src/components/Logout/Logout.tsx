@@ -1,4 +1,7 @@
 import { useNavigate } from 'react-router-dom';
+
+import { Button } from '@mui/material';
+
 import { Path } from '../../router/routes';
 
 const Logout = () => {
@@ -7,9 +10,9 @@ const Logout = () => {
     navigate(Path.home);
   };
   return (
-    <button type="button" onClick={logout}>
-      Logout
-    </button>
+    <Button variant="contained" color="secondary" onClick={logout}>
+      Sign Out
+    </Button>
   );
 };
 
