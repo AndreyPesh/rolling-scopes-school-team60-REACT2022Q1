@@ -1,7 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
-import Welcome from '../pages/Welcome/Welcome';
-import Layout from './Layout';
+
 import { listRoutes } from '../router/routes';
+import { Welcome } from '../pages/Welcome/Welcome';
+import Layout from './Layout';
 
 const App = () => {
   const routes = listRoutes.map((route) => (
