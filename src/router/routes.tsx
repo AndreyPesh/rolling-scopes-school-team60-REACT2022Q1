@@ -3,7 +3,6 @@ import Dashboard from '../pages/Dashboard/Dashboard';
 import Login from '../pages/Login/Login';
 import Signup from '../pages/Signup/Signup';
 import EditProfile from '../pages/EditProfile/EditProfile';
-import NoMatch from '../pages/NoMatch/NoMatch';
 
 export enum Path {
   'home' = '/',
@@ -40,10 +39,5 @@ export const listRoutes = [
     path: Path.edit_profile,
     component: <EditProfile />,
     isProtected: true,
-  },
-  {
-    path: Path.no_math,
-    component: <NoMatch />,
-    isProtected: false,
   },
 ];
