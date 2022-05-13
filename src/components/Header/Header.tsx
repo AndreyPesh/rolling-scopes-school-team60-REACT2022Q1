@@ -1,14 +1,21 @@
-import { Link } from 'react-router-dom';
 import useToken from '../../hooks/useToken';
-import { Path } from '../../router/routes';
-import CreateBoard from '../CreateBoard/CreateBoard';
-import Logout from '../Logout/Logout';
+import { signin } from '../../utils/functions/api';
+import AuthLinks from './AuthLinks';
+import UnAuthLinks from './UnAuthLinks';
+
+const fakeDataForm = {
+  login: 'user001',
+  password: 'userpass@123',
+};
 
 const Header = () => {
   const { token, setToken } = useToken();
 
-  const userLogin = () => {
-    setToken('new_token');
+  const userLogin = async () => {
+    const response = await signin(fakeDataForm);
+    if (response) {
+      setToken(response.token);
+    }
   };
   return (
     <header>
@@ -20,39 +27,3 @@ const Header = () => {
 };
 
 export default Header;
-
-const AuthLinks = () => {
-  return (
-    <>
-      <li>
-        <Link to={`/${Path.main}`}>main</Link>
-      </li>
-      <li>
-        <Link to={`/${Path.dashboard}`}>dashboard</Link>
-      </li>
-      <li>
-        <Link to={`/${Path.edit_profile}`}>edit profile</Link>
-      </li>
-      <li>
-        <CreateBoard />
-      </li>
-      <li>
-        <Logout />
-      </li>
-    </>
-  );
-};
-
-const UnAuthLinks: React.FC<{ userLogin: () => void }> = ({ userLogin }) => {
-  return (
-    <>
-      <li>
-        <Link to={`/${Path.login}`}>Sign In</Link>
-      </li>
-      <li>
-        <Link to={`/${Path.signup}`}>Sign Up</Link>
-      </li>
-      <button onClick={userLogin}>Login</button>
-    </>
-  );
-};
