@@ -18,3 +18,8 @@ export type UserData = {
   name: string;
   login: string;
 };
+
+export type ResponseCreateBoard = {
+  id: string;
+  title: string;
+};

@@ -1,6 +1,11 @@
 import axios from 'axios';
-import { ALL_USERS_URL, BASE_URL, SIGNIN_URL } from '../constants';
-import { DataFormSignin, ResponseSignin, UserData } from '../types/types';
+import { ALL_USERS_URL, BASE_URL, CREATE_BOARD_URL, SIGNIN_URL } from '../constants';
+import { DataFormSignin, ResponseCreateBoard, ResponseSignin, UserData } from '../types/types';
+
+const logErrors = (nameRequest: string, errorMessage: string) => {
+  console.log(`Can't complete request: ${nameRequest} `);
+  console.log(`Error: ${errorMessage}`);
+};
 
 export const signin = async (dataForm: DataFormSignin) => {
   try {
@@ -13,7 +18,7 @@ export const signin = async (dataForm: DataFormSignin) => {
     return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.log('error message: ', error.message);
+      logErrors(signin.name, error.message);
     }
     return null;
   }
@@ -32,7 +37,33 @@ export const isTokenExpire = async (token: string) => {
     return true;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.log('error message: ', error.message);
+      logErrors(isTokenExpire.name, error.message);
+    }
+    return false;
+  }
+};
+
+export const createBoard = async (token: string, title: string) => {
+  try {
+    if (!token) {
+      return false;
+    }
+
+    await axios.post<ResponseCreateBoard>(
+      `${BASE_URL}${CREATE_BOARD_URL}`,
+      { title },
+      {
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    return true;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      logErrors(createBoard.name, error.message);
     }
     return false;
   }
