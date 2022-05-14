@@ -7,9 +7,8 @@ export default function Main() {
   const dispatch = useAppDispatch();
   const { token } = useAppSelector((state: RootState) => state.user);
   useEffect(() => {
-    const response = dispatch(fetchListBoards(token)).unwrap();
-    console.log(response);
+    dispatch(fetchListBoards(token));
     console.log('render main');
-  }, []);
+  });
   return <h2>Main</h2>;
 }

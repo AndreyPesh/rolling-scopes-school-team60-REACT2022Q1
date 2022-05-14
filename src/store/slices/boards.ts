@@ -1,19 +1,25 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getAllBoards } from '../../utils/functions/api';
-import { DataBoard } from '../../utils/types/types';
+import { getAllBoards, getBoardById } from '../../utils/functions/api';
+import { BoardDescription } from '../../utils/types/types';
 
 export const fetchListBoards = createAsyncThunk(
   'boards/fetchListBoardsStatus',
   async (token: string) => {
-    const response = await getAllBoards(token);
-    if (response) {
-      return response;
+    const result: Array<BoardDescription> = [];
+    const responseListBoards = await getAllBoards(token);
+    if (responseListBoards) {
+      const boardItemsData = await Promise.all(
+        responseListBoards.map((boardData) => getBoardById(token, boardData.id))
+      );
+      if (boardItemsData.every((data) => data)) {
+        result.push(...(boardItemsData as BoardDescription[]));
+      }
     }
-    return [];
+    return result;
   }
 );
 
-const initialState: { loading: boolean; listBoards: Array<DataBoard> } = {
+const initialState: { loading: boolean; listBoards: Array<BoardDescription> } = {
   loading: false,
   listBoards: [],
 };
@@ -26,10 +32,13 @@ const boardSlice = createSlice({
     builder.addCase(fetchListBoards.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(fetchListBoards.fulfilled, (state, action: PayloadAction<Array<DataBoard>>) => {
-      state.loading = false;
-      state.listBoards = [...action.payload];
-    });
+    builder.addCase(
+      fetchListBoards.fulfilled,
+      (state, action: PayloadAction<Array<BoardDescription>>) => {
+        state.loading = false;
+        state.listBoards = [...action.payload];
+      }
+    );
   },
 });
 
