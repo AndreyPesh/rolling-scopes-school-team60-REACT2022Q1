@@ -3,6 +3,7 @@ import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signIn, SignInResponse } from '../../api';
+import { parseJwt } from '../../helpers/parseJwt';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { loginFail, loginPending, loginSuccess } from '../../store/slices/loginSlice';
@@ -10,7 +11,7 @@ import { loginFail, loginPending, loginSuccess } from '../../store/slices/loginS
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isLoading, error, isAuth } = useAppSelector((state) => state.login);
+  const { isLoading, error } = useAppSelector((state) => state.login);
 
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
@@ -28,10 +29,14 @@ const Login = () => {
     try {
       const res: SignInResponse = await signIn(data);
       dispatch(loginSuccess(res.token));
+      //
+      const decode = parseJwt(res.token);
+      console.log('decode', decode);
+      //
       navigate('/dashboard');
-    } catch (err) {
-      const error = err as AxiosError;
-      dispatch(loginFail(error.message));
+    } catch (error) {
+      const err = error as AxiosError;
+      dispatch(loginFail(err.message));
     }
   };
 
