@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
+import { NavigateFunction } from 'react-router-dom';
 import { parseJwt } from '../../utils/functions/parseJwt';
 
 const API_URL = 'https://mighty-earth-43476.herokuapp.com';
@@ -32,6 +33,7 @@ interface LoginResponse {
 interface LoginFormData {
   login: string;
   password: string;
+  navigate: NavigateFunction;
 }
 
 const isError = (action: AnyAction) => {
@@ -43,7 +45,8 @@ export const signIn = createAsyncThunk<LoginResponse, LoginFormData, { rejectVal
   async function (formData, { rejectWithValue }) {
     try {
       const response = await axios.post(`${API_URL}/signin`, formData);
-      console.log('asyncThunk', response);
+
+      formData.navigate('/main');
 
       return response.data;
     } catch (error) {
@@ -56,7 +59,9 @@ export const signIn = createAsyncThunk<LoginResponse, LoginFormData, { rejectVal
 const loginSlice = createSlice({
   name: 'login',
   initialState,
-  reducers: {},
+  reducers: {
+    redirect: () => {},
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signIn.pending, (state) => {
@@ -66,6 +71,7 @@ const loginSlice = createSlice({
       .addCase(signIn.fulfilled, (state, action) => {
         const { userId } = parseJwt(action.payload.token);
         localStorage.setItem('token', action.payload.token);
+
         state.userId = userId;
         state.isLoading = false;
         state.error = null;

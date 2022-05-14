@@ -8,7 +8,7 @@ import { signIn } from '../../store/slices/loginSlice';
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isLoading, error, userId } = useAppSelector((state) => state.login);
+  const { isLoading, error } = useAppSelector((state) => state.login);
 
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
@@ -19,8 +19,13 @@ const Login = () => {
     const data = {
       login,
       password,
+      navigate,
     };
+
     dispatch(signIn(data));
+
+    setLogin('');
+    setPassword('');
   };
 
   return (
