@@ -1,43 +1,26 @@
 import { Button, TextField, Link, Grid, Box, Typography, Container } from '@mui/material';
-import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signIn, SignInResponse } from '../../api';
-import { parseJwt } from '../../helpers/parseJwt';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { loginFail, loginPending, loginSuccess } from '../../store/slices/loginSlice';
+import { signIn } from '../../store/slices/loginSlice';
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isLoading, error } = useAppSelector((state) => state.login);
+  const { isLoading, error, userId } = useAppSelector((state) => state.login);
 
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const data = {
       login,
       password,
     };
-
-    dispatch(loginPending());
-
-    try {
-      const res: SignInResponse = await signIn(data);
-      dispatch(loginSuccess(res.token));
-      //
-      const decode = parseJwt(res.token);
-      console.log('decode', decode);
-      //
-      navigate('/dashboard');
-    } catch (error) {
-      const err = error as AxiosError;
-      dispatch(loginFail(err.message));
-    }
+    dispatch(signIn(data));
   };
 
   return (

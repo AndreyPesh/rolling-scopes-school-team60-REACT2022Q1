@@ -1,19 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface IUser {
-  name: string;
-}
-
 interface IUserAction {
-  user: IUser;
+  userId: string;
   isLoading: boolean;
   error: string;
 }
 
 const initialState: IUserAction = {
-  user: {
-    name: '',
-  },
+  userId: '',
   isLoading: false,
   error: '',
 };
@@ -25,9 +19,9 @@ const userSlice = createSlice({
     getUserPending: (state) => {
       state.isLoading = true;
     },
-    getUserSuccess: (state, action: PayloadAction<IUser>) => {
+    getUserSuccess: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
-      state.user = action.payload;
+      state.userId = action.payload;
       state.error = '';
     },
     getUserFail: (state, action: PayloadAction<string>) => {

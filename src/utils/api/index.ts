@@ -15,3 +15,13 @@ export const signIn = async (formData: LoginType) => {
   const { data } = await axios.post<SignInResponse>(`${API_URL}/signin`, formData);
   return data;
 };
+
+export const getUser = async (params: string) => {
+  const token = localStorage.getItem('token');
+  const { data } = await axios.get(`${API_URL}/users/${params}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return data;
+};
