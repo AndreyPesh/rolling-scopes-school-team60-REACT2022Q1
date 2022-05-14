@@ -19,7 +19,7 @@ export type UserData = {
   login: string;
 };
 
-export type ResponseCreateBoard = {
+export type DataBoard = {
   id: string;
   title: string;
 };

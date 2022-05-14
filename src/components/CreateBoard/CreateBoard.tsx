@@ -3,7 +3,7 @@ import Modal from '../Modal/Modal';
 import FormCreateBoard from './FormCreateBoard';
 
 const CreateBoard = () => {
-  const [open, setOpen] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { ALL_USERS_URL, BASE_URL, CREATE_BOARD_URL, SIGNIN_URL } from '../constants';
-import { DataFormSignin, ResponseCreateBoard, ResponseSignin, UserData } from '../types/types';
+import { DataFormSignin, DataBoard, ResponseSignin, UserData } from '../types/types';
 
 const logErrors = (nameRequest: string, errorMessage: string) => {
   console.log(`Can't complete request: ${nameRequest} `);
@@ -49,7 +49,7 @@ export const createBoard = async (token: string, title: string) => {
       return false;
     }
 
-    await axios.post<ResponseCreateBoard>(
+    await axios.post<DataBoard>(
       `${BASE_URL}${CREATE_BOARD_URL}`,
       { title },
       {
@@ -61,6 +61,26 @@ export const createBoard = async (token: string, title: string) => {
       }
     );
     return true;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      logErrors(createBoard.name, error.message);
+    }
+    return false;
+  }
+};
+
+export const getAllBoards = async (token: string) => {
+  try {
+    if (!token) {
+      return false;
+    }
+
+    const { data } = await axios.get<DataBoard[]>(`${BASE_URL}${CREATE_BOARD_URL}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       logErrors(createBoard.name, error.message);
