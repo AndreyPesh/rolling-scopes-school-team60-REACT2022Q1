@@ -1,17 +1,25 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-
-import { Button } from '@mui/material';
-
-import { listRoutes } from '../../router/routes';
-import CreateBoard from '../CreateBoard/CreateBoard';
-import Logout from '../Logout/Logout';
+import useToken from '../../hooks/useToken';
+import { signin } from '../../utils/functions/api';
 
 import './Header.scss';
 import { BurgerMenu } from './BurgerMenu';
+import AuthLinks from './AuthLinks';
+import UnAuthLinks from './UnAuthLinks';
+
+const fakeDataForm = {
+  login: 'user001',
+  password: 'userpass@123',
+};
 
 const Header = () => {
-  const [auth, setAuth] = useState<boolean>(true);
+  const { token, setToken } = useToken();
+
+  const userLogin = async () => {
+    const response = await signin(fakeDataForm);
+    if (response) {
+      setToken(response.token);
+    }
+  };
 
   return (
     <header className="header">
@@ -19,47 +27,7 @@ const Header = () => {
         <div className="header__nav_wrap">
           <nav className="header__nav">
             <ul className="header__nav_list">
-              {auth && (
-                <>
-                  {listRoutes
-                    .filter(
-                      (route) =>
-                        route.name !== 'Sign in' &&
-                        route.name !== 'Sign up' &&
-                        route.name !== 'No match'
-                    )
-                    .map((route) => {
-                      return (
-                        <li className="header__nav_item" key={route.name}>
-                          <Link to={`/${route.path}`}>{route.name}</Link>
-                        </li>
-                      );
-                    })}
-                  <li className="header__nav_item">
-                    <CreateBoard />
-                  </li>
-                  <li className="header__nav_item">
-                    <Logout />
-                  </li>
-                </>
-              )}
-              {!auth && (
-                <>
-                  {listRoutes
-                    .filter((route) => route.name === 'Sign in' || route.name === 'Sign up')
-                    .map((route) => {
-                      return (
-                        <li className="header__nav_item" key={route.name}>
-                          <Link to={`/${route.path}`}>
-                            <Button variant="contained" color="secondary">
-                              {route.name}
-                            </Button>
-                          </Link>
-                        </li>
-                      );
-                    })}
-                </>
-              )}
+              {!token ? <UnAuthLinks userLogin={userLogin} /> : <AuthLinks />}
             </ul>
           </nav>
           <div className="burger__wrap">

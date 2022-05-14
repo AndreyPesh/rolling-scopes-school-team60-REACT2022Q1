@@ -1,4 +1,4 @@
-import { team } from '../../utils/constants/constants';
+import { TEAM } from '../../utils/constants';
 
 import './Footer.scss';
 import FooterLogo from './footerComponents/FooterLogo';
@@ -11,7 +11,7 @@ export const Footer = () => {
         <FooterLogo />
         <nav className="team">
           <ul className="team__list">
-            {team.map((person) => {
+            {TEAM.map((person) => {
               return <FooterNavItem key={person.name} link={person.github} title={person.name} />;
             })}
           </ul>

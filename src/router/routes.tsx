@@ -1,15 +1,14 @@
 import Main from '../pages/Main/Main';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import EditProfile from '../pages/EditProfile/EditProfile';
-import NoMatch from '../pages/NoMatch/NoMatch';
-import SignIn from '../pages/Login/SignIn';
-import SignUp from '../pages/Signup/SignUp';
+import Login from '../pages/Login/Login';
+import Signup from '../pages/Signup/SignUp';
 
 export enum Path {
   'home' = '/',
   'main' = 'main',
   'dashboard' = 'dashboard',
-  'signin' = 'signin',
+  'login' = 'login',
   'signup' = 'signup',
   'edit_profile' = 'edit_profile',
   'no_match' = '*',
@@ -20,30 +19,30 @@ export const listRoutes = [
     path: Path.main,
     name: 'Main',
     component: <Main />,
+    isProtected: true,
   },
   {
     path: Path.dashboard,
     name: 'Dashboard',
     component: <Dashboard />,
+    isProtected: true,
   },
   {
-    path: Path.signin,
-    name: 'Sign in',
-    component: <SignIn />,
+    path: Path.login,
+    name: 'Sign In',
+    component: <Login />,
+    isProtected: false,
   },
   {
     path: Path.signup,
-    name: 'Sign up',
-    component: <SignUp />,
+    name: 'Sign Up',
+    component: <Signup />,
+    isProtected: false,
   },
   {
     path: Path.edit_profile,
     name: 'Edit profile',
     component: <EditProfile />,
-  },
-  {
-    path: Path.no_match,
-    name: 'No match',
-    component: <NoMatch />,
+    isProtected: true,
   },
 ];

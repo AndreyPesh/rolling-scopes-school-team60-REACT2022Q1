@@ -1,14 +1,14 @@
-import { useNavigate } from 'react-router-dom';
-
 import { Button } from '@mui/material';
 
-import { Path } from '../../router/routes';
+import useToken from '../../hooks/useToken';
+import { RESET_TOKEN } from '../../utils/constants';
 
 const Logout = () => {
-  const navigate = useNavigate();
+  const { setToken } = useToken();
   const logout = () => {
-    navigate(Path.home);
+    setToken(RESET_TOKEN);
   };
+
   return (
     <Button variant="contained" color="secondary" onClick={logout}>
       Sign Out
