@@ -1,14 +1,14 @@
-import { useNavigate } from 'react-router-dom';
-import { Path } from '../../router/routes';
+import useToken from '../../hooks/useToken';
+import { RESET_TOKEN } from '../../utils/constants';
 
 const Logout = () => {
-  const navigate = useNavigate();
+  const { setToken } = useToken();
   const logout = () => {
-    navigate(Path.home);
+    setToken(RESET_TOKEN);
   };
   return (
     <button type="button" onClick={logout}>
-      Logout
+      Sign out
     </button>
   );
 };
