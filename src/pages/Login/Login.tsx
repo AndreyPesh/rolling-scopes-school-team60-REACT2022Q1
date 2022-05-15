@@ -1,6 +1,6 @@
-import { Button, TextField, Link, Grid, Box, Typography, Container } from '@mui/material';
+import { Button, TextField, Grid, Box, Typography, Container } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { Path } from '../../router/routes';
@@ -68,9 +68,7 @@ const Login = () => {
         </Button>
         <Grid container>
           <Grid item>
-            <Link href="/signup" variant="body2">
-              {"Don't have an account? Sign Up"}
-            </Link>
+            <Link to={`/${Path.signup}`}>{"Don't have an account? Sign Up"}</Link>
           </Grid>
         </Grid>
       </Box>
