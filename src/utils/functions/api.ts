@@ -1,21 +1,22 @@
 import axios from 'axios';
-import { ALL_USERS_URL, BASE_URL, SIGNIN_URL } from '../constants';
-import { DataFormSignin, ResponseSignin, UserData } from '../types/types';
+import { ALL_USERS_URL, BASE_URL } from '../constants';
+import { ErrorResponse, UserData } from '../types/types';
+import { getToken } from './localStorage';
+import { parseJwt } from './parseJwt';
 
-export const signin = async (dataForm: DataFormSignin) => {
+export const getUser = async () => {
   try {
-    const { data } = await axios.post<ResponseSignin>(`${BASE_URL}${SIGNIN_URL}`, dataForm, {
+    const token = getToken();
+    const { userId } = parseJwt(token);
+    const { data } = await axios.get(`${BASE_URL}${ALL_USERS_URL}/${userId}`, {
       headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
       },
     });
     return data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('error message: ', error.message);
-    }
-    return null;
+    const err = error as ErrorResponse;
+    return err.response.data;
   }
 };
 

@@ -2,7 +2,7 @@ import Main from '../pages/Main/Main';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import EditProfile from '../pages/EditProfile/EditProfile';
 import Login from '../pages/Login/Login';
-import Signup from '../pages/SignUp/SignUp';
+import SignUp from '../pages/SignUp/SignUp';
 
 export enum Path {
   'home' = '/',
@@ -36,7 +36,7 @@ export const listRoutes = [
   {
     path: Path.signup,
     name: 'Sign Up',
-    component: <Signup />,
+    component: <SignUp />,
     isProtected: false,
   },
   {

@@ -1,13 +1,12 @@
 import { Navigate } from 'react-router-dom';
+import { getToken } from '../utils/functions/localStorage';
 import { Path } from './routes';
-import { useAppSelector } from '../hooks';
-import { RootState } from '../store';
 
 export const ProtectedRoute: React.FC<{ isAllowed: boolean; route: JSX.Element }> = ({
   isAllowed,
   route,
 }) => {
-  const { token } = useAppSelector((state: RootState) => state.user);
+  const token = getToken();
   if (token && !isAllowed) {
     return <Navigate to={`/${Path.main}`} replace />;
   }

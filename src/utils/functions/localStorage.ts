@@ -1,10 +1,15 @@
-import { NAME_STORAGE_TOKEN, RESET_TOKEN } from '../constants';
+import { TOKEN } from '../constants';
 
-export const getTokenFromStorage = () => {
-  const token = localStorage.getItem(NAME_STORAGE_TOKEN);
+export const getToken = () => {
+  const token = localStorage.getItem(TOKEN);
   if (token) {
-    const userToken = JSON.parse(token);
-    return userToken;
+    return token;
   }
-  return RESET_TOKEN;
+  return '';
+};
+export const setToken = (value: string) => {
+  localStorage.setItem(TOKEN, value);
+};
+export const removeToken = () => {
+  localStorage.removeItem(TOKEN);
 };

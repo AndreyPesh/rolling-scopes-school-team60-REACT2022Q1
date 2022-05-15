@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 
 import { listRoutes } from '../../router/routes';
 
-const UnAuthLinks: React.FC<{ userLogin: () => void }> = ({ userLogin }) => {
+const UnAuthLinks: React.FC = () => {
   return (
     <>
       {listRoutes
@@ -20,9 +20,6 @@ const UnAuthLinks: React.FC<{ userLogin: () => void }> = ({ userLogin }) => {
             </li>
           );
         })}
-      <Button variant="contained" color="secondary" onClick={userLogin}>
-        Login
-      </Button>
     </>
   );
 };

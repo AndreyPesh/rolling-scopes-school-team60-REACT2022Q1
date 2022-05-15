@@ -1,13 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
+import { getToken } from '../../utils/functions/localStorage';
 import { Button } from '@mui/material';
-
-import useToken from '../../hooks/useToken';
 import { listRoutes, Path } from '../../router/routes';
 import CreateBoard from '../CreateBoard/CreateBoard';
 import Logout from '../Logout/Logout';
 
 const AuthLinks = () => {
-  const { token } = useToken();
+  const token = getToken();
   const location = useLocation();
 
   if (token && location.pathname === Path.home.toString()) {
