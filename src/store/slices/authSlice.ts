@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { BASE_URL, SIGNIN_URL, SIGNUP_URL } from '../../utils/constants';
+import { isError } from '../../utils/functions/isError';
 import { getToken, removeToken, setToken } from '../../utils/functions/localStorage';
 import {
   DataFormSignIn,
@@ -24,10 +25,6 @@ const initialState: ILogin = {
   token: getToken(),
   name: '',
   login: '',
-};
-
-const isError = (action: AnyAction) => {
-  return action.type.endsWith('rejected');
 };
 
 export const signIn = createAsyncThunk<ResponseSignIn, DataFormSignIn, { rejectValue: string }>(

@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { UserData } from '../../utils/types/types';
 
-interface IUserAction {
-  userId: string;
+interface IUserAction extends UserData {
   isLoading: boolean;
-  error: string;
+  error: string | null;
 }
 
 const initialState: IUserAction = {
-  userId: '',
+  id: '',
+  name: '',
+  login: '',
   isLoading: false,
   error: '',
 };
@@ -18,19 +20,26 @@ const userSlice = createSlice({
   reducers: {
     getUserPending: (state) => {
       state.isLoading = true;
+      state.error = null;
     },
-    getUserSuccess: (state, action: PayloadAction<string>) => {
+    getUserSuccess: (state, action: PayloadAction<UserData>) => {
       state.isLoading = false;
-      state.userId = action.payload;
-      state.error = '';
+      state.id = action.payload.id;
+      state.name = action.payload.name;
+      state.login = action.payload.login;
     },
     getUserFail: (state, action: PayloadAction<string>) => {
-      state.isLoading = false;
       state.error = action.payload;
+      state.isLoading = false;
+    },
+    logOut: (state) => {
+      state.id = '';
+      state.name = '';
+      state.login = '';
     },
   },
 });
 
-export const { getUserPending, getUserSuccess, getUserFail } = userSlice.actions;
+export const { logOut, getUserPending, getUserSuccess, getUserFail } = userSlice.actions;
 
 export default userSlice.reducer;

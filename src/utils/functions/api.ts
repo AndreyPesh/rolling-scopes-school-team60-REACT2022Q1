@@ -1,16 +1,23 @@
 import axios from 'axios';
 import { ALL_USERS_URL, BASE_URL } from '../constants';
-import { UserData } from '../types/types';
+import { ErrorResponse, UserData } from '../types/types';
 import { getToken } from './localStorage';
+import { parseJwt } from './parseJwt';
 
-export const getUser = async (params: string) => {
-  const token = getToken();
-  const { data } = await axios.get(`${BASE_URL}${ALL_USERS_URL}/${params}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return data;
+export const getUser = async () => {
+  try {
+    const token = getToken();
+    const { userId } = parseJwt(token);
+    const { data } = await axios.get(`${BASE_URL}${ALL_USERS_URL}/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data;
+  } catch (error) {
+    const err = error as ErrorResponse;
+    return err.response.data;
+  }
 };
 
 export const isTokenExpire = async (token: string) => {

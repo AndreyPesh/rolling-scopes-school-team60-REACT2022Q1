@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { Path } from '../../router/routes';
 import { signOut } from '../../store/slices/authSlice';
+import { logOut } from '../../store/slices/userSlice';
 
 const Logout = () => {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ const Logout = () => {
 
   const logout = () => {
     dispatch(signOut());
+    dispatch(logOut());
     navigate(`/${Path.login}`);
   };
 
