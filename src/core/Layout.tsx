@@ -3,28 +3,27 @@ import { Outlet, useLocation } from 'react-router-dom';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
 import { useAppSelector } from '../hooks';
-import { TOKEN } from '../utils/constants';
 import { isTokenExpire } from '../utils/functions/api';
-import { getTokenFromStorage } from '../utils/functions/localStorage';
+import { removeToken, getToken } from '../utils/functions/localStorage';
 
 export default function Layout() {
   const token = useAppSelector((state) => state.auth.token);
   const location = useLocation();
 
   useEffect(() => {
-    const tokenStorage = getTokenFromStorage();
+    const tokenStorage = getToken();
     async function checkToken() {
       if (!token) {
         return;
       }
       const isExpire = await isTokenExpire(token);
       if (!isExpire) {
-        localStorage.removeItem(TOKEN);
+        removeToken();
       }
     }
     if (tokenStorage || token) {
       if (token !== tokenStorage) {
-        localStorage.removeItem(TOKEN);
+        removeToken();
       } else {
         checkToken();
       }

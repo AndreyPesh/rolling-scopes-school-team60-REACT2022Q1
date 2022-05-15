@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
+import { Path } from '../../router/routes';
 import { signIn } from '../../store/slices/authSlice';
 
 const Login = () => {
@@ -15,7 +16,7 @@ const Login = () => {
 
   useEffect(() => {
     if (token) {
-      navigate('/main');
+      navigate(`/${Path.main}`);
     }
   }, [token, navigate]);
 

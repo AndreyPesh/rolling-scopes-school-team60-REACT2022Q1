@@ -1,12 +1,12 @@
 import { Navigate } from 'react-router-dom';
-import { TOKEN } from '../utils/constants';
+import { getToken } from '../utils/functions/localStorage';
 import { Path } from './routes';
 
 export const ProtectedRoute: React.FC<{ isAllowed: boolean; route: JSX.Element }> = ({
   isAllowed,
   route,
 }) => {
-  const token = localStorage.getItem(TOKEN);
+  const token = getToken();
   if (token && !isAllowed) {
     return <Navigate to={`/${Path.main}`} replace />;
   }

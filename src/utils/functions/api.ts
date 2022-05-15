@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { ALL_USERS_URL, BASE_URL, TOKEN } from '../constants';
+import { ALL_USERS_URL, BASE_URL } from '../constants';
 import { UserData } from '../types/types';
+import { getToken } from './localStorage';
 
 export const getUser = async (params: string) => {
-  const token = localStorage.getItem(TOKEN);
+  const token = getToken();
   const { data } = await axios.get(`${BASE_URL}${ALL_USERS_URL}/${params}`, {
     headers: {
       Authorization: `Bearer ${token}`,

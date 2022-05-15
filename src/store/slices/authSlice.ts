@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { BASE_URL, SIGNIN_URL, TOKEN } from '../../utils/constants';
-import { getTokenFromStorage } from '../../utils/functions/localStorage';
+import { BASE_URL, SIGNIN_URL } from '../../utils/constants';
+import { getToken, removeToken, setToken } from '../../utils/functions/localStorage';
 import { DataFormSignin, ErrorResponse, ResponseSignin } from '../../utils/types/types';
 
 interface ILogin {
@@ -13,7 +13,7 @@ interface ILogin {
 const initialState: ILogin = {
   isLoading: false,
   error: '',
-  token: getTokenFromStorage(),
+  token: getToken(),
 };
 
 const isError = (action: AnyAction) => {
@@ -26,7 +26,7 @@ export const signIn = createAsyncThunk<ResponseSignin, DataFormSignin, { rejectV
     try {
       const response = await axios.post(`${BASE_URL}${SIGNIN_URL}`, formData);
 
-      localStorage.setItem(TOKEN, response.data.token);
+      setToken(response.data.token);
 
       return response.data;
     } catch (error) {
@@ -42,7 +42,7 @@ const authSlice = createSlice({
   reducers: {
     signOut: (state) => {
       state.token = '';
-      localStorage.removeItem(TOKEN);
+      removeToken();
     },
   },
   extraReducers: (builder) => {

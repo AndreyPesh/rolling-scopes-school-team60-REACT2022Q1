@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { TOKEN } from '../../utils/constants';
 import { getUser } from '../../utils/functions/api';
+import { getToken } from '../../utils/functions/localStorage';
 import { parseJwt } from '../../utils/functions/parseJwt';
 
 interface User {
@@ -15,7 +15,7 @@ export default function Main() {
   });
 
   useEffect(() => {
-    const token = localStorage.getItem(TOKEN);
+    const token = getToken();
     if (!token) return;
     const { userId } = parseJwt(token);
 
