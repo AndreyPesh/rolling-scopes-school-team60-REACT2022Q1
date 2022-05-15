@@ -4,11 +4,21 @@ export type TypePropsModal = {
   content: JSX.Element;
 };
 
-export type ResponseSignin = {
+export type ResponseSignIn = {
   token: string;
 };
+export type ResponseSignUp = {
+  id: string;
+  name: string;
+  login: string;
+};
 
-export type DataFormSignin = {
+export type DataFormSignIn = {
+  login: string;
+  password: string;
+};
+export type DataFormSignUp = {
+  name: string;
   login: string;
   password: string;
 };
@@ -50,4 +60,13 @@ export type TaskData = {
 export type FileData = {
   filename: string;
   fileSize: number;
+};
+
+export type ErrorResponse = {
+  response: {
+    data: {
+      statusCode: number;
+      message: string;
+    };
+  };
 };

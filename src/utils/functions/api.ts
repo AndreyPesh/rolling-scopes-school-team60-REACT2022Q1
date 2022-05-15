@@ -1,32 +1,27 @@
 import axios from 'axios';
-import { ALL_USERS_URL, BASE_URL, CREATE_BOARD_URL, SIGNIN_URL } from '../constants';
-import {
-  DataFormSignin,
-  DataBoard,
-  ResponseSignin,
-  UserData,
-  BoardDescription,
-} from '../types/types';
+import { getToken } from './localStorage';
+import { parseJwt } from './parseJwt';
+import { ALL_USERS_URL, BASE_URL, CREATE_BOARD_URL } from '../constants';
+import { DataBoard, ErrorResponse, UserData, BoardDescription } from '../types/types';
 
 const logErrors = (nameRequest: string, errorMessage: string) => {
   console.log(`Can't complete request: ${nameRequest} `);
   console.log(`Error: ${errorMessage}`);
 };
 
-export const signin = async (dataForm: DataFormSignin) => {
+export const getUser = async () => {
   try {
-    const { data } = await axios.post<ResponseSignin>(`${BASE_URL}${SIGNIN_URL}`, dataForm, {
+    const token = getToken();
+    const { userId } = parseJwt(token);
+    const { data } = await axios.get(`${BASE_URL}${ALL_USERS_URL}/${userId}`, {
       headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
       },
     });
     return data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      logErrors(signin.name, error.message);
-    }
-    return null;
+    const err = error as ErrorResponse;
+    return err.response.data;
   }
 };
 

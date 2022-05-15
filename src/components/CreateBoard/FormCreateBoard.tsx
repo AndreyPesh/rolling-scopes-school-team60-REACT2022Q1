@@ -8,7 +8,7 @@ import { RootState } from '../../store';
 import { createBoard } from '../../utils/functions/api';
 
 const FormCreateBoard: React.FC<{ handleClose: () => void }> = ({ handleClose }) => {
-  const { token } = useAppSelector((state: RootState) => state.user);
+  const { token } = useAppSelector((state: RootState) => state.auth);
   const [nameBoard, setNameBoard] = useState<string>('');
   const navigate = useNavigate();
 
@@ -21,7 +21,9 @@ const FormCreateBoard: React.FC<{ handleClose: () => void }> = ({ handleClose })
 
   const handleForm = async (event: SyntheticEvent<HTMLInputElement>) => {
     event.preventDefault();
-    await createBoard(token, nameBoard);
+    if (token) {
+      await createBoard(token, nameBoard);
+    }
     handleClose();
     navigate(`/${Path.main}`);
   };

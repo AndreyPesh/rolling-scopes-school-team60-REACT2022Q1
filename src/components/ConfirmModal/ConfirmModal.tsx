@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { RootState } from '../../store';
-import { close } from '../../store/slices/confirm';
+import { close } from '../../store/slices/confirmSlice';
 
 const ConfirmModal = () => {
   const { open, title, description, confirmAction } = useAppSelector(

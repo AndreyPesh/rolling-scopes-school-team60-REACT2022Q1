@@ -2,16 +2,16 @@ import './Board.scss';
 import { Button, Paper } from '@mui/material';
 import { BoardDescription } from '../../utils/types/types';
 import { useAppDispatch } from '../../hooks';
-import { open } from '../../store/slices/confirm';
+import { open } from '../../store/slices/confirmSlice';
 import { removeBoardById } from '../../utils/functions/api';
-import useToken from '../../hooks/useToken';
-import { fetchListBoards } from '../../store/slices/boards';
+import { fetchListBoards } from '../../store/slices/boardsSlice';
+import { getToken } from '../../utils/functions/localStorage';
 
 const TITLE_REMOVE_BOARD = 'Remove board';
 const QUESTION_REMOVE_BOARD = 'Are you sure want to delete the board ';
 
 const Board: React.FC<BoardDescription> = ({ id, title }) => {
-  const { token } = useToken();
+  const token = getToken();
   const dispatch = useAppDispatch();
   const openConfirm = () => {
     dispatch(

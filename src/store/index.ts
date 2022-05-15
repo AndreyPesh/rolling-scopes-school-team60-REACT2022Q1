@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import countReducer from './slices/counter';
-import userReducer from './slices/user';
-import boardsReducer from './slices/boards';
-import confirmReducer from './slices/confirm';
+import boardsReducer from './slices/boardsSlice';
+import confirmReducer from './slices/confirmSlice';
+
+import authReducer from './slices/authSlice';
+import userReducer from './slices/userSlice';
 
 const store = configureStore({
   reducer: {
-    count: countReducer,
+    auth: authReducer,
     user: userReducer,
     boards: boardsReducer,
     confirm: confirmReducer,
