@@ -1,7 +1,7 @@
 import Main from '../pages/Main/Main';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import Login from '../pages/Login/Login';
-import Signup from '../pages/Signup/Signup';
+import Signup from '../pages/SignUp/Signup';
 import EditProfile from '../pages/EditProfile/EditProfile';
 
 export enum Path {
