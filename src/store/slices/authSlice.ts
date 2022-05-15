@@ -1,66 +1,49 @@
 import { createSlice, PayloadAction, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { NavigateFunction } from 'react-router-dom';
-import { parseJwt } from '../../utils/functions/parseJwt';
-
-const API_URL = 'https://mighty-earth-43476.herokuapp.com';
+import { BASE_URL, SIGNIN_URL, TOKEN } from '../../utils/constants';
+import { getTokenFromStorage } from '../../utils/functions/localStorage';
+import { DataFormSignin, ErrorResponse, ResponseSignin } from '../../utils/types/types';
 
 interface ILogin {
   isLoading: boolean;
   error: string | null;
-  userId: string;
-}
-
-interface IError {
-  response: {
-    data: {
-      statusCode: number;
-      message: string;
-    };
-  };
+  token: string;
 }
 
 const initialState: ILogin = {
   isLoading: false,
   error: '',
-  userId: '',
+  token: getTokenFromStorage(),
 };
-
-interface LoginResponse {
-  token: string;
-}
-
-interface LoginFormData {
-  login: string;
-  password: string;
-  navigate: NavigateFunction;
-}
 
 const isError = (action: AnyAction) => {
   return action.type.endsWith('rejected');
 };
 
-export const signIn = createAsyncThunk<LoginResponse, LoginFormData, { rejectValue: string }>(
-  'login/signIn',
+export const signIn = createAsyncThunk<ResponseSignin, DataFormSignin, { rejectValue: string }>(
+  'auth/signIn',
   async function (formData, { rejectWithValue }) {
     try {
-      const response = await axios.post(`${API_URL}/signin`, formData);
+      const response = await axios.post(`${BASE_URL}${SIGNIN_URL}`, formData);
 
-      formData.navigate('/main');
+      localStorage.setItem(TOKEN, response.data.token);
 
       return response.data;
     } catch (error) {
-      const err = error as IError;
+      const err = error as ErrorResponse;
       return rejectWithValue(err.response.data.message);
     }
   }
 );
 
-const loginSlice = createSlice({
-  name: 'login',
+const authSlice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {
-    redirect: () => {},
+    signOut: (state) => {
+      state.token = '';
+      localStorage.removeItem(TOKEN);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -69,10 +52,7 @@ const loginSlice = createSlice({
         state.error = null;
       })
       .addCase(signIn.fulfilled, (state, action) => {
-        const { userId } = parseJwt(action.payload.token);
-        localStorage.setItem('token', action.payload.token);
-
-        state.userId = userId;
+        state.token = action.payload.token;
         state.isLoading = false;
         state.error = null;
       })
@@ -83,4 +63,6 @@ const loginSlice = createSlice({
   },
 });
 
-export default loginSlice.reducer;
+export const { signOut } = authSlice.actions;
+
+export default authSlice.reducer;

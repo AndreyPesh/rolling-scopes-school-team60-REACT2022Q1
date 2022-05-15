@@ -1,17 +1,23 @@
 import { Button, TextField, Link, Grid, Box, Typography, Container } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { signIn } from '../../store/slices/loginSlice';
+import { signIn } from '../../store/slices/authSlice';
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isLoading, error } = useAppSelector((state) => state.login);
+  const { isLoading, error, token } = useAppSelector((state) => state.auth);
 
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    if (token) {
+      navigate('/main');
+    }
+  }, [token, navigate]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -19,7 +25,6 @@ const Login = () => {
     const data = {
       login,
       password,
-      navigate,
     };
 
     dispatch(signIn(data));

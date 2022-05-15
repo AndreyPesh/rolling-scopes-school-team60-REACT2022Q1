@@ -18,3 +18,12 @@ export type UserData = {
   name: string;
   login: string;
 };
+
+export type ErrorResponse = {
+  response: {
+    data: {
+      statusCode: number;
+      message: string;
+    };
+  };
+};

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getUser } from '../../utils/api';
+import { TOKEN } from '../../utils/constants';
+import { getUser } from '../../utils/functions/api';
 import { parseJwt } from '../../utils/functions/parseJwt';
 
 interface User {
@@ -14,7 +15,7 @@ export default function Main() {
   });
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem(TOKEN);
     if (!token) return;
     const { userId } = parseJwt(token);
 
@@ -30,7 +31,7 @@ export default function Main() {
 
   return (
     <>
-      <h2>dashboard</h2>
+      <h2>Main</h2>
       <p>login: {user.login}</p>
       <p>name: {user.name}</p>
     </>

@@ -1,26 +1,14 @@
-import useToken from '../../hooks/useToken';
-import { signin } from '../../utils/functions/api';
+import { TOKEN } from '../../utils/constants';
 import AuthLinks from './AuthLinks';
 import UnAuthLinks from './UnAuthLinks';
 
-const fakeDataForm = {
-  login: 'user001',
-  password: 'userpass@123',
-};
-
 const Header = () => {
-  const { token, setToken } = useToken();
+  const token = localStorage.getItem(TOKEN);
 
-  const userLogin = async () => {
-    const response = await signin(fakeDataForm);
-    if (response) {
-      setToken(response.token);
-    }
-  };
   return (
     <header>
       <nav>
-        <ul>{!token ? <UnAuthLinks userLogin={userLogin} /> : <AuthLinks />}</ul>
+        <ul>{!token ? <UnAuthLinks /> : <AuthLinks />}</ul>
       </nav>
     </header>
   );

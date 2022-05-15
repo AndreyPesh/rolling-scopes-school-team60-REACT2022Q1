@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Path } from '../../router/routes';
 
-const UnAuthLinks: React.FC<{ userLogin: () => void }> = ({ userLogin }) => {
+const UnAuthLinks: React.FC = () => {
   return (
     <>
       <li>
@@ -10,7 +10,6 @@ const UnAuthLinks: React.FC<{ userLogin: () => void }> = ({ userLogin }) => {
       <li>
         <Link to={`/${Path.signup}`}>Sign Up</Link>
       </li>
-      <button onClick={userLogin}>Login</button>
     </>
   );
 };

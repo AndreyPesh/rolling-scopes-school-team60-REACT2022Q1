@@ -1,22 +1,15 @@
 import axios from 'axios';
-import { ALL_USERS_URL, BASE_URL, SIGNIN_URL } from '../constants';
-import { DataFormSignin, ResponseSignin, UserData } from '../types/types';
+import { ALL_USERS_URL, BASE_URL, TOKEN } from '../constants';
+import { UserData } from '../types/types';
 
-export const signin = async (dataForm: DataFormSignin) => {
-  try {
-    const { data } = await axios.post<ResponseSignin>(`${BASE_URL}${SIGNIN_URL}`, dataForm, {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    });
-    return data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('error message: ', error.message);
-    }
-    return null;
-  }
+export const getUser = async (params: string) => {
+  const token = localStorage.getItem(TOKEN);
+  const { data } = await axios.get(`${BASE_URL}${ALL_USERS_URL}/${params}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return data;
 };
 
 export const isTokenExpire = async (token: string) => {
