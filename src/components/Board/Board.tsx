@@ -3,11 +3,15 @@ import { Button, Paper } from '@mui/material';
 import { BoardDescription } from '../../utils/types/types';
 import { useAppDispatch } from '../../hooks';
 import { open } from '../../store/slices/confirm';
+import { removeBoardById } from '../../utils/functions/api';
+import useToken from '../../hooks/useToken';
+import { fetchListBoards } from '../../store/slices/boards';
 
 const TITLE_REMOVE_BOARD = 'Remove board';
 const QUESTION_REMOVE_BOARD = 'Are you sure want to delete the board ';
 
-const Board: React.FC<BoardDescription> = ({ title }) => {
+const Board: React.FC<BoardDescription> = ({ id, title }) => {
+  const { token } = useToken();
   const dispatch = useAppDispatch();
   const openConfirm = () => {
     dispatch(
@@ -15,7 +19,9 @@ const Board: React.FC<BoardDescription> = ({ title }) => {
         open: true,
         title: TITLE_REMOVE_BOARD,
         description: `${QUESTION_REMOVE_BOARD} ${title}?`,
-        confirmAction: () => alert(),
+        confirmAction: async () => {
+          await removeBoardById(token, id), dispatch(fetchListBoards(token));
+        },
       })
     );
   };

@@ -20,8 +20,8 @@ const ConfirmModal = () => {
     dispatch(close(false));
   };
 
-  const agreeAction = async () => {
-    await confirmAction();
+  const agreeAction = () => {
+    confirmAction();
     closeConfirm();
   };
 

@@ -114,3 +114,23 @@ export const getBoardById = async (token: string, id: string) => {
     return false;
   }
 };
+
+export const removeBoardById = async (token: string, id: string) => {
+  try {
+    if (!token) {
+      return false;
+    }
+
+    await axios.delete<BoardDescription>(`${BASE_URL}${CREATE_BOARD_URL}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return true;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      logErrors(removeBoardById.name, error.message);
+    }
+    return false;
+  }
+};
