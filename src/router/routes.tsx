@@ -2,7 +2,7 @@ import Main from '../pages/Main/Main';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import EditProfile from '../pages/EditProfile/EditProfile';
 import Login from '../pages/Login/Login';
-import Signup from '../pages/Signup/SignUp';
+import Signup from '../pages/Signup/Signup';
 
 export enum Path {
   'home' = '/',

@@ -29,7 +29,7 @@ export default function Layout() {
   return (
     <>
       <Header />
-      <main className="container">
+      <main className="container container__main">
         <Outlet />
       </main>
       <Footer />

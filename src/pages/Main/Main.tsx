@@ -1,14 +1,23 @@
+import './Main.scss';
 import { useEffect } from 'react';
+import Board from '../../components/Board/Board';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { RootState } from '../../store';
 import { fetchListBoards } from '../../store/slices/boards';
 
 export default function Main() {
   const dispatch = useAppDispatch();
-  const { token } = useAppSelector((state: RootState) => state.user);
+  const {
+    user: { token },
+    boards: { listBoards },
+  } = useAppSelector((state: RootState) => state);
+  const boards = listBoards.map((dataBoard) => <Board key={dataBoard.id} {...dataBoard} />);
   useEffect(() => {
     dispatch(fetchListBoards(token));
-    console.log('render main');
-  });
-  return <h2>Main</h2>;
+  }, [token, dispatch]);
+
+  if (!listBoards.length) {
+    return <div>List is empty</div>;
+  }
+  return <div className="list-board-card">{boards}</div>;
 }
