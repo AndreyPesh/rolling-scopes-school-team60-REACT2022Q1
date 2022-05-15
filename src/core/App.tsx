@@ -1,9 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
-import Welcome from '../pages/Welcome/Welcome';
-import Layout from './Layout';
+
+import { Welcome } from '../pages/Welcome/Welcome';
 import { listRoutes, Path } from '../router/routes';
 import { ProtectedRoute } from '../router/ProtectedRoute';
 import NoMatch from '../pages/NoMatch/NoMatch';
+import Layout from './Layout';
 
 const App = () => {
   const routes = listRoutes.map((route) => {
@@ -15,12 +16,13 @@ const App = () => {
       />
     );
   });
+
   return (
     <Routes>
       <Route path={Path.home} element={<Layout />}>
         <Route index element={<Welcome />} />
         {routes}
-        <Route path={Path.no_math} element={<NoMatch />} />
+        <Route path={Path.no_match} element={<NoMatch />} />
       </Route>
     </Routes>
   );

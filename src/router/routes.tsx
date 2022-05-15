@@ -1,8 +1,8 @@
 import Main from '../pages/Main/Main';
 import Dashboard from '../pages/Dashboard/Dashboard';
-import Login from '../pages/Login/Login';
-import Signup from '../pages/SignUp/Signup';
 import EditProfile from '../pages/EditProfile/EditProfile';
+import Login from '../pages/Login/Login';
+import SignUp from '../pages/SignUp/SignUp';
 
 export enum Path {
   'home' = '/',
@@ -11,32 +11,37 @@ export enum Path {
   'login' = 'login',
   'signup' = 'signup',
   'edit_profile' = 'edit_profile',
-  'no_math' = '*',
+  'no_match' = '*',
 }
 
 export const listRoutes = [
   {
     path: Path.main,
+    name: 'Main',
     component: <Main />,
     isProtected: true,
   },
   {
     path: Path.dashboard,
+    name: 'Dashboard',
     component: <Dashboard />,
     isProtected: true,
   },
   {
     path: Path.login,
+    name: 'Sign In',
     component: <Login />,
     isProtected: false,
   },
   {
     path: Path.signup,
-    component: <Signup />,
+    name: 'Sign Up',
+    component: <SignUp />,
     isProtected: false,
   },
   {
     path: Path.edit_profile,
+    name: 'Edit profile',
     component: <EditProfile />,
     isProtected: true,
   },

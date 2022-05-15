@@ -3,6 +3,8 @@ import { useAppDispatch } from '../../hooks';
 import { Path } from '../../router/routes';
 import { signOut } from '../../store/slices/authSlice';
 import { logOut } from '../../store/slices/userSlice';
+import { Button } from '@mui/material';
+
 
 const Logout = () => {
   const navigate = useNavigate();
@@ -15,9 +17,9 @@ const Logout = () => {
   };
 
   return (
-    <button type="button" onClick={logout}>
-      Sign out
-    </button>
+    <Button variant="contained" color="secondary" onClick={logout}>
+      Sign Out
+    </Button>
   );
 };
 

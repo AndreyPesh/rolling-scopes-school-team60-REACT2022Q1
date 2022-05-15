@@ -1,3 +1,13 @@
-export default function Welcome() {
-  return <h2>Welcome</h2>;
-}
+import { WelcomeDevelopers } from './WelcomeDevelopers';
+import { WelcomeIntro } from './WelcomeIntro';
+
+import './Welcome.scss';
+
+export const Welcome = () => {
+  return (
+    <section className="welcome">
+      <WelcomeIntro />
+      <WelcomeDevelopers />
+    </section>
+  );
+};

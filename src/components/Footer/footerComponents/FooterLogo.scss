@@ -1,0 +1,52 @@
+@import '../../../style/variables.scss';
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  transition: all 0.3s;
+  margin-right: 20px;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+
+  &__link {
+    position: relative;
+    color: $brown;
+    text-decoration: none;
+  }
+
+  &__year {
+    position: absolute;
+    bottom: 10px;
+    font-size: 22px;
+  }
+
+  &__rs {
+    width: 100px;
+    height: 60px;
+    fill: $brown;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-biggest) {
+  .footer-logo__rs {
+    width: 80px;
+  }
+
+  .footer-logo__year {
+    bottom: 15px;
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-medium) {
+  .footer-logo__rs {
+    width: 60px;
+  }
+
+  .footer-logo__year {
+    bottom: 19px;
+    font-size: 16px;
+  }
+}

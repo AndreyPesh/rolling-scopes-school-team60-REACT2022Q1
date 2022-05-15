@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Path } from '../../router/routes';
 import { getToken } from '../../utils/functions/localStorage';
+import { Button } from '@mui/material';
+import { listRoutes, Path } from '../../router/routes';
 import CreateBoard from '../CreateBoard/CreateBoard';
 import Logout from '../Logout/Logout';
 
@@ -9,23 +10,30 @@ const AuthLinks = () => {
   const location = useLocation();
 
   if (token && location.pathname === Path.home.toString()) {
-    return <Link to={`/${Path.main}`}>Go to main page</Link>;
+    return (
+      <Link to={`/${Path.main}`} style={{ textDecoration: 'none' }}>
+        <Button variant="contained" color="secondary">
+          Go to main page
+        </Button>
+      </Link>
+    );
   }
+
   return (
     <>
-      <li>
-        <Link to={`/${Path.main}`}>main</Link>
-      </li>
-      <li>
-        <Link to={`/${Path.dashboard}`}>dashboard</Link>
-      </li>
-      <li>
-        <Link to={`/${Path.edit_profile}`}>edit profile</Link>
-      </li>
-      <li>
+      {listRoutes
+        .filter((route) => route.isProtected)
+        .map((route) => {
+          return (
+            <li className="header__nav_item" key={route.name}>
+              <Link to={`/${route.path}`}>{route.name}</Link>
+            </li>
+          );
+        })}
+      <li className="header__nav_item">
         <CreateBoard />
       </li>
-      <li>
+      <li className="header__nav_item">
         <Logout />
       </li>
     </>

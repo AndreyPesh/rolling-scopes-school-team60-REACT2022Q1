@@ -6,7 +6,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { Path } from '../../router/routes';
 import { signUp } from '../../store/slices/authSlice';
 
-const Signup = () => {
+const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isLoading, error, name, login } = useAppSelector((state) => state.auth);
@@ -90,4 +90,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignUp;
