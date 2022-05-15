@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+import ConfirmModal from '../components/ConfirmModal/ConfirmModal';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
 import useToken from '../hooks/useToken';
@@ -33,6 +34,7 @@ export default function Layout() {
         <Outlet />
       </main>
       <Footer />
+      <ConfirmModal />
     </>
   );
 }
