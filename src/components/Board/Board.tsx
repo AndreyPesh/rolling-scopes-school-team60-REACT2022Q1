@@ -1,6 +1,6 @@
 import './Board.scss';
 import { Button, Paper } from '@mui/material';
-import { BoardDescription } from '../../utils/types/types';
+import { DataBoard } from '../../utils/types/types';
 import { useAppDispatch } from '../../hooks';
 import icon from '../../assets/image/case.svg';
 import { open } from '../../store/slices/confirmSlice';
@@ -13,7 +13,7 @@ import { Path } from '../../router/routes';
 const TITLE_REMOVE_BOARD = 'Remove board';
 const QUESTION_REMOVE_BOARD = 'Are you sure want to delete the board ';
 
-const Board: React.FC<BoardDescription> = ({ id, title }) => {
+const Board: React.FC<DataBoard> = ({ id, title }) => {
   const navigate = useNavigate();
   const token = getToken();
   const dispatch = useAppDispatch();

@@ -7,7 +7,8 @@ export default function Dashboard() {
   const navigate = useNavigate();
   useEffect(() => {
     if (!id) {
-      navigate(`/${Path.home}`);
+      navigate(`${Path.home}`);
+      console.log(id);
     }
   });
 

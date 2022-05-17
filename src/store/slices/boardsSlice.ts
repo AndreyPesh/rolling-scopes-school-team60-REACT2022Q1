@@ -1,27 +1,24 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getAllBoards, getBoardById } from '../../utils/functions/api';
-import { BoardDescription } from '../../utils/types/types';
+import { EMPTY_STRING, GENERAL_ERROR_TEXT } from '../../utils/constants';
+import { getAllBoards } from '../../utils/functions/api';
+import { DataBoard } from '../../utils/types/types';
 
 export const fetchListBoards = createAsyncThunk(
   'boards/fetchListBoardsStatus',
   async (token: string) => {
-    const result: Array<BoardDescription> = [];
+    const result: Array<DataBoard> = [];
     const responseListBoards = await getAllBoards(token);
     if (responseListBoards) {
-      const boardItemsData = await Promise.all(
-        responseListBoards.map((boardData) => getBoardById(token, boardData.id))
-      );
-      if (boardItemsData.every((data) => data)) {
-        result.push(...(boardItemsData as BoardDescription[]));
-      }
+      result.push(...responseListBoards);
     }
     return result;
   }
 );
 
-const initialState: { loading: boolean; listBoards: Array<BoardDescription> } = {
+const initialState: { loading: boolean; listBoards: Array<DataBoard>; errors: string } = {
   loading: false,
   listBoards: [],
+  errors: EMPTY_STRING,
 };
 
 const boardSlice = createSlice({
@@ -32,13 +29,15 @@ const boardSlice = createSlice({
     builder.addCase(fetchListBoards.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(
-      fetchListBoards.fulfilled,
-      (state, action: PayloadAction<Array<BoardDescription>>) => {
-        state.loading = false;
-        state.listBoards = [...action.payload];
-      }
-    );
+    builder.addCase(fetchListBoards.fulfilled, (state, action: PayloadAction<Array<DataBoard>>) => {
+      state.loading = false;
+      state.listBoards = [...action.payload];
+      state.errors = EMPTY_STRING;
+    });
+    builder.addCase(fetchListBoards.rejected, (state) => {
+      state.loading = false;
+      state.errors = GENERAL_ERROR_TEXT;
+    });
   },
 });
 

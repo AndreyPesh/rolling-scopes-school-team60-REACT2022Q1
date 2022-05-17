@@ -10,7 +10,7 @@ export default function Main() {
   const dispatch = useAppDispatch();
   const {
     auth: { token },
-    boards: { loading, listBoards },
+    boards: { loading, listBoards, errors },
   } = useAppSelector((state: RootState) => state);
   const boards = listBoards.map((dataBoard) => <Board key={dataBoard.id} {...dataBoard} />);
 
@@ -22,6 +22,9 @@ export default function Main() {
 
   if (loading) {
     return <Spinner />;
+  }
+  if (errors) {
+    return <h2>{errors}</h2>;
   }
   return (
     <>

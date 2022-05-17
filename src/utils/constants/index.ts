@@ -11,6 +11,9 @@ export const ALL_USERS_URL = '/users';
 export const CREATE_BOARD_URL = '/boards';
 export const PARAMS_ID_DASHBOARD = ':id';
 
+export const GENERAL_ERROR_TEXT = 'Something went wrong';
+export const EMPTY_STRING = '';
+
 export const TEAM: Array<Developer> = [
   {
     name: 'Mentor: Maryna Rastargueva',
