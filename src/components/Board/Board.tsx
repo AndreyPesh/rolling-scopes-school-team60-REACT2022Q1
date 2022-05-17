@@ -2,6 +2,7 @@ import './Board.scss';
 import { Button, Paper } from '@mui/material';
 import { BoardDescription } from '../../utils/types/types';
 import { useAppDispatch } from '../../hooks';
+import icon from '../../assets/image/case.svg';
 import { open } from '../../store/slices/confirmSlice';
 import { removeBoardById } from '../../utils/functions/api';
 import { fetchListBoards } from '../../store/slices/boardsSlice';
@@ -28,7 +29,8 @@ const Board: React.FC<BoardDescription> = ({ id, title }) => {
 
   return (
     <Paper elevation={3} className="board-card">
-      <h2>Title : {title}</h2>
+      <h2>{title}</h2>
+      <img src={icon} alt={title} className="board-card__icon" />
       <Button variant="outlined" color="error" onClick={openConfirm}>
         Remove
       </Button>

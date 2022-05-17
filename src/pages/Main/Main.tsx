@@ -25,7 +25,7 @@ export default function Main() {
   }
   return (
     <>
-      <h2>Main</h2>
+      <h2>List boards</h2>
       <div className="list-board-card">
         {!listBoards.length ? <h2>List boards is empty</h2> : boards}
       </div>
