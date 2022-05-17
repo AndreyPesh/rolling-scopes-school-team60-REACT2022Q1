@@ -7,11 +7,14 @@ import { open } from '../../store/slices/confirmSlice';
 import { removeBoardById } from '../../utils/functions/api';
 import { fetchListBoards } from '../../store/slices/boardsSlice';
 import { getToken } from '../../utils/functions/localStorage';
+import { useNavigate } from 'react-router-dom';
+import { Path } from '../../router/routes';
 
 const TITLE_REMOVE_BOARD = 'Remove board';
 const QUESTION_REMOVE_BOARD = 'Are you sure want to delete the board ';
 
 const Board: React.FC<BoardDescription> = ({ id, title }) => {
+  const navigate = useNavigate();
   const token = getToken();
   const dispatch = useAppDispatch();
   const openConfirm = () => {
@@ -26,9 +29,12 @@ const Board: React.FC<BoardDescription> = ({ id, title }) => {
       })
     );
   };
+  const openBoard = () => {
+    navigate(`/${Path.dashboard}/${id}`);
+  };
 
   return (
-    <Paper elevation={3} className="board-card">
+    <Paper elevation={3} className="board-card" onClick={openBoard}>
       <h2>{title}</h2>
       <img src={icon} alt={title} className="board-card__icon" />
       <Button variant="outlined" color="error" onClick={openConfirm}>
