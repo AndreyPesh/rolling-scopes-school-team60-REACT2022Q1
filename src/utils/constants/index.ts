@@ -14,6 +14,8 @@ export const PARAMS_ID_DASHBOARD = ':id';
 export const GENERAL_ERROR_TEXT = 'Something went wrong';
 export const EMPTY_STRING = '';
 
+export const TAG_NAME_BUTTON = 'BUTTON';
+
 export const TEAM: Array<Developer> = [
   {
     name: 'Mentor: Maryna Rastargueva',

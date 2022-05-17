@@ -1,4 +1,5 @@
 import './Board.scss';
+import { MouseEvent } from 'react';
 import { Button, Paper } from '@mui/material';
 import { DataBoard } from '../../utils/types/types';
 import { useAppDispatch } from '../../hooks';
@@ -9,6 +10,7 @@ import { fetchListBoards } from '../../store/slices/boardsSlice';
 import { getToken } from '../../utils/functions/localStorage';
 import { useNavigate } from 'react-router-dom';
 import { Path } from '../../router/routes';
+import { TAG_NAME_BUTTON } from '../../utils/constants';
 
 const TITLE_REMOVE_BOARD = 'Remove board';
 const QUESTION_REMOVE_BOARD = 'Are you sure want to delete the board ';
@@ -29,8 +31,11 @@ const Board: React.FC<DataBoard> = ({ id, title }) => {
       })
     );
   };
-  const openBoard = () => {
-    navigate(`/${Path.dashboard}/${id}`);
+  const openBoard = (event: MouseEvent<HTMLElement>) => {
+    const nameTarget = (event.target as HTMLElement).tagName;
+    if (nameTarget && nameTarget !== TAG_NAME_BUTTON) {
+      navigate(`/${Path.dashboard}/${id}`);
+    }
   };
 
   return (
