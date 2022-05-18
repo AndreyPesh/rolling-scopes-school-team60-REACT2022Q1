@@ -6,9 +6,10 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Path } from '../../router/routes';
 import { RootState } from '../../store';
 import { fetchListBoards } from '../../store/slices/boardsSlice';
+import { closeModal } from '../../store/slices/modalSlice';
 import { createBoard } from '../../utils/functions/api';
 
-const FormCreateBoard: React.FC<{ handleClose: () => void }> = ({ handleClose }) => {
+const FormCreateBoard = () => {
   const { token } = useAppSelector((state: RootState) => state.auth);
   const dispatch = useAppDispatch();
   const [nameBoard, setNameBoard] = useState<string>('');
@@ -25,7 +26,7 @@ const FormCreateBoard: React.FC<{ handleClose: () => void }> = ({ handleClose })
     event.preventDefault();
     if (token) {
       await createBoard(token, nameBoard);
-      handleClose();
+      dispatch(closeModal(false));
       navigate(`/${Path.main}`);
       dispatch(fetchListBoards(token));
     }
