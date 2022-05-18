@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button } from '@mui/material';
 
 import Modal from '../Modal/Modal';
+import FormCreateBoard from './FormCreateBoard';
 
 const CreateBoard = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -14,7 +15,11 @@ const CreateBoard = () => {
       <Button variant="contained" color="secondary" onClick={handleOpen}>
         Create new board
       </Button>
-      <Modal open={open} handleClose={handleClose} content={<h1>Component create board</h1>} />
+      <Modal
+        open={open}
+        handleClose={handleClose}
+        content={<FormCreateBoard handleClose={handleClose} />}
+      />
     </>
   );
 };

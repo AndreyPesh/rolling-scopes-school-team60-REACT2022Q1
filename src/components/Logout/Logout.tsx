@@ -5,7 +5,6 @@ import { signOut } from '../../store/slices/authSlice';
 import { logOut } from '../../store/slices/userSlice';
 import { Button } from '@mui/material';
 
-
 const Logout = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();

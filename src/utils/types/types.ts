@@ -29,6 +29,39 @@ export type UserData = {
   login: string;
 };
 
+export type DataBoard = {
+  id: string;
+  title: string;
+};
+
+export type BoardDescription = {
+  id: string;
+  title: string;
+  columns: Array<ColumnBoard>;
+};
+
+export type ColumnBoard = {
+  id: string;
+  title: string;
+  order: number;
+  tasks: Array<TaskData>;
+};
+
+export type TaskData = {
+  id: string;
+  title: string;
+  order: number;
+  done: boolean;
+  description: string;
+  userId: string;
+  files: Array<FileData>;
+};
+
+export type FileData = {
+  filename: string;
+  fileSize: number;
+};
+
 export type ErrorResponse = {
   response: {
     data: {

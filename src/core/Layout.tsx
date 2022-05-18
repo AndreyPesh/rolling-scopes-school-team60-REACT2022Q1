@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+import ConfirmModal from '../components/ConfirmModal/ConfirmModal';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
 import { useAppSelector } from '../hooks';
@@ -32,10 +33,11 @@ export default function Layout() {
   return (
     <>
       <Header />
-      <main className="container">
+      <main className="container container__main">
         <Outlet />
       </main>
       <Footer />
+      <ConfirmModal />
     </>
   );
 }
