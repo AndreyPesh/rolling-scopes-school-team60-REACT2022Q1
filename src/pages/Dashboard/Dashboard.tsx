@@ -10,6 +10,7 @@ import { fetchBoardDataById } from '../../store/slices/currentBoardSlice';
 import { openModal } from '../../store/slices/modalSlice';
 import Column from './Column/Column';
 import CreateColumnForm from './CreateForms/CreateColumnForm';
+import CreateTaskForm from './CreateForms/CreateTaskForm';
 
 export default function Dashboard() {
   const {
@@ -29,6 +30,9 @@ export default function Dashboard() {
 
   const addColumn = () => {
     dispatch(openModal({ open: true, contentModal: <CreateColumnForm /> }));
+  };
+  const addTask = () => {
+    dispatch(openModal({ open: true, contentModal: <CreateTaskForm /> }));
   };
 
   const listColumns = boardData.columns.map((column) => <Column key={column.id} {...column} />);
@@ -50,7 +54,7 @@ export default function Dashboard() {
         <Button
           variant="contained"
           color="success"
-          onClick={addColumn}
+          onClick={addTask}
           disabled={!boardData.columns.length}
         >
           Add task
