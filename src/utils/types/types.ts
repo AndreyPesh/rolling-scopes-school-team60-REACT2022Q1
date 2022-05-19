@@ -76,7 +76,7 @@ export interface CreateColumnData {
 
 export interface ColumnData extends CreateColumnData {
   id: string;
-  tasks?: Array<TaskData>;
+  tasks: Array<TaskData>;
 }
 
 export interface CreateDataTask {
