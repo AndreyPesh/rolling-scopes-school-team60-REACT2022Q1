@@ -36,14 +36,7 @@ export type DataBoard = {
 export type BoardDescription = {
   id: string;
   title: string;
-  columns: Array<ColumnBoard>;
-};
-
-export type ColumnBoard = {
-  id: string;
-  title: string;
-  order: number;
-  tasks: Array<TaskData>;
+  columns: Array<ColumnData>;
 };
 
 export type TaskData = {
@@ -69,3 +62,19 @@ export type ErrorResponse = {
     };
   };
 };
+
+export type RequestColumnData = {
+  token: string;
+  boardId: string;
+  dataColumn: CreateColumnData;
+};
+
+export interface CreateColumnData {
+  title: string;
+  order: number;
+}
+
+export interface ColumnData extends CreateColumnData {
+  id: string;
+  tasks?: Array<TaskData>;
+}

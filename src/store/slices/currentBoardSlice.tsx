@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EMPTY_STRING, GENERAL_ERROR_TEXT } from '../../utils/constants';
-import { getBoardById } from '../../utils/functions/api';
-import { BoardDescription } from '../../utils/types/types';
+import { createColumn, getBoardById } from '../../utils/functions/api';
+import { BoardDescription, ColumnData, RequestColumnData } from '../../utils/types/types';
 
 const INIT_DATA_BOARD = { id: EMPTY_STRING, title: EMPTY_STRING, columns: [] };
 
@@ -11,6 +11,17 @@ export const fetchBoardDataById = createAsyncThunk(
     const responseBoardData = await getBoardById(token, id);
     if (responseBoardData) {
       return responseBoardData;
+    }
+    throw new Error();
+  }
+);
+
+export const fetchAddColumn = createAsyncThunk(
+  'boards/fetchAddColumnStatus',
+  async ({ token, boardId, dataColumn }: RequestColumnData) => {
+    const responseCreateColumn = await createColumn({ token, boardId, dataColumn });
+    if (responseCreateColumn) {
+      return responseCreateColumn;
     }
     throw new Error();
   }
@@ -39,6 +50,18 @@ const currentBoardSlice = createSlice({
       }
     );
     builder.addCase(fetchBoardDataById.rejected, (state) => {
+      state.loading = false;
+      state.errors = GENERAL_ERROR_TEXT;
+    });
+    builder.addCase(fetchAddColumn.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchAddColumn.fulfilled, (state, action: PayloadAction<ColumnData>) => {
+      state.loading = false;
+      state.boardData.columns.push(action.payload);
+      state.errors = EMPTY_STRING;
+    });
+    builder.addCase(fetchAddColumn.rejected, (state) => {
       state.loading = false;
       state.errors = GENERAL_ERROR_TEXT;
     });

@@ -1,8 +1,15 @@
 import axios from 'axios';
 import { getToken } from './localStorage';
 import { parseJwt } from './parseJwt';
-import { ALL_USERS_URL, BASE_URL, CREATE_BOARD_URL } from '../constants';
-import { DataBoard, ErrorResponse, UserData, BoardDescription } from '../types/types';
+import { ALL_USERS_URL, BASE_URL, COLUMNS_URL, CREATE_BOARD_URL } from '../constants';
+import {
+  DataBoard,
+  ErrorResponse,
+  UserData,
+  BoardDescription,
+  ColumnData,
+  RequestColumnData,
+} from '../types/types';
 
 const logErrors = (nameRequest: string, errorMessage: string) => {
   console.log(`Can't complete request: ${nameRequest} `);
@@ -125,6 +132,75 @@ export const removeBoardById = async (token: string, id: string) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       logErrors(removeBoardById.name, error.message);
+    }
+    return false;
+  }
+};
+export const getAllColumns = async (token: string, boardId: string) => {
+  try {
+    if (!token) {
+      return false;
+    }
+
+    const { data } = await axios.get<ColumnData[]>(
+      `${BASE_URL}${CREATE_BOARD_URL}/${boardId}${COLUMNS_URL}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      logErrors(createBoard.name, error.message);
+    }
+    return false;
+  }
+};
+
+export const createColumn = async ({ token, boardId, dataColumn }: RequestColumnData) => {
+  try {
+    if (!token) {
+      return false;
+    }
+
+    const { data } = await axios.post<ColumnData>(
+      `${BASE_URL}${CREATE_BOARD_URL}/${boardId}${COLUMNS_URL}`,
+      dataColumn,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      logErrors(createBoard.name, error.message);
+    }
+    return false;
+  }
+};
+
+export const removeColumnById = async (token: string, boardId: string, columnId: string) => {
+  try {
+    if (!token) {
+      return false;
+    }
+
+    await axios.delete<ColumnData[]>(
+      `${BASE_URL}${CREATE_BOARD_URL}/${boardId}${COLUMNS_URL}/${columnId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return true;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      logErrors(createBoard.name, error.message);
     }
     return false;
   }

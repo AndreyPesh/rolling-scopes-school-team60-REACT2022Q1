@@ -1,0 +1,17 @@
+.columns {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.dashboard-buttons {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90px;
+  & > * {
+    width: 200px;
+  }
+}
