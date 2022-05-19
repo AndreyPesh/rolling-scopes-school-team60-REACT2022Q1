@@ -1,13 +1,19 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+import ConfirmModal from '../components/ConfirmModal/ConfirmModal';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
+import Modal from '../components/Modal/Modal';
 import { useAppSelector } from '../hooks';
+import { RootState } from '../store';
 import { isTokenExpire } from '../utils/functions/api';
 import { removeToken, getToken } from '../utils/functions/localStorage';
 
 export default function Layout() {
-  const token = useAppSelector((state) => state.auth.token);
+  const {
+    auth: { token },
+    modal: { open, contentModal },
+  } = useAppSelector((state: RootState) => state);
   const location = useLocation();
 
   useEffect(() => {
@@ -32,10 +38,12 @@ export default function Layout() {
   return (
     <>
       <Header />
-      <main className="container">
+      <main className="container container__main">
         <Outlet />
       </main>
       <Footer />
+      <ConfirmModal />
+      <Modal open={open} content={contentModal} />
     </>
   );
 }

@@ -8,6 +8,16 @@ import Layout from './Layout';
 
 const App = () => {
   const routes = listRoutes.map((route) => {
+    if (route.params) {
+      return (
+        <Route key={route.path} path={route.path.toString()} element={route.component}>
+          <Route
+            path={route.params}
+            element={<ProtectedRoute isAllowed={route.isProtected} route={route.component} />}
+          />
+        </Route>
+      );
+    }
     return (
       <Route
         key={route.path}

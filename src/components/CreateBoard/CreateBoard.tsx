@@ -1,20 +1,19 @@
-import { useState } from 'react';
-
 import { Button } from '@mui/material';
-
-import Modal from '../Modal/Modal';
+import FormCreateBoard from './FormCreateBoard';
+import { useAppDispatch } from '../../hooks';
+import { openModal } from '../../store/slices/modalSlice';
 
 const CreateBoard = () => {
-  const [open, setOpen] = useState<boolean>(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const dispatch = useAppDispatch();
+  const handleOpenModal = () => {
+    dispatch(openModal({ open: true, contentModal: <FormCreateBoard /> }));
+  };
 
   return (
     <>
-      <Button variant="contained" color="secondary" onClick={handleOpen}>
+      <Button variant="contained" color="secondary" onClick={handleOpenModal}>
         Create new board
       </Button>
-      <Modal open={open} handleClose={handleClose} content={<h1>Component create board</h1>} />
     </>
   );
 };

@@ -99,11 +99,11 @@ const EditProfile = () => {
           </div>
         </Box>
       </Container>
-      <BasicModal
+      {/* <BasicModal
         open={openModalUpdate}
         handleClose={handleCloseModalUpdate}
         content={<h1>Data updated successfully!</h1>}
-      />
+      /> */}
     </>
   );
 };
