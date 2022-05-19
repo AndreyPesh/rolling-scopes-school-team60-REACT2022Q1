@@ -17,7 +17,7 @@ const EditProfile = () => {
   const [name, setName] = useState<string>('');
   const [login, setLogin] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [open, setOpen] = useState<boolean>(false);
+  const [openModalUpdate, setOpenModalUpdate] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const token = useAppSelector((state) => state.auth.token);
@@ -47,11 +47,11 @@ const EditProfile = () => {
       },
     });
 
-    setOpen(true);
+    setOpenModalUpdate(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseModalUpdate = () => {
+    setOpenModalUpdate(false);
     navigate(`/${Path.main}`, { replace: true });
   };
 
@@ -100,8 +100,8 @@ const EditProfile = () => {
         </Box>
       </Container>
       <BasicModal
-        open={open}
-        handleClose={handleClose}
+        open={openModalUpdate}
+        handleClose={handleCloseModalUpdate}
         content={<h1>Data updated successfully!</h1>}
       />
     </>
