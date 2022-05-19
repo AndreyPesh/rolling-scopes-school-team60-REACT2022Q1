@@ -10,6 +10,7 @@ export const SIGNUP_URL = '/signup';
 export const ALL_USERS_URL = '/users';
 export const CREATE_BOARD_URL = '/boards';
 export const COLUMNS_URL = '/columns';
+export const TASKS_URL = '/tasks';
 export const PARAMS_ID_DASHBOARD = ':id';
 
 export const GENERAL_ERROR_TEXT = 'Something went wrong';

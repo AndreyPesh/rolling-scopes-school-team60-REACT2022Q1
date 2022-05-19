@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken } from './localStorage';
 import { parseJwt } from './parseJwt';
-import { ALL_USERS_URL, BASE_URL, COLUMNS_URL, CREATE_BOARD_URL } from '../constants';
+import { ALL_USERS_URL, BASE_URL, COLUMNS_URL, CREATE_BOARD_URL, TASKS_URL } from '../constants';
 import {
   DataBoard,
   ErrorResponse,
@@ -9,6 +9,7 @@ import {
   BoardDescription,
   ColumnData,
   RequestColumnData,
+  RequestCreateTask,
 } from '../types/types';
 
 const logErrors = (nameRequest: string, errorMessage: string) => {
@@ -198,6 +199,30 @@ export const removeColumnById = async (token: string, boardId: string, columnId:
       }
     );
     return true;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      logErrors(createBoard.name, error.message);
+    }
+    return false;
+  }
+};
+
+export const createTask = async (token: string, dataTask: RequestCreateTask) => {
+  try {
+    if (!token) {
+      return false;
+    }
+    const { title, order, userId, description } = dataTask;
+    const { data } = await axios.post<RequestCreateTask>(
+      `${BASE_URL}${CREATE_BOARD_URL}/${dataTask.boardId}${COLUMNS_URL}/${dataTask.columnId}${TASKS_URL}`,
+      { title, order, userId, description },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       logErrors(createBoard.name, error.message);

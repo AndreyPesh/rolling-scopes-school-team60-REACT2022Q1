@@ -78,3 +78,15 @@ export interface ColumnData extends CreateColumnData {
   id: string;
   tasks?: Array<TaskData>;
 }
+
+export interface CreateDataTask {
+  title: string;
+  order: number;
+  description: string;
+  userId: string;
+}
+
+export interface RequestCreateTask extends CreateDataTask {
+  boardId: string;
+  columnId: string;
+}

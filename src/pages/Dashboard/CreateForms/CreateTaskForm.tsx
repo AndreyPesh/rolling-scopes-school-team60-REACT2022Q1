@@ -11,12 +11,16 @@ import {
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { RootState } from '../../../store';
+import { fetchBoardDataById } from '../../../store/slices/currentBoardSlice';
 import { closeModal } from '../../../store/slices/modalSlice';
 import { EMPTY_STRING } from '../../../utils/constants';
+import { createTask } from '../../../utils/functions/api';
+import { RequestCreateTask } from '../../../utils/types/types';
 
 const CreateTaskForm = () => {
   const {
     auth: { token },
+    user,
     currentBoard: {
       boardData: { id, columns },
     },
@@ -46,12 +50,20 @@ const CreateTaskForm = () => {
     setSelectColumn(event.target.value as string);
   };
 
-  const handleForm = (event: FormEvent) => {
+  const handleForm = async (event: FormEvent) => {
     event.preventDefault();
-    const allDataTask = { ...dataTask, boardId: id };
+    const requestDataCreateTask: RequestCreateTask = {
+      ...dataTask,
+      boardId: id,
+      userId: user.id,
+      order: 2,
+    };
     if (token) {
       dispatch(closeModal(false));
-      console.log(allDataTask);
+      const responseCreateTask = await createTask(token, requestDataCreateTask);
+      if (responseCreateTask) {
+        dispatch(fetchBoardDataById({ token, id }));
+      }
     }
   };
 
