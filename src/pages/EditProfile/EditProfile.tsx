@@ -1,26 +1,59 @@
+import axios from 'axios';
+
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { Button, Container, TextField } from '@mui/material';
 import { Box } from '@mui/system';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { useAppSelector } from '../../hooks';
+
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ALL_USERS_URL, BASE_URL } from '../../utils/constants';
 import { getUser } from '../../utils/functions/api';
 import { ResponseSignUp } from '../../utils/types/types';
-import BasicModal from '../../components/Modal/Modal';
+import { Path } from '../../router/routes';
+import { openModal } from '../../store/slices/modalSlice';
+import { open } from '../../store/slices/confirmSlice';
 
 import './EditProfile.scss';
-import { useNavigate } from 'react-router-dom';
-import { Path } from '../../router/routes';
+import { signOut } from '../../store/slices/authSlice';
+
+const TITLE_DELETE_PROFILE = 'Delete profile';
+const QUESTION_DELETE_PROFILE = 'Are you sure want to delete the profile';
 
 const EditProfile = () => {
   const [userId, setUserId] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [login, setLogin] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [openModalUpdate, setOpenModalUpdate] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const token = useAppSelector((state) => state.auth.token);
+  const openModalSuccess = useAppSelector((state) => state.modal.open);
+  const dispatch = useAppDispatch();
+
+  const deleteUs = async () => {
+    await axios.delete(`${BASE_URL}${ALL_USERS_URL}/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    dispatch(signOut);
+    localStorage.clear();
+    navigate(`/${Path.home}`, { replace: true });
+  };
+
+  const openConfirm = (event: React.FormEvent) => {
+    event.preventDefault();
+    dispatch(
+      open({
+        open: true,
+        title: TITLE_DELETE_PROFILE,
+        description: `${QUESTION_DELETE_PROFILE}?`,
+        confirmAction: () => deleteUs(),
+      })
+    );
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -47,12 +80,11 @@ const EditProfile = () => {
       },
     });
 
-    setOpenModalUpdate(true);
-  };
+    dispatch(openModal({ open: true, contentModal: <h1>Data updated successfully!</h1> }));
 
-  const handleCloseModalUpdate = () => {
-    setOpenModalUpdate(false);
-    navigate(`/${Path.main}`, { replace: true });
+    if (!openModalSuccess) {
+      navigate(`/${Path.main}`, { replace: true });
+    }
   };
 
   return (
@@ -87,23 +119,19 @@ const EditProfile = () => {
             type="password"
             id="password"
             value={password}
+            autoComplete="on"
             onChange={(e) => setPassword(e.target.value)}
           />
           <div className="edit-profile__buttons">
             <Button type="submit" variant="contained" sx={{ mt: 3 }} onClick={updateProfile}>
               Update
             </Button>
-            <Button type="submit" variant="contained" sx={{ mt: 3 }}>
+            <Button type="submit" variant="contained" sx={{ mt: 3 }} onClick={openConfirm}>
               Delete profile
             </Button>
           </div>
         </Box>
       </Container>
-      {/* <BasicModal
-        open={openModalUpdate}
-        handleClose={handleCloseModalUpdate}
-        content={<h1>Data updated successfully!</h1>}
-      /> */}
     </>
   );
 };
