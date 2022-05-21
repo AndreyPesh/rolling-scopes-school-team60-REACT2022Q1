@@ -32,19 +32,29 @@ export const getUser = async () => {
 };
 
 export const updateUser = (userId: string, requestData: DataUpdateUser, token: string) => {
-  axios.put(`${BASE_URL}${ALL_USERS_URL}/${userId}`, requestData, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  try {
+    axios.put(`${BASE_URL}${ALL_USERS_URL}/${userId}`, requestData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    const err = error as ErrorResponse;
+    return err.response.data;
+  }
 };
 
 export const deleteUser = (userId: string, token: string) => {
-  axios.delete(`${BASE_URL}${ALL_USERS_URL}/${userId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  try {
+    axios.delete(`${BASE_URL}${ALL_USERS_URL}/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    const err = error as ErrorResponse;
+    return err.response.data;
+  }
 };
 
 export const isTokenExpire = async (token: string) => {
