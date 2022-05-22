@@ -87,7 +87,6 @@ export interface ColumnData extends CreateColumnData {
 
 export interface CreateDataTask {
   title: string;
-  order: number;
   description: string;
   userId: string;
 }

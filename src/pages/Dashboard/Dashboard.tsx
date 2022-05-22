@@ -61,7 +61,7 @@ export default function Dashboard() {
         </Button>
       </div>
       <h2>List columns</h2>
-      <div className="columns">{listColumns}</div>
+      <div className="columns">{!listColumns.length ? 'Column list is empty' : listColumns}</div>
     </>
   );
 }

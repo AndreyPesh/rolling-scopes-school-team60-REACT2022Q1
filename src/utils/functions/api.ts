@@ -209,10 +209,10 @@ export const createTask = async (token: string, dataTask: RequestCreateTask) => 
     if (!token) {
       return false;
     }
-    const { title, order, userId, description } = dataTask;
+    const { title, userId, description } = dataTask;
     const { data } = await axios.post<RequestCreateTask>(
       `${BASE_URL}${CREATE_BOARD_URL}/${dataTask.boardId}${COLUMNS_URL}/${dataTask.columnId}${TASKS_URL}`,
-      { title, order, userId, description },
+      { title, userId, description },
       {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -56,7 +56,6 @@ const CreateTaskForm = () => {
       ...dataTask,
       boardId: id,
       userId: user.id,
-      order: 2,
     };
     if (token) {
       dispatch(closeModal(false));
