@@ -95,3 +95,9 @@ export interface RequestCreateTask extends CreateDataTask {
   boardId: string;
   columnId: string;
 }
+
+export interface RemoveTaskData {
+  boardId: string;
+  columnId: string;
+  taskId: string;
+}

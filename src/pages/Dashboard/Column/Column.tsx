@@ -10,7 +10,9 @@ const Column = ({ title, id, tasks }: ColumnData) => {
   const {
     currentBoard: { boardData },
   } = useAppSelector((state: RootState) => state);
-  const listTasks = tasks ? tasks.map((dataTask) => <Task key={dataTask.id} {...dataTask} />) : [];
+  const listTasks = tasks
+    ? tasks.map((dataTask) => <Task key={dataTask.id} columnId={id} dataTask={dataTask} />)
+    : [];
 
   return (
     <Paper className="column">

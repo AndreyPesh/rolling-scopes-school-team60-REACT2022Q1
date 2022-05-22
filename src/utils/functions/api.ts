@@ -11,6 +11,7 @@ import {
   RequestColumnData,
   RequestCreateTask,
   CreateDataBoard,
+  RemoveTaskData,
 } from '../types/types';
 
 const logErrors = (nameRequest: string, errorMessage: string) => {
@@ -220,6 +221,32 @@ export const createTask = async (token: string, dataTask: RequestCreateTask) => 
       }
     );
     return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      logErrors(createBoard.name, error.message);
+    }
+    return false;
+  }
+};
+
+export const removeTaskById = async (
+  token: string,
+  { boardId, columnId, taskId }: RemoveTaskData
+) => {
+  try {
+    if (!token) {
+      return false;
+    }
+
+    await axios.delete(
+      `${BASE_URL}${CREATE_BOARD_URL}/${boardId}${COLUMNS_URL}/${columnId}${TASKS_URL}/${taskId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return true;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       logErrors(createBoard.name, error.message);
