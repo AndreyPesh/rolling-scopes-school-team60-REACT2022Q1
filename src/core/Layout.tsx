@@ -4,17 +4,33 @@ import ConfirmModal from '../components/ConfirmModal/ConfirmModal';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
 import Modal from '../components/Modal/Modal';
-import { useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { RootState } from '../store';
 import { isTokenExpire } from '../utils/functions/api';
 import { removeToken, getToken } from '../utils/functions/localStorage';
+import { getUserPending, getUserSuccess } from '../store/slices/userSlice';
+import { getUser } from '../utils/functions/api';
 
 export default function Layout() {
+  const dispatch = useAppDispatch();
   const {
     auth: { token },
     modal: { open, contentModal },
   } = useAppSelector((state: RootState) => state);
   const location = useLocation();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      dispatch(getUserPending());
+
+      const response = await getUser();
+
+      dispatch(getUserSuccess(response));
+    };
+    if (token) {
+      fetchUser();
+    }
+  }, [dispatch, token]);
 
   useEffect(() => {
     const tokenStorage = getToken();
