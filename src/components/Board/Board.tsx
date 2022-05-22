@@ -15,7 +15,7 @@ import { TAG_NAME_BUTTON } from '../../utils/constants';
 const TITLE_REMOVE_BOARD = 'Remove board';
 const QUESTION_REMOVE_BOARD = 'Are you sure want to delete the board ';
 
-const Board: React.FC<DataBoard> = ({ id, title }) => {
+const Board: React.FC<DataBoard> = ({ id, title, description }) => {
   const navigate = useNavigate();
   const token = getToken();
   const dispatch = useAppDispatch();
@@ -41,6 +41,7 @@ const Board: React.FC<DataBoard> = ({ id, title }) => {
   return (
     <Paper elevation={3} className="board-card" onClick={openBoard}>
       <h2>{title}</h2>
+      <h3>{description}</h3>
       <img src={icon} alt={title} className="board-card__icon" />
       <Button variant="outlined" color="error" onClick={openConfirm}>
         Remove

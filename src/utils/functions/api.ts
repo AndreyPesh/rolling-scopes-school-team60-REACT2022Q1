@@ -10,6 +10,7 @@ import {
   ColumnData,
   RequestColumnData,
   RequestCreateTask,
+  CreateDataBoard,
 } from '../types/types';
 
 const logErrors = (nameRequest: string, errorMessage: string) => {
@@ -52,23 +53,19 @@ export const isTokenExpire = async (token: string) => {
   }
 };
 
-export const createBoard = async (token: string, title: string) => {
+export const createBoard = async (token: string, dataBoard: CreateDataBoard) => {
   try {
     if (!token) {
       return false;
     }
 
-    await axios.post<DataBoard>(
-      `${BASE_URL}${CREATE_BOARD_URL}`,
-      { title },
-      {
-        headers: {
-          Accept: 'application/json',
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    await axios.post<DataBoard>(`${BASE_URL}${CREATE_BOARD_URL}`, dataBoard, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
     return true;
   } catch (error) {
     if (axios.isAxiosError(error)) {

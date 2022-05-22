@@ -28,9 +28,15 @@ export type UserData = {
   login: string;
 };
 
+export type CreateDataBoard = {
+  title: string;
+  description: string;
+};
+
 export type DataBoard = {
   id: string;
   title: string;
+  description: string;
 };
 
 export type BoardDescription = {
