@@ -71,11 +71,11 @@ export type RequestColumnData = {
 
 export interface CreateColumnData {
   title: string;
-  order: number;
 }
 
 export interface ColumnData extends CreateColumnData {
   id: string;
+  order: number;
   tasks: Array<TaskData>;
 }
 

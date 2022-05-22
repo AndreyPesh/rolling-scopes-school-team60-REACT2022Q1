@@ -5,12 +5,13 @@ import { RootState } from '../../../store';
 import { fetchAddColumn } from '../../../store/slices/currentBoardSlice';
 import { closeModal } from '../../../store/slices/modalSlice';
 import { EMPTY_STRING } from '../../../utils/constants';
+import { CreateColumnData } from '../../../utils/types/types';
 
 const CreateColumnForm = () => {
   const {
     auth: { token },
     currentBoard: {
-      boardData: { id, columns },
+      boardData: { id },
     },
   } = useAppSelector((state: RootState) => state);
   const dispatch = useAppDispatch();
@@ -25,7 +26,7 @@ const CreateColumnForm = () => {
 
   const handleForm = (event: FormEvent) => {
     event.preventDefault();
-    const dataColumn = { title: nameColumn, order: columns.length + 1 };
+    const dataColumn: CreateColumnData = { title: nameColumn };
     if (token) {
       dispatch(closeModal(false));
       dispatch(fetchAddColumn({ token, boardId: id, dataColumn }));
@@ -33,25 +34,33 @@ const CreateColumnForm = () => {
   };
 
   return (
-    <Box component="form" onSubmit={handleForm}>
-      <FormControl
-        sx={{
-          '& > :not(style)': { m: 1 },
-        }}
-      >
-        <TextField
-          id="outlined-basic"
-          label="Column"
-          variant="outlined"
-          size="small"
-          name="name_column"
-          onChange={handleNameColumn}
-        />
-        <Button variant="contained" type="submit" color="success" disabled={nameColumn.length < 4}>
-          Create
-        </Button>
-      </FormControl>
-    </Box>
+    <>
+      <h2>Add column</h2>
+      <Box component="form" onSubmit={handleForm}>
+        <FormControl
+          sx={{
+            '& > :not(style)': { m: 1 },
+          }}
+        >
+          <TextField
+            id="outlined-basic"
+            label="Name column"
+            variant="outlined"
+            size="small"
+            name="name_column"
+            onChange={handleNameColumn}
+          />
+          <Button
+            variant="contained"
+            type="submit"
+            color="success"
+            disabled={nameColumn.length < 4}
+          >
+            Create
+          </Button>
+        </FormControl>
+      </Box>
+    </>
   );
 };
 
