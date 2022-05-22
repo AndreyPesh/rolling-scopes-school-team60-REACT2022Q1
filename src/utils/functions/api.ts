@@ -12,6 +12,8 @@ import {
   RequestCreateTask,
   CreateDataBoard,
   RemoveTaskData,
+  DataUpdateUser,
+
 } from '../types/types';
 
 const logErrors = (nameRequest: string, errorMessage: string) => {
@@ -29,6 +31,32 @@ export const getUser = async () => {
       },
     });
     return data;
+  } catch (error) {
+    const err = error as ErrorResponse;
+    return err.response.data;
+  }
+};
+
+export const updateUser = (userId: string, requestData: DataUpdateUser, token: string) => {
+  try {
+    axios.put(`${BASE_URL}${ALL_USERS_URL}/${userId}`, requestData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    const err = error as ErrorResponse;
+    return err.response.data;
+  }
+};
+
+export const deleteUser = (userId: string, token: string) => {
+  try {
+    axios.delete(`${BASE_URL}${ALL_USERS_URL}/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   } catch (error) {
     const err = error as ErrorResponse;
     return err.response.data;
