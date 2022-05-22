@@ -2,7 +2,13 @@ import axios from 'axios';
 import { getToken } from './localStorage';
 import { parseJwt } from './parseJwt';
 import { ALL_USERS_URL, BASE_URL, CREATE_BOARD_URL } from '../constants';
-import { DataBoard, ErrorResponse, UserData, BoardDescription } from '../types/types';
+import {
+  DataBoard,
+  ErrorResponse,
+  UserData,
+  BoardDescription,
+  DataUpdateUser,
+} from '../types/types';
 
 const logErrors = (nameRequest: string, errorMessage: string) => {
   console.log(`Can't complete request: ${nameRequest} `);
@@ -19,6 +25,32 @@ export const getUser = async () => {
       },
     });
     return data;
+  } catch (error) {
+    const err = error as ErrorResponse;
+    return err.response.data;
+  }
+};
+
+export const updateUser = (userId: string, requestData: DataUpdateUser, token: string) => {
+  try {
+    axios.put(`${BASE_URL}${ALL_USERS_URL}/${userId}`, requestData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    const err = error as ErrorResponse;
+    return err.response.data;
+  }
+};
+
+export const deleteUser = (userId: string, token: string) => {
+  try {
+    axios.delete(`${BASE_URL}${ALL_USERS_URL}/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   } catch (error) {
     const err = error as ErrorResponse;
     return err.response.data;

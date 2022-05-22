@@ -22,6 +22,8 @@ export type DataFormSignUp = {
   password: string;
 };
 
+export type DataUpdateUser = DataFormSignUp;
+
 export type UserData = {
   id: string;
   name: string;
