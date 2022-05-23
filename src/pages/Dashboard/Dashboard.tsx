@@ -11,8 +11,6 @@ import { openModal } from '../../store/slices/modalSlice';
 import Column from './Column/Column';
 import CreateColumnForm from './CreateForms/CreateColumnForm';
 import CreateTaskForm from './CreateForms/CreateTaskForm';
-import { DragDropContext } from 'react-beautiful-dnd';
-import { handleDragEnd } from './function';
 
 export default function Dashboard() {
   const {
@@ -63,9 +61,7 @@ export default function Dashboard() {
         </Button>
       </div>
       <h2>List columns</h2>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <div className="columns">{!listColumns.length ? 'Column list is empty' : listColumns}</div>
-      </DragDropContext>
+      <div className="columns">{!listColumns.length ? 'Column list is empty' : listColumns}</div>
     </>
   );
 }

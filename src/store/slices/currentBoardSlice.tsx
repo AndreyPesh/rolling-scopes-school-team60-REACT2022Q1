@@ -16,6 +16,17 @@ export const fetchBoardDataById = createAsyncThunk(
   }
 );
 
+export const fetchUpdateBoardDataById = createAsyncThunk(
+  'boards/fetchUpdateBoardDataStatus',
+  async ({ token, id }: { token: string; id: string }) => {
+    const responseBoardData = await getBoardById(token, id);
+    if (responseBoardData) {
+      return responseBoardData;
+    }
+    throw new Error();
+  }
+);
+
 export const fetchAddColumn = createAsyncThunk(
   'boards/fetchAddColumnStatus',
   async ({ token, boardId, dataColumn }: RequestColumnData) => {
@@ -65,6 +76,14 @@ const currentBoardSlice = createSlice({
       state.loading = false;
       state.errors = GENERAL_ERROR_TEXT;
     });
+    builder.addCase(
+      fetchUpdateBoardDataById.fulfilled,
+      (state, action: PayloadAction<BoardDescription>) => {
+        state.loading = false;
+        state.boardData = { ...action.payload };
+        state.errors = EMPTY_STRING;
+      }
+    );
   },
 });
 
