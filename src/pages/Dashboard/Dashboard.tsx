@@ -11,6 +11,7 @@ import { openModal } from '../../store/slices/modalSlice';
 import Column from './Column/Column';
 import CreateColumnForm from './CreateForms/CreateColumnForm';
 import CreateTaskForm from './CreateForms/CreateTaskForm';
+import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 
 export default function Dashboard() {
   const {
@@ -35,7 +36,26 @@ export default function Dashboard() {
     dispatch(openModal({ open: true, contentModal: <CreateTaskForm /> }));
   };
 
-  const listColumns = boardData.columns.map((column) => <Column key={column.id} {...column} />);
+  const listColumns = boardData.columns.map((column, index) => {
+    return (
+      <Draggable key={column.id} draggableId={column.id} index={index}>
+        {(provided) => (
+          <div
+            className="wrap-column"
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+          >
+            <Column {...column} />
+          </div>
+        )}
+      </Draggable>
+    );
+  });
+
+  const handleDragEnd = (result: DropResult) => {
+    console.log(result.type);
+  };
 
   if (loading) {
     return <Spinner />;
@@ -61,7 +81,16 @@ export default function Dashboard() {
         </Button>
       </div>
       <h2>List columns</h2>
-      <div className="columns">{!listColumns.length ? 'Column list is empty' : listColumns}</div>
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="all-columns" direction="horizontal" type="column">
+          {(provided) => (
+            <div className="columns" ref={provided.innerRef} {...provided.droppableProps}>
+              {!listColumns.length ? 'Column list is empty' : listColumns}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
     </>
   );
 }

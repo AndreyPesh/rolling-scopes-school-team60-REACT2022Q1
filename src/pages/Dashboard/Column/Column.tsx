@@ -70,11 +70,11 @@ const Column = ({ title, id, tasks }: ColumnData) => {
       }
     }
     update();
-  }, [localTasks]);
+  }, [localTasks, boardData.id, token, fetchDataUpdateTaskOrder, dispatch]);
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <Droppable droppableId={id}>
+      <Droppable droppableId={id} type="task">
         {(provided) => (
           <Paper className="column" ref={provided.innerRef} {...provided.droppableProps}>
             <h2>{title}</h2>
