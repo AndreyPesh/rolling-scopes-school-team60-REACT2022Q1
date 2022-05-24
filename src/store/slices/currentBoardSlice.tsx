@@ -47,7 +47,11 @@ const initialState: { loading: boolean; boardData: BoardDescription; errors: str
 const currentBoardSlice = createSlice({
   name: 'currentBoard',
   initialState,
-  reducers: {},
+  reducers: {
+    updateColumns: (state, action: PayloadAction<Array<ColumnData>>) => {
+      state.boardData.columns = [...action.payload];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchBoardDataById.pending, (state) => {
       state.loading = true;
@@ -86,5 +90,7 @@ const currentBoardSlice = createSlice({
     );
   },
 });
+
+export const { updateColumns } = currentBoardSlice.actions;
 
 export default currentBoardSlice.reducer;

@@ -6,7 +6,7 @@ import Spinner from '../../components/Spinner/Spinner';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Path } from '../../router/routes';
 import { RootState } from '../../store';
-import { fetchBoardDataById } from '../../store/slices/currentBoardSlice';
+import { fetchBoardDataById, updateColumns } from '../../store/slices/currentBoardSlice';
 import { openModal } from '../../store/slices/modalSlice';
 import Column from './Column/Column';
 import CreateColumnForm from './CreateForms/CreateColumnForm';
@@ -54,7 +54,19 @@ export default function Dashboard() {
   });
 
   const handleDragEnd = (result: DropResult) => {
-    console.log(result.type);
+    const { destination, source, draggableId } = result;
+    const { columns } = boardData;
+    if (!destination) {
+      return;
+    }
+    if (destination.droppableId === source.droppableId && destination.index === source.index) {
+      return;
+    }
+    const columnsList = [...columns];
+    columnsList.splice(source.index, 1);
+    columnsList.splice(destination.index, 0, columns[source.index]);
+    const updatedColumns = columnsList.map((column, index) => ({ ...column, order: index + 1 }));
+    dispatch(updateColumns(updatedColumns));
   };
 
   if (loading) {
