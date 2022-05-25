@@ -34,3 +34,29 @@ export const swapTask = (
   }));
   return swappedTasks;
 };
+
+export const addTaskToDestination = (
+  destinationTasks: Array<TaskData>,
+  sourceTask: TaskData,
+  destinationIndex: number
+): Array<TaskData> => {
+  const destinationSortTasks = Array.from(destinationTasks).sort(sortItemByOrder);
+  destinationSortTasks.splice(destinationIndex, 0, sourceTask);
+  const addDestinationTasks = destinationSortTasks.map((task, index) => ({
+    ...task,
+    order: index + OFFSET_FROM_INIT_INDEX_ARRAY,
+  }));
+  return addDestinationTasks;
+};
+
+export const removeTaskFromSource = (
+  sourceSortTasks: Array<TaskData>,
+  sourceIndex: number
+): Array<TaskData> => {
+  sourceSortTasks.splice(sourceIndex, 1);
+  const removeSourceTasks = sourceSortTasks.map((task, index) => ({
+    ...task,
+    order: index + OFFSET_FROM_INIT_INDEX_ARRAY,
+  }));
+  return removeSourceTasks;
+};

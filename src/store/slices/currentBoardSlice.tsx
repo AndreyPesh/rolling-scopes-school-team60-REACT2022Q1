@@ -61,7 +61,6 @@ const currentBoardSlice = createSlice({
       const currentColumn = columns.find((column) => column.id === action.payload.idColumn);
       if (currentColumn) {
         currentColumn.tasks = [...action.payload.tasks];
-        console.log('update tasks');
       }
       return state;
     },

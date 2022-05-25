@@ -21,7 +21,13 @@ import { RequestUpdateTask, RequestUpdateColumn } from '../../utils/types/types'
 import { updateColumnOrder, updateTaskList } from '../../utils/functions/api';
 import { sortItemByOrder } from '../../utils/functions/sort';
 import { NameDragAction } from '../../utils/enum/enum';
-import { OFFSET_FROM_INIT_INDEX_ARRAY, swapColumns, swapTask } from '../../utils/functions/dnd';
+import {
+  addTaskToDestination,
+  OFFSET_FROM_INIT_INDEX_ARRAY,
+  removeTaskFromSource,
+  swapColumns,
+  swapTask,
+} from '../../utils/functions/dnd';
 
 export default function Dashboard() {
   const {
@@ -119,9 +125,11 @@ export default function Dashboard() {
       }
     }
     if (result.type === NameDragAction.TASK) {
-      const droppableColumnId = columns.find((column) => column.id === source.droppableId);
-      if (droppableColumnId) {
-        const listCurrentTasks = droppableColumnId.tasks;
+      const destinationColumnId = destination.droppableId;
+      const sourceColumnId = source.droppableId;
+      const droppableColumn = columns.find((column) => column.id === source.droppableId);
+      if (droppableColumn && destinationColumnId === sourceColumnId) {
+        const listCurrentTasks = droppableColumn.tasks;
         const draggableTask = listCurrentTasks.find((task) => task.id === draggableId);
         if (draggableTask && token) {
           const dataRequestUpdateTask: RequestUpdateTask = {
@@ -138,6 +146,19 @@ export default function Dashboard() {
           const swappedTasks = swapTask(listCurrentTasks, source.index, destination.index);
           dispatch(updateTasks({ idColumn: source.droppableId, tasks: swappedTasks }));
         }
+      } else if (droppableColumn) {
+        const destinationColumn = columns.find((column) => column.id === destinationColumnId);
+        const sourceSortTasks = Array.from(droppableColumn.tasks).sort(sortItemByOrder);
+        if (destinationColumn) {
+          const addedDestinationTasks = addTaskToDestination(
+            destinationColumn.tasks,
+            sourceSortTasks[source.index],
+            destination.index
+          );
+          dispatch(updateTasks({ idColumn: destinationColumnId, tasks: addedDestinationTasks }));
+        }
+        const removedTasks = removeTaskFromSource(sourceSortTasks, source.index);
+        dispatch(updateTasks({ idColumn: sourceColumnId, tasks: removedTasks }));
       }
     }
   };
