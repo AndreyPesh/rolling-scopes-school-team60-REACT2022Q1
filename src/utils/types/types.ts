@@ -128,3 +128,8 @@ export interface FetchDataChangeOrderColumn {
 export interface RequestUpdateColumn extends FetchDataChangeOrderColumn {
   token: string;
 }
+
+export interface UpdateTaskData {
+  idColumn: string;
+  tasks: Array<TaskData>;
+}

@@ -10,23 +10,28 @@ import {
   fetchBoardDataById,
   fetchUpdateBoardDataById,
   updateColumns,
+  updateTasks,
 } from '../../store/slices/currentBoardSlice';
 import { openModal } from '../../store/slices/modalSlice';
 import Column from './Column/Column';
 import CreateColumnForm from './CreateForms/CreateColumnForm';
 import CreateTaskForm from './CreateForms/CreateTaskForm';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
-import { RequestUpdateColumn } from '../../utils/types/types';
-import { updateColumnOrder } from '../../utils/functions/api';
+import { RequestUpdateTask, RequestUpdateColumn } from '../../utils/types/types';
+import { updateColumnOrder, updateTaskList } from '../../utils/functions/api';
 import { sortItemByOrder } from '../../utils/functions/sort';
+import { NameDragAction } from '../../utils/enum/enum';
+import { OFFSET_FROM_INIT_INDEX_ARRAY, swapColumns, swapTask } from '../../utils/functions/dnd';
 
 export default function Dashboard() {
   const {
+    user,
     auth: { token },
     currentBoard: { boardData, loading, errors },
   } = useAppSelector((state: RootState) => state);
   const [fetchDataUpdateColumnOrder, setFetchDataUpdateColumnOrder] =
     useState<RequestUpdateColumn>();
+  const [fetchDataUpdateTaskOrder, setFetchDataUpdateTaskOrder] = useState<RequestUpdateTask>();
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -49,6 +54,18 @@ export default function Dashboard() {
     };
     fetchUpdateColumnOrder();
   }, [fetchDataUpdateColumnOrder, token, boardData.id, dispatch]);
+
+  useEffect(() => {
+    async function fetchUpdateColumnOrder() {
+      if (fetchDataUpdateTaskOrder) {
+        const responseUpdateListTak = await updateTaskList(fetchDataUpdateTaskOrder);
+        if (responseUpdateListTak && token) {
+          dispatch(fetchUpdateBoardDataById({ token, id: boardData.id }));
+        }
+      }
+    }
+    fetchUpdateColumnOrder();
+  }, [fetchDataUpdateTaskOrder, token, boardData.id, dispatch]);
 
   const addColumn = () => {
     dispatch(openModal({ open: true, contentModal: <CreateColumnForm /> }));
@@ -85,23 +102,44 @@ export default function Dashboard() {
     if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
-    const currentDragColumn = columns.find((column) => column.id === draggableId);
-    if (currentDragColumn && token) {
-      const dataRequest: RequestUpdateColumn = {
-        token,
-        title: currentDragColumn.title,
-        order: destination.index + 1,
-        boardId: boardData.id,
-        columnId: draggableId,
-      };
-      setFetchDataUpdateColumnOrder(dataRequest);
+
+    if (result.type === NameDragAction.COLUMN) {
+      const currentDragColumn = columns.find((column) => column.id === draggableId);
+      if (currentDragColumn && token) {
+        const dataRequest: RequestUpdateColumn = {
+          token,
+          title: currentDragColumn.title,
+          order: destination.index + OFFSET_FROM_INIT_INDEX_ARRAY,
+          boardId: boardData.id,
+          columnId: draggableId,
+        };
+        setFetchDataUpdateColumnOrder(dataRequest);
+        const swappedColumns = swapColumns(columns, source.index, destination.index);
+        dispatch(updateColumns(swappedColumns));
+      }
     }
-    const sortListColumns = Array.from(columns).sort(sortItemByOrder);
-    const columnsList = [...sortListColumns];
-    columnsList.splice(source.index, 1);
-    columnsList.splice(destination.index, 0, sortListColumns[source.index]);
-    const updatedColumns = columnsList.map((column, index) => ({ ...column, order: index + 1 }));
-    dispatch(updateColumns(updatedColumns));
+    if (result.type === NameDragAction.TASK) {
+      const droppableColumnId = columns.find((column) => column.id === source.droppableId);
+      if (droppableColumnId) {
+        const listCurrentTasks = droppableColumnId.tasks;
+        const draggableTask = listCurrentTasks.find((task) => task.id === draggableId);
+        if (draggableTask && token) {
+          const dataRequestUpdateTask: RequestUpdateTask = {
+            token,
+            title: draggableTask.title,
+            order: destination.index + OFFSET_FROM_INIT_INDEX_ARRAY,
+            description: draggableTask.description,
+            userId: user.id,
+            boardId: boardData.id,
+            columnId: source.droppableId,
+            taskId: draggableId,
+          };
+          setFetchDataUpdateTaskOrder(dataRequestUpdateTask);
+          const swappedTasks = swapTask(listCurrentTasks, source.index, destination.index);
+          dispatch(updateTasks({ idColumn: source.droppableId, tasks: swappedTasks }));
+        }
+      }
+    }
   };
 
   if (loading) {
@@ -129,7 +167,7 @@ export default function Dashboard() {
       </div>
       <h2>List columns</h2>
       <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="all-columns" direction="horizontal" type="column">
+        <Droppable droppableId="all-columns" direction="horizontal" type={NameDragAction.COLUMN}>
           {(provided) => (
             <div className="columns" ref={provided.innerRef} {...provided.droppableProps}>
               {!listColumns.length ? 'Column list is empty' : listColumns}

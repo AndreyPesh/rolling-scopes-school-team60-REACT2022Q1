@@ -1,7 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EMPTY_STRING, GENERAL_ERROR_TEXT } from '../../utils/constants';
 import { createColumn, getBoardById } from '../../utils/functions/api';
-import { BoardDescription, ColumnData, RequestColumnData } from '../../utils/types/types';
+import {
+  BoardDescription,
+  ColumnData,
+  RequestColumnData,
+  UpdateTaskData,
+} from '../../utils/types/types';
 
 const INIT_DATA_BOARD = { id: EMPTY_STRING, title: EMPTY_STRING, columns: [] };
 
@@ -51,6 +56,15 @@ const currentBoardSlice = createSlice({
     updateColumns: (state, action: PayloadAction<Array<ColumnData>>) => {
       state.boardData.columns = [...action.payload];
     },
+    updateTasks: (state, action: PayloadAction<UpdateTaskData>) => {
+      const { columns } = state.boardData;
+      const currentColumn = columns.find((column) => column.id === action.payload.idColumn);
+      if (currentColumn) {
+        currentColumn.tasks = [...action.payload.tasks];
+        console.log('update tasks');
+      }
+      return state;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchBoardDataById.pending, (state) => {
@@ -91,6 +105,6 @@ const currentBoardSlice = createSlice({
   },
 });
 
-export const { updateColumns } = currentBoardSlice.actions;
+export const { updateColumns, updateTasks } = currentBoardSlice.actions;
 
 export default currentBoardSlice.reducer;
