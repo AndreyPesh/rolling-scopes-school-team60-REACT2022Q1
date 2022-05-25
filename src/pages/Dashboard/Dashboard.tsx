@@ -17,8 +17,12 @@ import Column from './Column/Column';
 import CreateColumnForm from './CreateForms/CreateColumnForm';
 import CreateTaskForm from './CreateForms/CreateTaskForm';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
-import { RequestUpdateTask, RequestUpdateColumn } from '../../utils/types/types';
-import { updateColumnOrder, updateTaskList } from '../../utils/functions/api';
+import { RequestUpdateTask, RequestUpdateColumn, RequestMoveTask } from '../../utils/types/types';
+import {
+  moveTaskBetweenColumn,
+  updateColumnOrder,
+  updateTaskList,
+} from '../../utils/functions/api';
 import { sortItemByOrder } from '../../utils/functions/sort';
 import { NameDragAction } from '../../utils/enum/enum';
 import {
@@ -38,6 +42,7 @@ export default function Dashboard() {
   const [fetchDataUpdateColumnOrder, setFetchDataUpdateColumnOrder] =
     useState<RequestUpdateColumn>();
   const [fetchDataUpdateTaskOrder, setFetchDataUpdateTaskOrder] = useState<RequestUpdateTask>();
+  const [fetchMoveTaskBetweenColumn, setFetchMoveTaskBetweenColumn] = useState<RequestMoveTask>();
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -72,6 +77,20 @@ export default function Dashboard() {
     }
     fetchUpdateColumnOrder();
   }, [fetchDataUpdateTaskOrder, token, boardData.id, dispatch]);
+
+  useEffect(() => {
+    async function moveFetchTaskBetweenColumn() {
+      if (fetchMoveTaskBetweenColumn) {
+        const responseMoveTaskBetweenColumn = await moveTaskBetweenColumn(
+          fetchMoveTaskBetweenColumn
+        );
+        if (responseMoveTaskBetweenColumn && token) {
+          dispatch(fetchUpdateBoardDataById({ token, id: boardData.id }));
+        }
+      }
+    }
+    moveFetchTaskBetweenColumn();
+  }, [fetchMoveTaskBetweenColumn, token, boardData.id, dispatch]);
 
   const addColumn = () => {
     dispatch(openModal({ open: true, contentModal: <CreateColumnForm /> }));
@@ -146,19 +165,32 @@ export default function Dashboard() {
           const swappedTasks = swapTask(listCurrentTasks, source.index, destination.index);
           dispatch(updateTasks({ idColumn: source.droppableId, tasks: swappedTasks }));
         }
-      } else if (droppableColumn) {
+      } else if (droppableColumn && token) {
         const destinationColumn = columns.find((column) => column.id === destinationColumnId);
         const sourceSortTasks = Array.from(droppableColumn.tasks).sort(sortItemByOrder);
+        const sourceDataTask = sourceSortTasks[source.index];
         if (destinationColumn) {
           const addedDestinationTasks = addTaskToDestination(
             destinationColumn.tasks,
-            sourceSortTasks[source.index],
+            sourceDataTask,
             destination.index
           );
           dispatch(updateTasks({ idColumn: destinationColumnId, tasks: addedDestinationTasks }));
         }
         const removedTasks = removeTaskFromSource(sourceSortTasks, source.index);
         dispatch(updateTasks({ idColumn: sourceColumnId, tasks: removedTasks }));
+        const dataMoveTaskBetweenColumn: RequestMoveTask = {
+          token,
+          title: sourceDataTask.title,
+          order: destination.index + 1,
+          description: sourceDataTask.description,
+          userId: user.id,
+          boardId: boardData.id,
+          columnId: sourceColumnId,
+          taskId: sourceDataTask.id,
+          destinationColumnId: destinationColumnId,
+        };
+        setFetchMoveTaskBetweenColumn(dataMoveTaskBetweenColumn);
       }
     }
   };
