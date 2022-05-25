@@ -117,3 +117,14 @@ export interface FetchDataChangeOrderTaskInColumn {
 export interface RequestUpdateTask extends FetchDataChangeOrderTaskInColumn {
   token: string;
 }
+
+export interface FetchDataChangeOrderColumn {
+  title: string;
+  order: number;
+  boardId: string;
+  columnId: string;
+}
+
+export interface RequestUpdateColumn extends FetchDataChangeOrderColumn {
+  token: string;
+}

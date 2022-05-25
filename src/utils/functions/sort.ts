@@ -1,10 +1,10 @@
-import { TaskData } from '../types/types';
+import { ColumnData, TaskData } from '../types/types';
 
-export const sortTask = (taskPrev: TaskData, taskNext: TaskData) => {
-  if (taskPrev.order > taskNext.order) {
+export const sortItemByOrder = <T extends TaskData | ColumnData>(itemPrev: T, itemNext: T) => {
+  if (itemPrev.order > itemNext.order) {
     return 1;
   }
-  if (taskPrev.order < taskNext.order) {
+  if (itemPrev.order < itemNext.order) {
     return -1;
   }
   return 0;

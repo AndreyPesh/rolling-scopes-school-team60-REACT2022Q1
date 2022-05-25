@@ -6,7 +6,7 @@ import { RootState } from '../../../store';
 import RemoveColumn from '../RemoveColumn/RemoveColumn';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import Task from '../Task/Task';
-import { sortTask } from '../../../utils/functions/sort';
+import { sortItemByOrder } from '../../../utils/functions/sort';
 import { fetchUpdateBoardDataById } from '../../../store/slices/currentBoardSlice';
 import { useEffect, useState } from 'react';
 import { updateTaskList } from '../../../utils/functions/api';
@@ -22,7 +22,7 @@ const Column = ({ title, id, tasks }: ColumnData) => {
   const dispatch = useAppDispatch();
   const listTasks = tasks
     ? Array.from(localTasks)
-        .sort(sortTask)
+        .sort(sortItemByOrder)
         .map((dataTask, index) => (
           <Task key={dataTask.id} columnId={id} dataTask={dataTask} index={index} />
         ))
@@ -52,7 +52,7 @@ const Column = ({ title, id, tasks }: ColumnData) => {
     }
     const sourceOrder = source.index;
     const destinationOrder = destination.index;
-    const sortLocalTasks = Array.from(localTasks).sort(sortTask);
+    const sortLocalTasks = Array.from(localTasks).sort(sortItemByOrder);
     const listTasks = [...sortLocalTasks];
     listTasks.splice(sourceOrder, 1);
     listTasks.splice(destinationOrder, 0, sortLocalTasks[sourceOrder]);

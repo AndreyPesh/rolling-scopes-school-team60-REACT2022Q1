@@ -1,23 +1,32 @@
 import './dashboard.scss';
 import { Button } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Spinner from '../../components/Spinner/Spinner';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Path } from '../../router/routes';
 import { RootState } from '../../store';
-import { fetchBoardDataById, updateColumns } from '../../store/slices/currentBoardSlice';
+import {
+  fetchBoardDataById,
+  fetchUpdateBoardDataById,
+  updateColumns,
+} from '../../store/slices/currentBoardSlice';
 import { openModal } from '../../store/slices/modalSlice';
 import Column from './Column/Column';
 import CreateColumnForm from './CreateForms/CreateColumnForm';
 import CreateTaskForm from './CreateForms/CreateTaskForm';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
+import { RequestUpdateColumn } from '../../utils/types/types';
+import { updateColumnOrder } from '../../utils/functions/api';
+import { sortItemByOrder } from '../../utils/functions/sort';
 
 export default function Dashboard() {
   const {
     auth: { token },
     currentBoard: { boardData, loading, errors },
   } = useAppSelector((state: RootState) => state);
+  const [fetchDataUpdateColumnOrder, setFetchDataUpdateColumnOrder] =
+    useState<RequestUpdateColumn>();
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -29,6 +38,18 @@ export default function Dashboard() {
     }
   }, [id, navigate, dispatch, token]);
 
+  useEffect(() => {
+    const fetchUpdateColumnOrder = async () => {
+      if (fetchDataUpdateColumnOrder) {
+        const responseUpdateColumn = await updateColumnOrder(fetchDataUpdateColumnOrder);
+        if (responseUpdateColumn && token) {
+          dispatch(fetchUpdateBoardDataById({ token, id: boardData.id }));
+        }
+      }
+    };
+    fetchUpdateColumnOrder();
+  }, [fetchDataUpdateColumnOrder, token, boardData.id, dispatch]);
+
   const addColumn = () => {
     dispatch(openModal({ open: true, contentModal: <CreateColumnForm /> }));
   };
@@ -36,22 +57,24 @@ export default function Dashboard() {
     dispatch(openModal({ open: true, contentModal: <CreateTaskForm /> }));
   };
 
-  const listColumns = boardData.columns.map((column, index) => {
-    return (
-      <Draggable key={column.id} draggableId={column.id} index={index}>
-        {(provided) => (
-          <div
-            className="wrap-column"
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            ref={provided.innerRef}
-          >
-            <Column {...column} />
-          </div>
-        )}
-      </Draggable>
-    );
-  });
+  const listColumns = Array.from(boardData.columns)
+    .sort(sortItemByOrder)
+    .map((column, index) => {
+      return (
+        <Draggable key={column.id} draggableId={column.id} index={index}>
+          {(provided) => (
+            <div
+              className="wrap-column"
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              ref={provided.innerRef}
+            >
+              <Column {...column} />
+            </div>
+          )}
+        </Draggable>
+      );
+    });
 
   const handleDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
@@ -62,9 +85,21 @@ export default function Dashboard() {
     if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
-    const columnsList = [...columns];
+    const currentDragColumn = columns.find((column) => column.id === draggableId);
+    if (currentDragColumn && token) {
+      const dataRequest: RequestUpdateColumn = {
+        token,
+        title: currentDragColumn.title,
+        order: destination.index + 1,
+        boardId: boardData.id,
+        columnId: draggableId,
+      };
+      setFetchDataUpdateColumnOrder(dataRequest);
+    }
+    const sortListColumns = Array.from(columns).sort(sortItemByOrder);
+    const columnsList = [...sortListColumns];
     columnsList.splice(source.index, 1);
-    columnsList.splice(destination.index, 0, columns[source.index]);
+    columnsList.splice(destination.index, 0, sortListColumns[source.index]);
     const updatedColumns = columnsList.map((column, index) => ({ ...column, order: index + 1 }));
     dispatch(updateColumns(updatedColumns));
   };

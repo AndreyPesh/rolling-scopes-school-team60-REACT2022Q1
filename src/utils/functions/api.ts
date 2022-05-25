@@ -14,6 +14,7 @@ import {
   RemoveTaskData,
   DataUpdateUser,
   RequestUpdateTask,
+  RequestUpdateColumn,
 } from '../types/types';
 
 const logErrors = (nameRequest: string, errorMessage: string) => {
@@ -195,6 +196,36 @@ export const createColumn = async ({ token, boardId, dataColumn }: RequestColumn
     const { data } = await axios.post<ColumnData>(
       `${BASE_URL}${CREATE_BOARD_URL}/${boardId}${COLUMNS_URL}`,
       dataColumn,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      logErrors(createBoard.name, error.message);
+    }
+    return false;
+  }
+};
+
+export const updateColumnOrder = async ({
+  token,
+  boardId,
+  columnId,
+  title,
+  order,
+}: RequestUpdateColumn) => {
+  try {
+    if (!token) {
+      return false;
+    }
+
+    const { data } = await axios.put<ColumnData>(
+      `${BASE_URL}${CREATE_BOARD_URL}/${boardId}${COLUMNS_URL}/${columnId}`,
+      { title, order },
       {
         headers: {
           Authorization: `Bearer ${token}`,
