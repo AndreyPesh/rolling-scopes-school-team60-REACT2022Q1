@@ -1,5 +1,6 @@
 import { Button, TextField, Grid, Box, Typography, Container } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
@@ -10,6 +11,8 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isLoading, error, token } = useAppSelector((state) => state.auth);
+
+  const { t } = useTranslation();
 
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
@@ -39,7 +42,7 @@ const Login = () => {
       {isLoading && <Typography>Loading...</Typography>}
       {error && <Typography>{error}</Typography>}
       <Typography component="h1" variant="h5">
-        Sign in
+        {t('signin')}
       </Typography>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
         <TextField
