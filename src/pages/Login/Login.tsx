@@ -42,7 +42,7 @@ const Login = () => {
       {isLoading && <Typography>Loading...</Typography>}
       {error && <Typography>{error}</Typography>}
       <Typography component="h1" variant="h5">
-        {t('signin')}
+        {t('signInPage.signin')}
       </Typography>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
         <TextField
@@ -50,7 +50,7 @@ const Login = () => {
           required
           fullWidth
           id="login"
-          label="Login "
+          label={t('form.login')}
           name="login"
           value={login}
           onChange={(e) => setLogin(e.target.value)}
@@ -60,18 +60,18 @@ const Login = () => {
           required
           fullWidth
           name="password"
-          label="Password"
+          label={t('form.password')}
           type="password"
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-          Sign In
+          {t('signInPage.signin')}
         </Button>
         <Grid container>
           <Grid item>
-            <Link to={`/${Path.signup}`}>{"Don't have an account? Sign Up"}</Link>
+            <Link to={`/${Path.signup}`}>{t('signInPage.link')}</Link>
           </Grid>
         </Grid>
       </Box>

@@ -3,19 +3,11 @@ import './Header.scss';
 import { BurgerMenu } from './BurgerMenu';
 import AuthLinks from './AuthLinks';
 import UnAuthLinks from './UnAuthLinks';
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
 
 const Header = () => {
   const token = getToken();
   const { i18n, t } = useTranslation();
-
-  useEffect(() => {
-    if (localStorage.getItem('i18nextLng')) {
-      i18next.changeLanguage('en');
-    }
-  }, []);
 
   const handleLangChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     i18n.changeLanguage(e.target.value);
@@ -32,7 +24,11 @@ const Header = () => {
                 className="header__nav_item"
                 style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
               >
-                <select onChange={handleLangChange} value={localStorage.getItem('i18nextLng')}>
+                <select
+                  className="header__lang"
+                  value={localStorage.getItem('i18nextLng') || 'en'}
+                  onChange={handleLangChange}
+                >
                   <option value="en">EN</option>
                   <option value="ru">RU</option>
                 </select>
