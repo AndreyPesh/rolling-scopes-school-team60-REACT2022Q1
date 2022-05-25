@@ -1,6 +1,5 @@
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { grey } from '@mui/material/colors';
-import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 
 import { Developer } from '../../utils/interfaces/interfaces';

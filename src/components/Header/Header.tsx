@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 const Header = () => {
   const token = getToken();
-  const { i18n, t } = useTranslation();
+  const { i18n } = useTranslation();
 
   const handleLangChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     i18n.changeLanguage(e.target.value);

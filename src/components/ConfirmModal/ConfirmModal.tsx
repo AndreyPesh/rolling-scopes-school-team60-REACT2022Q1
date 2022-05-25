@@ -40,7 +40,7 @@ const ConfirmModal = () => {
       </DialogContent>
       <DialogActions>
         <Button onClick={closeConfirm} variant="outlined" color="error">
-          {t('buttons.cansel')}
+          {t('buttons.cancel')}
         </Button>
         <Button onClick={agreeAction} variant="outlined" color="success" autoFocus>
           {t('buttons.agree')}

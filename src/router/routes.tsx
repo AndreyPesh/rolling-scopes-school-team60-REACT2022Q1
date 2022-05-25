@@ -4,7 +4,6 @@ import EditProfile from '../pages/EditProfile/EditProfile';
 import Login from '../pages/Login/Login';
 import SignUp from '../pages/SignUp/SignUp';
 import { PARAMS_ID_DASHBOARD } from '../utils/constants';
-import { t } from 'i18next';
 
 export enum Path {
   'home' = '/',
