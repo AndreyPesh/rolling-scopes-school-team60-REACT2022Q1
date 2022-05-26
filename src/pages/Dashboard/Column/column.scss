@@ -8,6 +8,9 @@
   text-align: center;
   &__list-tasks {
     width: 100%;
+    min-height: 70%;
+    max-height: 70%;
+    overflow-y: auto;
   }
   &__buttons {
     position: absolute;

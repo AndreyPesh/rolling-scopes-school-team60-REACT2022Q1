@@ -27,7 +27,6 @@ const Column = ({ title, id, tasks }: ColumnData) => {
       {(provided) => (
         <Paper className="column" ref={provided.innerRef} {...provided.droppableProps}>
           <h2>{title}</h2>
-          <h3>{id}</h3>
           {tasks && <div className="column__list-tasks">{listTasks}</div>}
           <div className="column__buttons">
             <RemoveColumn boardId={boardData.id} columnId={id} title={title} />

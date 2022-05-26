@@ -9,7 +9,7 @@ const Task: React.FC<{ columnId: string; dataTask: TaskData; index: number }> = 
   dataTask,
   index,
 }) => {
-  const { title, id } = dataTask;
+  const { title } = dataTask;
   return (
     <Draggable draggableId={dataTask.id} index={index}>
       {(provided) => (
@@ -20,7 +20,6 @@ const Task: React.FC<{ columnId: string; dataTask: TaskData; index: number }> = 
           ref={provided.innerRef}
         >
           <h2>{title}</h2>
-          <h3 className="id-task">{id}</h3>
           <RemoveTask columnId={columnId} dataTask={dataTask} />
         </Paper>
       )}
