@@ -4,16 +4,18 @@ import { Button } from '@mui/material';
 import { listRoutes, Path } from '../../router/routes';
 import CreateBoard from '../CreateBoard/CreateBoard';
 import Logout from '../Logout/Logout';
+import { useTranslation } from 'react-i18next';
 
 const AuthLinks = () => {
   const token = getToken();
   const location = useLocation();
+  const { t } = useTranslation();
 
   if (token && location.pathname === Path.home.toString()) {
     return (
       <Link to={`/${Path.main}`} style={{ textDecoration: 'none' }}>
         <Button variant="contained" color="secondary">
-          Go to main page
+          {t(`navLinks.goToMainPage`)}
         </Button>
       </Link>
     );
@@ -26,7 +28,7 @@ const AuthLinks = () => {
         .map((route) => {
           return (
             <li className="header__nav_item" key={route.name}>
-              <Link to={`/${route.path}`}>{route.name}</Link>
+              <Link to={`/${route.path}`}>{t(`navLinks.${route.name}`)}</Link>
             </li>
           );
         })}

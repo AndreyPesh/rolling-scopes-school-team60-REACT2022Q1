@@ -1,5 +1,6 @@
 import { Button, TextField, Grid, Box, Typography, Container } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
@@ -10,6 +11,8 @@ const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isLoading, error, name, login } = useAppSelector((state) => state.auth);
+
+  const { t } = useTranslation();
 
   const [inputName, setName] = useState('');
   const [inputLogin, setLogin] = useState('');
@@ -43,7 +46,7 @@ const SignUp = () => {
         </Typography>
       )}
       <Typography component="h1" variant="h5">
-        Sign Up
+        {t('signUpPage.signup')}
       </Typography>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
         <TextField
@@ -51,7 +54,7 @@ const SignUp = () => {
           required
           fullWidth
           id="name"
-          label="Name "
+          label={t('form.name')}
           name="name"
           value={inputName}
           onChange={(e) => setName(e.target.value)}
@@ -61,7 +64,7 @@ const SignUp = () => {
           required
           fullWidth
           id="login"
-          label="Login "
+          label={t('form.login')}
           name="login"
           value={inputLogin}
           onChange={(e) => setLogin(e.target.value)}
@@ -71,18 +74,18 @@ const SignUp = () => {
           required
           fullWidth
           name="password"
-          label="Password"
+          label={t('form.password')}
           type="password"
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-          Sign Up
+          {t('signUpPage.signup')}
         </Button>
         <Grid container>
           <Grid item>
-            <Link to={`/${Path.login}`}>{'Already have an account'}</Link>
+            <Link to={`/${Path.login}`}>{t('signUpPage.link')}</Link>
           </Grid>
         </Grid>
       </Box>

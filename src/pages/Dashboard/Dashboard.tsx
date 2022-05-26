@@ -11,6 +11,7 @@ import { openModal } from '../../store/slices/modalSlice';
 import Column from './Column/Column';
 import CreateColumnForm from './CreateForms/CreateColumnForm';
 import CreateTaskForm from './CreateForms/CreateTaskForm';
+import { useTranslation } from 'react-i18next';
 
 export default function Dashboard() {
   const {
@@ -18,6 +19,7 @@ export default function Dashboard() {
     currentBoard: { boardData, loading, errors },
   } = useAppSelector((state: RootState) => state);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
@@ -46,10 +48,12 @@ export default function Dashboard() {
 
   return (
     <>
-      <h2>Board: {boardData.title}</h2>
+      <h2>
+        {t('dashboardPage.h2_1')}: {boardData.title}
+      </h2>
       <div className="dashboard-buttons">
         <Button variant="contained" color="secondary" onClick={addColumn}>
-          Add column
+          {t('buttons.addCol')}
         </Button>
         <Button
           variant="contained"
@@ -57,11 +61,13 @@ export default function Dashboard() {
           onClick={addTask}
           disabled={!boardData.columns.length}
         >
-          Add task
+          {t('buttons.addTask')}
         </Button>
       </div>
-      <h2>List columns</h2>
-      <div className="columns">{!listColumns.length ? 'Column list is empty' : listColumns}</div>
+      <h2>{t('dashboardPage.h2_2')}</h2>
+      <div className="columns">
+        {!listColumns.length ? `${t('dashboardPage.isEmpty')}` : listColumns}
+      </div>
     </>
   );
 }
