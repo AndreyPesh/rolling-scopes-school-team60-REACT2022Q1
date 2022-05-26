@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { RootState } from '../../store';
 import { fetchListBoards } from '../../store/slices/boardsSlice';
 import Spinner from '../../components/Spinner/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function Main() {
   const dispatch = useAppDispatch();
@@ -13,6 +14,8 @@ export default function Main() {
     boards: { loading, listBoards, errors },
   } = useAppSelector((state: RootState) => state);
   const boards = listBoards.map((dataBoard) => <Board key={dataBoard.id} {...dataBoard} />);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (token) {
@@ -28,9 +31,9 @@ export default function Main() {
   }
   return (
     <>
-      <h2>List boards</h2>
+      <h2>{t(`mainPage.title`)}</h2>
       <div className="list-board-card">
-        {!listBoards.length ? <h2>List boards is empty</h2> : boards}
+        {!listBoards.length ? <h2>{t(`mainPage.isEmpty`)}</h2> : boards}
       </div>
     </>
   );

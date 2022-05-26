@@ -13,6 +13,7 @@ import { open } from '../../store/slices/confirmSlice';
 import { signOut } from '../../store/slices/authSlice';
 
 import './EditProfile.scss';
+import { useTranslation } from 'react-i18next';
 
 const TITLE_DELETE_PROFILE = 'Delete profile';
 const QUESTION_DELETE_PROFILE = 'Are you sure want to delete the profile';
@@ -26,6 +27,7 @@ const EditProfile = () => {
   const token = useAppSelector((state) => state.auth.token);
   const openModalSuccess = useAppSelector((state) => state.modal.open);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -83,7 +85,7 @@ const EditProfile = () => {
           margin="normal"
           fullWidth
           id="name"
-          label="Name"
+          label={t('form.name')}
           name="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -92,7 +94,7 @@ const EditProfile = () => {
           margin="normal"
           fullWidth
           id="login"
-          label="Login"
+          label={t('form.login')}
           name="login"
           value={login}
           onChange={(e) => setLogin(e.target.value)}
@@ -102,7 +104,7 @@ const EditProfile = () => {
           required
           fullWidth
           title="Enter old password or new password if you want to change it"
-          label="Password"
+          label={t('form.password')}
           name="password"
           type="password"
           id="password"
@@ -118,10 +120,10 @@ const EditProfile = () => {
             onClick={updateProfile}
             disabled={!Boolean(password)}
           >
-            Update
+            {t('buttons.update')}
           </Button>
           <Button type="submit" variant="contained" sx={{ mt: 3 }} onClick={openConfirm}>
-            Delete profile
+            {t('buttons.delete')}
           </Button>
         </div>
       </Box>
