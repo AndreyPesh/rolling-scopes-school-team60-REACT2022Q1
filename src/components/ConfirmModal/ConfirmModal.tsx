@@ -6,6 +6,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { RootState } from '../../store';
 import { close } from '../../store/slices/confirmSlice';
@@ -15,6 +16,7 @@ const ConfirmModal = () => {
     (state: RootState) => state.confirm
   );
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const closeConfirm = () => {
     dispatch(close(false));
@@ -38,10 +40,10 @@ const ConfirmModal = () => {
       </DialogContent>
       <DialogActions>
         <Button onClick={closeConfirm} variant="outlined" color="error">
-          Disagree
+          {t('buttons.cancel')}
         </Button>
         <Button onClick={agreeAction} variant="outlined" color="success" autoFocus>
-          Agree
+          {t('buttons.agree')}
         </Button>
       </DialogActions>
     </Dialog>

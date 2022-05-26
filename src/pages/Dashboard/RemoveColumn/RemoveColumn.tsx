@@ -4,6 +4,7 @@ import { RootState } from '../../../store';
 import { removeColumnById } from '../../../utils/functions/api';
 import { fetchBoardDataById } from '../../../store/slices/currentBoardSlice';
 import { open } from '../../../store/slices/confirmSlice';
+import { useTranslation } from 'react-i18next';
 
 const TITLE_REMOVE_COLUMN = 'Remove column';
 const QUESTION_REMOVE_COLUMN = 'Are you sure you want to delete the column ';
@@ -18,6 +19,7 @@ const RemoveColumn: React.FC<{ boardId: string; columnId: string; title: string 
     currentBoard: { boardData },
   } = useAppSelector((state: RootState) => state);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   const openConfirm = () => {
     dispatch(
       open({
@@ -36,7 +38,7 @@ const RemoveColumn: React.FC<{ boardId: string; columnId: string; title: string 
 
   return (
     <Button variant="outlined" color="error" onClick={openConfirm}>
-      Remove
+      {t('buttons.remove')}
     </Button>
   );
 };

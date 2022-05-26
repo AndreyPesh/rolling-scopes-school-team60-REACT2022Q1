@@ -1,5 +1,6 @@
 import { Button, TextField, Grid, Box, Typography, Container } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
@@ -10,6 +11,8 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isLoading, error, token } = useAppSelector((state) => state.auth);
+
+  const { t } = useTranslation();
 
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
@@ -39,7 +42,7 @@ const Login = () => {
       {isLoading && <Typography>Loading...</Typography>}
       {error && <Typography>{error}</Typography>}
       <Typography component="h1" variant="h5">
-        Sign in
+        {t('signInPage.signin')}
       </Typography>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
         <TextField
@@ -47,7 +50,7 @@ const Login = () => {
           required
           fullWidth
           id="login"
-          label="Login "
+          label={t('form.login')}
           name="login"
           value={login}
           onChange={(e) => setLogin(e.target.value)}
@@ -57,18 +60,18 @@ const Login = () => {
           required
           fullWidth
           name="password"
-          label="Password"
+          label={t('form.password')}
           type="password"
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-          Sign In
+          {t('signInPage.signin')}
         </Button>
         <Grid container>
           <Grid item>
-            <Link to={`/${Path.signup}`}>{"Don't have an account? Sign Up"}</Link>
+            <Link to={`/${Path.signup}`}>{t('signInPage.link')}</Link>
           </Grid>
         </Grid>
       </Box>

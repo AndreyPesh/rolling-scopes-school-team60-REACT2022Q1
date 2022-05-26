@@ -1,5 +1,6 @@
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { grey } from '@mui/material/colors';
+import { useTranslation } from 'react-i18next';
 
 import { Developer } from '../../utils/interfaces/interfaces';
 
@@ -11,6 +12,8 @@ interface IDeveloperCardProps {
 
 export const DeveloperCard: React.FC<IDeveloperCardProps> = ({ developerProps }) => {
   const { avatarUrl, nickname, github, jobStatus, description } = developerProps;
+  const { t } = useTranslation();
+
   return (
     <div className="developers__card">
       <img src={avatarUrl} alt="" className="developer__card_image" />
@@ -22,7 +25,7 @@ export const DeveloperCard: React.FC<IDeveloperCardProps> = ({ developerProps })
           </a>
         </div>
         <p className="developer__card_job">{jobStatus}</p>
-        <p className="developer__card_work-title">Development Contribution</p>
+        <p className="developer__card_work-title">{t('welcomePage.cardTitle')}</p>
         <div className="developer__card_characteristic">{description}</div>
       </div>
     </div>
