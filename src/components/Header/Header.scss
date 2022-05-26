@@ -5,10 +5,12 @@
   padding: 20px 0;
 
   &__container {
+    flex: 1;
     padding: 0 10vw;
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
   }
 
   &__nav_list {
@@ -22,13 +24,13 @@
   }
 
   &__nav_item a {
-    color: $brown;
+    color: $white;
     text-decoration: none;
     font-size: 24px;
   }
 
   &__nav_item a:hover {
-    color: $dark-brown;
+    text-shadow: $white 1px 0 10px;
   }
 }
 

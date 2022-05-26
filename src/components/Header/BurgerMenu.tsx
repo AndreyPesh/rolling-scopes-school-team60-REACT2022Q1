@@ -1,19 +1,19 @@
 import { MouseEventHandler, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import { Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
-import { Path } from '../../router/routes';
+import { getToken } from '../../utils/functions/localStorage';
 
 import './BurgerMenu.scss';
+import UnAuthLinks from './UnAuthLinks';
+import AuthLinks from './AuthLinks';
 
 export const BurgerMenu = () => {
-  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
+  const token = getToken();
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     if (event) {
       setAnchorEl(event.currentTarget);
@@ -43,30 +43,7 @@ export const BurgerMenu = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem
-          onClick={() => {
-            navigate(`/${Path.main}`, { replace: true });
-            handleClose();
-          }}
-        >
-          Main
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            navigate(`/${Path.dashboard}`, { replace: true });
-            handleClose();
-          }}
-        >
-          Dashboard
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            navigate(`/${Path.edit_profile}`, { replace: true });
-            handleClose();
-          }}
-        >
-          Edit profile
-        </MenuItem>
+        <ul className="burger__list">{!token ? <UnAuthLinks /> : <AuthLinks />}</ul>
       </Menu>
     </div>
   );

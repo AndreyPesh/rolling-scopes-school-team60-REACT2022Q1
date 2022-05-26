@@ -13,7 +13,6 @@ import {
   CreateDataBoard,
   RemoveTaskData,
   DataUpdateUser,
-
 } from '../types/types';
 
 const logErrors = (nameRequest: string, errorMessage: string) => {
