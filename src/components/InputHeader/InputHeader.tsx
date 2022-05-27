@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Box, Button, TextField } from '@mui/material';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import SendIcon from '@mui/icons-material/Send';
-// import './inputHeader.scss';
+import './inputHeader.scss';
 import { ColumnData, RequestUpdateColumn } from '../../utils/types/types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { RootState } from '../../store';
