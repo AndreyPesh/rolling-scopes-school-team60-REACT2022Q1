@@ -103,3 +103,39 @@ export interface RemoveTaskData {
   columnId: string;
   taskId: string;
 }
+
+export interface FetchDataUpdateTaskInColumn {
+  title: string;
+  order: number;
+  description: string;
+  userId: string;
+  boardId: string;
+  columnId: string;
+  taskId: string;
+}
+
+export interface RequestUpdateTask extends FetchDataUpdateTaskInColumn {
+  token: string;
+}
+
+export interface RequestMoveTask extends RequestUpdateTask {
+  destinationColumnId: string;
+}
+
+export interface FetchDataChangeOrderColumn {
+  title: string;
+  order: number;
+  boardId: string;
+  columnId: string;
+}
+
+export interface RequestUpdateColumn extends FetchDataChangeOrderColumn {
+  token: string;
+}
+
+export interface UpdateTaskData {
+  idColumn: string;
+  tasks: Array<TaskData>;
+}
+
+export type FetchDataUpdateTask = CreateDataTask;

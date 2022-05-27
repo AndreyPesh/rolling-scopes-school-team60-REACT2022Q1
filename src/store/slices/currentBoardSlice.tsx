@@ -1,12 +1,28 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EMPTY_STRING, GENERAL_ERROR_TEXT } from '../../utils/constants';
 import { createColumn, getBoardById } from '../../utils/functions/api';
-import { BoardDescription, ColumnData, RequestColumnData } from '../../utils/types/types';
+import {
+  BoardDescription,
+  ColumnData,
+  RequestColumnData,
+  UpdateTaskData,
+} from '../../utils/types/types';
 
 const INIT_DATA_BOARD = { id: EMPTY_STRING, title: EMPTY_STRING, columns: [] };
 
 export const fetchBoardDataById = createAsyncThunk(
   'boards/fetchBoardDataStatus',
+  async ({ token, id }: { token: string; id: string }) => {
+    const responseBoardData = await getBoardById(token, id);
+    if (responseBoardData) {
+      return responseBoardData;
+    }
+    throw new Error();
+  }
+);
+
+export const fetchUpdateBoardDataById = createAsyncThunk(
+  'boards/fetchUpdateBoardDataStatus',
   async ({ token, id }: { token: string; id: string }) => {
     const responseBoardData = await getBoardById(token, id);
     if (responseBoardData) {
@@ -36,7 +52,19 @@ const initialState: { loading: boolean; boardData: BoardDescription; errors: str
 const currentBoardSlice = createSlice({
   name: 'currentBoard',
   initialState,
-  reducers: {},
+  reducers: {
+    updateColumns: (state, action: PayloadAction<Array<ColumnData>>) => {
+      state.boardData.columns = [...action.payload];
+    },
+    updateTasks: (state, action: PayloadAction<UpdateTaskData>) => {
+      const { columns } = state.boardData;
+      const currentColumn = columns.find((column) => column.id === action.payload.idColumn);
+      if (currentColumn) {
+        currentColumn.tasks = [...action.payload.tasks];
+      }
+      return state;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchBoardDataById.pending, (state) => {
       state.loading = true;
@@ -65,7 +93,17 @@ const currentBoardSlice = createSlice({
       state.loading = false;
       state.errors = GENERAL_ERROR_TEXT;
     });
+    builder.addCase(
+      fetchUpdateBoardDataById.fulfilled,
+      (state, action: PayloadAction<BoardDescription>) => {
+        state.loading = false;
+        state.boardData = { ...action.payload };
+        state.errors = EMPTY_STRING;
+      }
+    );
   },
 });
+
+export const { updateColumns, updateTasks } = currentBoardSlice.actions;
 
 export default currentBoardSlice.reducer;

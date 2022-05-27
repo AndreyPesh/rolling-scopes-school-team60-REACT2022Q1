@@ -7,6 +7,12 @@
 .columns {
   display: flex;
   flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.wrap-column {
+  margin: 10px;
+  min-width: 300px;
 }
 
 .dashboard-buttons {
