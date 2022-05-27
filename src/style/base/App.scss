@@ -4,8 +4,9 @@
 
   &__main {
     flex: 10;
-    padding: 20px 0;
     text-align: center;
+    display: flex;
+    align-items: center;
   }
 }
 

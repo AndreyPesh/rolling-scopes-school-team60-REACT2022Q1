@@ -47,7 +47,7 @@ export default function Dashboard() {
   }
 
   return (
-    <>
+    <section className="dashboard-main">
       <h2>
         {t('dashboardPage.h2_1')}: {boardData.title}
       </h2>
@@ -68,6 +68,6 @@ export default function Dashboard() {
       <div className="columns">
         {!listColumns.length ? `${t('dashboardPage.isEmpty')}` : listColumns}
       </div>
-    </>
+    </section>
   );
 }

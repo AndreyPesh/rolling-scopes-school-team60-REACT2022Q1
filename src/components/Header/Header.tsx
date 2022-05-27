@@ -1,20 +1,41 @@
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { getToken } from '../../utils/functions/localStorage';
 import './Header.scss';
 import { BurgerMenu } from './BurgerMenu';
 import AuthLinks from './AuthLinks';
 import UnAuthLinks from './UnAuthLinks';
-import { useTranslation } from 'react-i18next';
 
 const Header = () => {
   const token = getToken();
   const { i18n } = useTranslation();
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
+
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const handleLangChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     i18n.changeLanguage(e.target.value);
   };
 
   return (
-    <header className="header">
+    <header
+      className="header"
+      style={
+        scrollPosition ? { padding: '10px 0', backgroundColor: '#032825' } : { padding: '20px 0' }
+      }
+    >
       <div className="container header__container">
         <div className="header__nav_wrap">
           <nav className="header__nav">
