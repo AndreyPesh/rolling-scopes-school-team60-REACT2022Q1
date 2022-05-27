@@ -22,7 +22,7 @@ const Task: React.FC<{ columnId: string; dataTask: TaskData; index: number }> = 
         >
           <h2>{title}</h2>
           <span>
-            <EditTask {...dataTask} />
+            <EditTask columnId={columnId} dataTask={dataTask} />
             <RemoveTask columnId={columnId} dataTask={dataTask} />
           </span>
         </Paper>
