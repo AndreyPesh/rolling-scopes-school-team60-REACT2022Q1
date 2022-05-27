@@ -1,92 +1,157 @@
 import { Button, TextField, Grid, Box, Typography, Container } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+import BasicModal from '../../components/Modal/Modal';
+import Spinner from '../../components/Spinner/Spinner';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { Path } from '../../router/routes';
 import { signUp } from '../../store/slices/authSlice';
+import { DataFormSignUp } from '../../utils/types/types';
 
 const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isLoading, error, name, login } = useAppSelector((state) => state.auth);
+  const { isLoading, error } = useAppSelector((state) => state.auth);
 
-  const [inputName, setName] = useState('');
-  const [inputLogin, setLogin] = useState('');
-  const [password, setPassword] = useState('');
+  const [popup, setPopup] = useState(false);
 
-  useEffect(() => {}, [name, navigate]);
+  useEffect(() => {
+    if (error) {
+      setPopup(true);
+    }
+  }, [error]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors, isValid },
+  } = useForm<DataFormSignUp>({ mode: 'onChange' });
 
-    const data = {
-      name: inputName,
-      login: inputLogin,
-      password,
-    };
-
+  const onSubmit = handleSubmit((data) => {
     dispatch(signUp(data));
-
-    setName('');
-    setLogin('');
-    setPassword('');
-  };
+    reset();
+  });
 
   return (
-    <Container component="main" maxWidth="xs">
-      {isLoading && <Typography>Loading...</Typography>}
-      {error && <Typography>{error}</Typography>}
-      {name && login && (
-        <Typography>
-          you successfully created an account login: {login}, name: {name}
-        </Typography>
-      )}
-      <Typography component="h1" variant="h5">
-        Sign Up
-      </Typography>
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="name"
-          label="Name "
-          name="name"
-          value={inputName}
-          onChange={(e) => setName(e.target.value)}
+    <>
+      {
+        <BasicModal
+          open={popup}
+          handleClose={() => setPopup(false)}
+          content={
+            <Typography component="h1" variant="h5">
+              {error}
+              <Button
+                onClick={() => setPopup(false)}
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Ok
+              </Button>
+            </Typography>
+          }
         />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="login"
-          label="Login "
-          name="login"
-          value={inputLogin}
-          onChange={(e) => setLogin(e.target.value)}
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-          Sign Up
-        </Button>
-        <Grid container>
-          <Grid item>
-            <Link to={`/${Path.login}`}>{'Already have an account'}</Link>
+      }
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <Container component="main" maxWidth="xs">
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <Box sx={{ m: 1 }}>
+            <form onSubmit={onSubmit} noValidate>
+              <Controller
+                name="name"
+                control={control}
+                rules={{
+                  required: 'Name is required',
+                }}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    type="text"
+                    label="Name"
+                    variant="outlined"
+                    fullWidth
+                    error={!!errors?.name}
+                    helperText={errors?.name?.message}
+                    sx={{ mb: 1 }}
+                  />
+                )}
+              />
+              <Controller
+                name="login"
+                control={control}
+                rules={{
+                  required: 'Login is required',
+                  minLength: {
+                    value: 8,
+                    message: 'minimum 8 characters',
+                  },
+                }}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    type="text"
+                    label="Login"
+                    variant="outlined"
+                    fullWidth
+                    error={!!errors?.login}
+                    helperText={errors?.login?.message}
+                    sx={{ mb: 1 }}
+                  />
+                )}
+              />
+              <Controller
+                name="password"
+                control={control}
+                rules={{
+                  required: 'Password is required',
+                  minLength: {
+                    value: 8,
+                    message: 'minimum 8 characters',
+                  },
+                }}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    type="password"
+                    label="Password"
+                    variant="outlined"
+                    fullWidth
+                    error={!!errors?.password}
+                    helperText={errors?.password?.message}
+                    sx={{ mb: 1 }}
+                  />
+                )}
+              />
+              <Button
+                disabled={!isValid}
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign Up
+              </Button>
+            </form>
+          </Box>
+          <Grid container>
+            <Grid item>
+              <Link to={`/${Path.signup}`}>{"Don't have an account? Register"}</Link>
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
-    </Container>
+        </Container>
+      )}
+    </>
   );
 };
 
