@@ -3,27 +3,83 @@ import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
-import BasicModal from '../../components/Modal/Modal';
 import Spinner from '../../components/Spinner/Spinner';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { Path } from '../../router/routes';
-import { signUp } from '../../store/slices/authSlice';
-import { DataFormSignUp } from '../../utils/types/types';
+import { resetError, signUp, signIn } from '../../store/slices/authSlice';
+import { closeModal, openModal } from '../../store/slices/modalSlice';
+import { DataFormSignIn, DataFormSignUp } from '../../utils/types/types';
 
 const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isLoading, error } = useAppSelector((state) => state.auth);
+  const { isLoading, error, login, token } = useAppSelector((state) => state.auth);
 
-  const [popup, setPopup] = useState(false);
   const { t } = useTranslation();
+
+  const [signInData, setSignInData] = useState<DataFormSignIn>({
+    login: '',
+    password: '',
+  });
+
+  useEffect(() => {
+    if (token) {
+      navigate(`/${Path.main}`);
+    }
+  }, [token, navigate]);
 
   useEffect(() => {
     if (error) {
-      setPopup(true);
+      dispatch(
+        openModal({
+          open: true,
+          contentModal: (
+            <Typography component="h1" variant="h5">
+              {error}
+              <Button
+                onClick={() => {
+                  dispatch(closeModal(false));
+                  dispatch(resetError());
+                }}
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                OK
+              </Button>
+            </Typography>
+          ),
+        })
+      );
     }
   }, [error]);
+
+  useEffect(() => {
+    if (login) {
+      dispatch(
+        openModal({
+          open: true,
+          contentModal: (
+            <Typography component="h1" variant="h5">
+              You successfully create an account and will be redirected to main page
+              <Button
+                onClick={() => {
+                  dispatch(closeModal(false));
+                  dispatch(signIn(signInData));
+                }}
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                OK
+              </Button>
+            </Typography>
+          ),
+        })
+      );
+    }
+  }, [login]);
 
   const {
     handleSubmit,
@@ -34,36 +90,21 @@ const SignUp = () => {
 
   const onSubmit = handleSubmit((data) => {
     dispatch(signUp(data));
+    setSignInData({
+      login: data.login,
+      password: data.password,
+    });
     reset();
   });
 
   return (
     <>
-      {
-        <BasicModal
-          open={popup}
-          handleClose={() => setPopup(false)}
-          content={
-            <Typography component="h1" variant="h5">
-              {error}
-              <Button
-                onClick={() => setPopup(false)}
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Ok
-              </Button>
-            </Typography>
-          }
-        />
-      }
       {isLoading ? (
         <Spinner />
       ) : (
         <Container component="main" maxWidth="xs">
           <Typography component="h1" variant="h5">
-            Sign in
+            {t('signUpPage.signup')}
           </Typography>
           <Box sx={{ m: 1 }}>
             <form onSubmit={onSubmit} noValidate>
@@ -78,7 +119,7 @@ const SignUp = () => {
                   <TextField
                     {...field}
                     type="text"
-                    label="Name"
+                    label={t('form.name')}
                     variant="outlined"
                     fullWidth
                     error={!!errors?.name}
@@ -102,7 +143,7 @@ const SignUp = () => {
                   <TextField
                     {...field}
                     type="text"
-                    label="Login"
+                    label={t('form.login')}
                     variant="outlined"
                     fullWidth
                     error={!!errors?.login}
@@ -126,7 +167,7 @@ const SignUp = () => {
                   <TextField
                     {...field}
                     type="password"
-                    label="Password"
+                    label={t('form.password')}
                     variant="outlined"
                     fullWidth
                     error={!!errors?.password}
@@ -142,13 +183,13 @@ const SignUp = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign Up
+                {t('signUpPage.signup')}
               </Button>
             </form>
           </Box>
           <Grid container>
             <Grid item>
-              <Link to={`/${Path.signup}`}>{"Don't have an account? Register"}</Link>
+              <Link to={`/${Path.signup}`}>{t('signUpPage.link')}</Link>
             </Grid>
           </Grid>
         </Container>

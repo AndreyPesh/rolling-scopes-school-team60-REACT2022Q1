@@ -1,47 +1,20 @@
 import { Button, Box, Grid, Typography, Container, TextField } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import Spinner from '../../components/Spinner/Spinner';
 import { useAppSelector } from '../../hooks';
 import { Path } from '../../router/routes';
-import { signIn } from '../../store/slices/authSlice';
-import BasicModal from '../../components/Modal/Modal';
+import { resetError, signIn } from '../../store/slices/authSlice';
 import { Controller, useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../hooks';
 import { DataFormSignIn } from '../../utils/types/types';
-
-const fields = [
-  {
-    name: 'login',
-    type: 'text',
-    validationsRules: {
-      required: 'this input is required',
-      minLength: {
-        value: 8,
-        message: 'minimum 8 characters',
-      },
-    },
-  },
-  {
-    name: 'password',
-    type: 'password',
-    validationsRules: {
-      required: 'this input is required',
-      minLength: {
-        value: 8,
-        message: 'minimum 8 characters',
-      },
-    },
-  },
-];
+import { closeModal, openModal } from '../../store/slices/modalSlice';
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isLoading, token, error } = useAppSelector((state) => state.auth);
-
-  const [popup, setPopup] = useState(false);
 
   const {
     handleSubmit,
@@ -59,7 +32,27 @@ const Login = () => {
 
   useEffect(() => {
     if (error) {
-      setPopup(true);
+      dispatch(
+        openModal({
+          open: true,
+          contentModal: (
+            <Typography component="h1" variant="h5">
+              {error}
+              <Button
+                onClick={() => {
+                  dispatch(closeModal(false));
+                  dispatch(resetError());
+                }}
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                OK
+              </Button>
+            </Typography>
+          ),
+        })
+      );
     }
   }, [error]);
 
@@ -70,31 +63,12 @@ const Login = () => {
 
   return (
     <>
-      {
-        <BasicModal
-          open={popup}
-          handleClose={() => setPopup(false)}
-          content={
-            <Typography component="h1" variant="h5">
-              {error}
-              <Button
-                onClick={() => setPopup(false)}
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Ok
-              </Button>
-            </Typography>
-          }
-        />
-      }
       {isLoading ? (
         <Spinner />
       ) : (
         <Container component="main" maxWidth="xs">
           <Typography component="h1" variant="h5">
-            Sign in
+            {t('signInPage.signin')}
           </Typography>
           <Box sx={{ m: 1 }}>
             <form onSubmit={onSubmit} noValidate>
@@ -113,7 +87,7 @@ const Login = () => {
                   <TextField
                     {...field}
                     type="text"
-                    label="Login"
+                    label={t('form.login')}
                     variant="outlined"
                     fullWidth
                     error={!!errors?.login}
@@ -137,7 +111,7 @@ const Login = () => {
                   <TextField
                     {...field}
                     type="password"
-                    label="Password"
+                    label={t('form.password')}
                     variant="outlined"
                     fullWidth
                     error={!!errors?.password}
@@ -153,13 +127,13 @@ const Login = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                {t('signInPage.signin')}
               </Button>
             </form>
           </Box>
           <Grid container>
             <Grid item>
-              <Link to={`/${Path.signup}`}>{"Don't have an account? Register"}</Link>
+              <Link to={`/${Path.signup}`}>{t('signInPage.link')}</Link>
             </Grid>
           </Grid>
         </Container>
