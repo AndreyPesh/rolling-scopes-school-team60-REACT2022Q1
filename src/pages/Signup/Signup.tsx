@@ -7,7 +7,7 @@ import Spinner from '../../components/Spinner/Spinner';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { Path } from '../../router/routes';
-import { resetError, signUp, signIn } from '../../store/slices/authSlice';
+import { resetError, signUp, signIn, resetLogin } from '../../store/slices/authSlice';
 import { closeModal, openModal } from '../../store/slices/modalSlice';
 import { DataFormSignIn, DataFormSignUp } from '../../utils/types/types';
 
@@ -53,7 +53,7 @@ const SignUp = () => {
         })
       );
     }
-  }, [error]);
+  }, [error, dispatch]);
 
   useEffect(() => {
     if (login) {
@@ -67,6 +67,7 @@ const SignUp = () => {
                 onClick={() => {
                   dispatch(closeModal(false));
                   dispatch(signIn(signInData));
+                  dispatch(resetLogin());
                 }}
                 fullWidth
                 variant="contained"
@@ -79,7 +80,7 @@ const SignUp = () => {
         })
       );
     }
-  }, [login]);
+  }, [login, dispatch, signInData]);
 
   const {
     handleSubmit,

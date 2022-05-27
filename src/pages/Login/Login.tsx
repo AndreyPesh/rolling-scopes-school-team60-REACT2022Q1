@@ -54,7 +54,7 @@ const Login = () => {
         })
       );
     }
-  }, [error]);
+  }, [error, dispatch]);
 
   const onSubmit = handleSubmit((data) => {
     dispatch(signIn(data));
