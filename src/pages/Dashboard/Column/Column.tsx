@@ -8,12 +8,13 @@ import { Droppable } from 'react-beautiful-dnd';
 import Task from '../Task/Task';
 import { sortItemByOrder } from '../../../utils/functions/sort';
 import { NameDragAction } from '../../../utils/enum/enum';
+import InputHeaderTag from '../../../components/InputHeader/InputHeader';
 
-const Column = ({ title, id, tasks }: ColumnData) => {
+const Column = (columnData: ColumnData) => {
   const {
     currentBoard: { boardData },
   } = useAppSelector((state: RootState) => state);
-
+  const { title, id, tasks } = columnData;
   const listTasks = tasks
     ? Array.from(tasks)
         .sort(sortItemByOrder)
@@ -26,7 +27,7 @@ const Column = ({ title, id, tasks }: ColumnData) => {
     <Droppable droppableId={id} type={NameDragAction.TASK}>
       {(provided) => (
         <Paper className="column" ref={provided.innerRef} {...provided.droppableProps}>
-          <h2>{title}</h2>
+          <InputHeaderTag {...columnData} />
           {tasks && <div className="column__list-tasks">{listTasks}</div>}
           <div className="column__buttons">
             <RemoveColumn boardId={boardData.id} columnId={id} title={title} />
