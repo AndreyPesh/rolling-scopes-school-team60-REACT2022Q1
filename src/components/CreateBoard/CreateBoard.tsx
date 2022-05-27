@@ -1,25 +1,21 @@
-import { useState } from 'react';
-
 import { Button } from '@mui/material';
-
-import Modal from '../Modal/Modal';
 import FormCreateBoard from './FormCreateBoard';
+import { useAppDispatch } from '../../hooks';
+import { openModal } from '../../store/slices/modalSlice';
+import { useTranslation } from 'react-i18next';
 
 const CreateBoard = () => {
-  const [open, setOpen] = useState<boolean>(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const dispatch = useAppDispatch();
+  const handleOpenModal = () => {
+    dispatch(openModal({ open: true, contentModal: <FormCreateBoard /> }));
+  };
+  const { t } = useTranslation();
 
   return (
     <>
-      <Button variant="contained" color="secondary" onClick={handleOpen}>
-        Create new board
+      <Button variant="contained" color="secondary" onClick={handleOpenModal}>
+        {t('buttons.createBoard')}
       </Button>
-      <Modal
-        open={open}
-        handleClose={handleClose}
-        content={<FormCreateBoard handleClose={handleClose} />}
-      />
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-
+import { Suspense } from 'react';
 import { Welcome } from '../pages/Welcome/Welcome';
 import { listRoutes, Path } from '../router/routes';
 import { ProtectedRoute } from '../router/ProtectedRoute';
@@ -28,13 +28,15 @@ const App = () => {
   });
 
   return (
-    <Routes>
-      <Route path={Path.home} element={<Layout />}>
-        <Route index element={<Welcome />} />
-        {routes}
-        <Route path={Path.no_match} element={<NoMatch />} />
-      </Route>
-    </Routes>
+    <Suspense fallback={null}>
+      <Routes>
+        <Route path={Path.home} element={<Layout />}>
+          <Route index element={<Welcome />} />
+          {routes}
+          <Route path={Path.no_match} element={<NoMatch />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 };
 export default App;

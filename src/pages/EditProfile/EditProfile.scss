@@ -1,0 +1,11 @@
+.edit-profile {
+  height: calc(100vh - 181px);
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-profile__buttons {
+  display: flex;
+  justify-content: space-between;
+}

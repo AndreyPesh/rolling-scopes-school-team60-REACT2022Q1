@@ -4,10 +4,12 @@ import { Path } from '../../router/routes';
 import { signOut } from '../../store/slices/authSlice';
 import { logOut } from '../../store/slices/userSlice';
 import { Button } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const Logout = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const logout = () => {
     dispatch(signOut());
@@ -17,7 +19,7 @@ const Logout = () => {
 
   return (
     <Button variant="contained" color="secondary" onClick={logout}>
-      Sign Out
+      {t('buttons.signout')}
     </Button>
   );
 };

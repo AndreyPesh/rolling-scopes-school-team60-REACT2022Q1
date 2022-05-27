@@ -1,6 +1,5 @@
 export type TypePropsModal = {
   open: boolean;
-  handleClose: (state: boolean) => void;
   content: JSX.Element;
 };
 
@@ -23,28 +22,29 @@ export type DataFormSignUp = {
   password: string;
 };
 
+export type DataUpdateUser = DataFormSignUp;
+
 export type UserData = {
   id: string;
   name: string;
   login: string;
 };
 
+export type CreateDataBoard = {
+  title: string;
+  description: string;
+};
+
 export type DataBoard = {
   id: string;
   title: string;
+  description: string;
 };
 
 export type BoardDescription = {
   id: string;
   title: string;
-  columns: Array<ColumnBoard>;
-};
-
-export type ColumnBoard = {
-  id: string;
-  title: string;
-  order: number;
-  tasks: Array<TaskData>;
+  columns: Array<ColumnData>;
 };
 
 export type TaskData = {
@@ -70,3 +70,36 @@ export type ErrorResponse = {
     };
   };
 };
+
+export type RequestColumnData = {
+  token: string;
+  boardId: string;
+  dataColumn: CreateColumnData;
+};
+
+export interface CreateColumnData {
+  title: string;
+}
+
+export interface ColumnData extends CreateColumnData {
+  id: string;
+  order: number;
+  tasks: Array<TaskData>;
+}
+
+export interface CreateDataTask {
+  title: string;
+  description: string;
+  userId: string;
+}
+
+export interface RequestCreateTask extends CreateDataTask {
+  boardId: string;
+  columnId: string;
+}
+
+export interface RemoveTaskData {
+  boardId: string;
+  columnId: string;
+  taskId: string;
+}

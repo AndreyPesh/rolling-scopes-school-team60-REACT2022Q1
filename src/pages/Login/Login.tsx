@@ -1,5 +1,6 @@
 import { Button, Box, Grid, Typography, Container, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import Spinner from '../../components/Spinner/Spinner';
 import { useAppSelector } from '../../hooks';
@@ -48,6 +49,7 @@ const Login = () => {
     reset,
     formState: { errors, isValid },
   } = useForm<DataFormSignIn>({ mode: 'onChange' });
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (token) {

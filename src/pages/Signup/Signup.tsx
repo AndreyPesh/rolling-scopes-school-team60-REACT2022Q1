@@ -1,6 +1,7 @@
 import { Button, TextField, Grid, Box, Typography, Container } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import BasicModal from '../../components/Modal/Modal';
 import Spinner from '../../components/Spinner/Spinner';
@@ -16,6 +17,7 @@ const SignUp = () => {
   const { isLoading, error } = useAppSelector((state) => state.auth);
 
   const [popup, setPopup] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (error) {

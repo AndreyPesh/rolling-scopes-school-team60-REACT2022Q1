@@ -1,0 +1,16 @@
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  width: 30%;
+  min-height: 220px;
+  text-align: center;
+  &__list-tasks {
+    width: 100%;
+  }
+  &__buttons {
+    margin-top: auto;
+  }
+}

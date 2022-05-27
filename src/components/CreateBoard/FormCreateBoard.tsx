@@ -1,56 +1,78 @@
 import { Box, Button, TextField } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
-import { ChangeEvent, SyntheticEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Path } from '../../router/routes';
 import { RootState } from '../../store';
 import { fetchListBoards } from '../../store/slices/boardsSlice';
+import { closeModal } from '../../store/slices/modalSlice';
+import { EMPTY_STRING } from '../../utils/constants';
 import { createBoard } from '../../utils/functions/api';
+import { CreateDataBoard } from '../../utils/types/types';
 
-const FormCreateBoard: React.FC<{ handleClose: () => void }> = ({ handleClose }) => {
+const FormCreateBoard = () => {
   const { token } = useAppSelector((state: RootState) => state.auth);
   const dispatch = useAppDispatch();
-  const [nameBoard, setNameBoard] = useState<string>('');
+  const [dataBoard, setDataBoard] = useState<CreateDataBoard>({
+    title: EMPTY_STRING,
+    description: EMPTY_STRING,
+  });
   const navigate = useNavigate();
 
-  const handleNameBoard = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleDataBoard = (event: ChangeEvent<HTMLInputElement>) => {
     const {
-      target: { value },
+      target: { name, value },
     } = event;
-    setNameBoard(value);
+    setDataBoard({ ...dataBoard, [name]: value });
   };
 
-  const handleForm = async (event: SyntheticEvent<HTMLInputElement>) => {
+  const handleForm = async (event: FormEvent) => {
     event.preventDefault();
     if (token) {
-      await createBoard(token, nameBoard);
-      handleClose();
+      await createBoard(token, dataBoard);
+      dispatch(closeModal(false));
       navigate(`/${Path.main}`);
       dispatch(fetchListBoards(token));
     }
   };
 
   return (
-    <Box component="form" onSubmit={handleForm}>
-      <FormControl
-        sx={{
-          '& > :not(style)': { m: 1 },
-        }}
-      >
-        <TextField
-          id="outlined-basic"
-          label="Name board"
-          variant="outlined"
-          size="small"
-          name="name_board"
-          onChange={handleNameBoard}
-        />
-        <Button variant="contained" type="submit" color="success" disabled={nameBoard.length < 4}>
-          Create
-        </Button>
-      </FormControl>
-    </Box>
+    <>
+      <h2>Add board</h2>
+      <Box component="form" onSubmit={handleForm}>
+        <FormControl
+          sx={{
+            '& > :not(style)': { m: 1 },
+          }}
+        >
+          <TextField
+            id="outlined-basic"
+            label="Name board"
+            variant="outlined"
+            size="small"
+            name="title"
+            onChange={handleDataBoard}
+          />
+          <TextField
+            id="outlined-basic"
+            label="Description"
+            variant="outlined"
+            size="small"
+            name="description"
+            onChange={handleDataBoard}
+          />
+          <Button
+            variant="contained"
+            type="submit"
+            color="success"
+            disabled={dataBoard.title.length < 4 || dataBoard.description.length < 4}
+          >
+            Create
+          </Button>
+        </FormControl>
+      </Box>
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import boardsReducer from './slices/boardsSlice';
 import confirmReducer from './slices/confirmSlice';
+import modalReducer from './slices/modalSlice';
 import currentBoardReducer from './slices/currentBoardSlice';
 import authReducer from './slices/authSlice';
 import userReducer from './slices/userSlice';
@@ -12,6 +13,7 @@ const store = configureStore({
     boards: boardsReducer,
     currentBoard: currentBoardReducer,
     confirm: confirmReducer,
+    modal: modalReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
