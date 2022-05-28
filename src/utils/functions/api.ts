@@ -13,6 +13,9 @@ import {
   CreateDataBoard,
   RemoveTaskData,
   DataUpdateUser,
+  RequestUpdateTask,
+  RequestUpdateColumn,
+  RequestMoveTask,
 } from '../types/types';
 
 const logErrors = (nameRequest: string, errorMessage: string) => {
@@ -209,6 +212,36 @@ export const createColumn = async ({ token, boardId, dataColumn }: RequestColumn
   }
 };
 
+export const updateColumnOrder = async ({
+  token,
+  boardId,
+  columnId,
+  title,
+  order,
+}: RequestUpdateColumn) => {
+  try {
+    if (!token) {
+      return false;
+    }
+
+    const { data } = await axios.put<ColumnData>(
+      `${BASE_URL}${CREATE_BOARD_URL}/${boardId}${COLUMNS_URL}/${columnId}`,
+      { title, order },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      logErrors(createBoard.name, error.message);
+    }
+    return false;
+  }
+};
+
 export const removeColumnById = async (token: string, boardId: string, columnId: string) => {
   try {
     if (!token) {
@@ -267,6 +300,73 @@ export const removeTaskById = async (
 
     await axios.delete(
       `${BASE_URL}${CREATE_BOARD_URL}/${boardId}${COLUMNS_URL}/${columnId}${TASKS_URL}/${taskId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return true;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      logErrors(createBoard.name, error.message);
+    }
+    return false;
+  }
+};
+
+export const updateTaskList = async ({
+  token,
+  boardId,
+  columnId,
+  taskId,
+  title,
+  order,
+  description,
+  userId,
+}: RequestUpdateTask) => {
+  try {
+    if (!token) {
+      return false;
+    }
+
+    await axios.put(
+      `${BASE_URL}${CREATE_BOARD_URL}/${boardId}${COLUMNS_URL}/${columnId}${TASKS_URL}/${taskId}`,
+      { title, order, description, userId, boardId, columnId },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return true;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      logErrors(createBoard.name, error.message);
+    }
+    return false;
+  }
+};
+
+export const moveTaskBetweenColumn = async ({
+  token,
+  boardId,
+  columnId,
+  taskId,
+  title,
+  order,
+  description,
+  userId,
+  destinationColumnId,
+}: RequestMoveTask) => {
+  try {
+    if (!token) {
+      return false;
+    }
+
+    await axios.put(
+      `${BASE_URL}${CREATE_BOARD_URL}/${boardId}${COLUMNS_URL}/${columnId}${TASKS_URL}/${taskId}`,
+      { title, order, description, userId, boardId, columnId: destinationColumnId },
       {
         headers: {
           Authorization: `Bearer ${token}`,

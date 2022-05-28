@@ -1,16 +1,20 @@
 .column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: relative;
+  display: block;
   margin: 10px;
   padding: 10px;
-  width: 30%;
-  min-height: 220px;
+  width: 100%;
+  height: 400px;
   text-align: center;
   &__list-tasks {
     width: 100%;
+    min-height: 70%;
+    max-height: 70%;
+    overflow-y: auto;
   }
   &__buttons {
-    margin-top: auto;
+    position: absolute;
+    bottom: 10px;
+    left: calc(50% - 50px);
   }
 }
