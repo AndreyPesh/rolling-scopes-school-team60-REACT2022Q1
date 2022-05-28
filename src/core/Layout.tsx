@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import ConfirmModal from '../components/ConfirmModal/ConfirmModal';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
@@ -10,6 +10,7 @@ import { isTokenExpire } from '../utils/functions/api';
 import { removeToken, getToken } from '../utils/functions/localStorage';
 import { getUserPending, getUserSuccess } from '../store/slices/userSlice';
 import { getUser } from '../utils/functions/api';
+import { Path } from '../router/routes';
 
 export default function Layout() {
   const dispatch = useAppDispatch();
@@ -18,6 +19,7 @@ export default function Layout() {
     modal: { open, contentModal },
   } = useAppSelector((state: RootState) => state);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -41,11 +43,13 @@ export default function Layout() {
       const isExpire = await isTokenExpire(token);
       if (!isExpire) {
         removeToken();
+        navigate(`${Path.home}`);
       }
     }
     if (tokenStorage || token) {
       if (token !== tokenStorage) {
         removeToken();
+        navigate(`${Path.home}`);
       } else {
         checkToken();
       }
