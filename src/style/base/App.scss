@@ -1,10 +1,13 @@
 .container {
   max-width: 1920px;
   margin: 0 auto;
+
   &__main {
-    padding: 20px 10vw;
-    min-height: calc(100vh - 181px);
+    flex: 10;
     text-align: center;
+    display: flex;
+    align-items: center;
+    width: 100%;
   }
 }
 
