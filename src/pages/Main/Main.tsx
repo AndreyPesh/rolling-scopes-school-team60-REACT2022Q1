@@ -30,11 +30,11 @@ export default function Main() {
     return <h2>{errors}</h2>;
   }
   return (
-    <>
+    <section className="boards-main">
       <h2>{t(`mainPage.title`)}</h2>
       <div className="list-board-card">
         {!listBoards.length ? <h2>{t(`mainPage.isEmpty`)}</h2> : boards}
       </div>
-    </>
+    </section>
   );
 }

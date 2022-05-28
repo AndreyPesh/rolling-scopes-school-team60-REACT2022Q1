@@ -1,5 +1,21 @@
 @import '../../style/variables.scss';
 
 .burger__icon {
-  color: $brown;
+  color: $white;
+}
+
+.burger__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  padding: 10px;
+
+  & a {
+    display: block;
+    color: $black;
+  }
+
+  & a:hover {
+    text-shadow: $black 1px 0 10px;
+  }
 }

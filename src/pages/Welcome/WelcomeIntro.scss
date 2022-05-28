@@ -6,10 +6,18 @@
   justify-content: center;
   font-size: 22px;
   gap: 5vw;
+
+  @media screen and (max-width: $screen-max-width-biggest) {
+    font-size: 18px;
+  }
+
+  @media screen and (max-width: $screen-max-width-small) {
+    font-size: 16px;
+  }
 }
 
 .welcome__intro_title {
-  font-size: 32px;
+  font-size: 1.5em;
   margin-bottom: 2vh;
 }
 
@@ -19,22 +27,7 @@
 }
 
 .welcome__intro_img {
-  width: 400px;
-}
-
-@media screen and (max-width: $screen-max-width-medium) {
-  .welcome__intro {
-    font-size: 16px;
-    gap: 10vh;
-  }
-
-  .welcome__intro_title {
-    font-size: 28px;
-  }
-
-  .welcome__intro_img {
-    width: 300px;
-  }
+  width: 30%;
 }
 
 @media screen and (max-width: $screen-max-width-small) {
