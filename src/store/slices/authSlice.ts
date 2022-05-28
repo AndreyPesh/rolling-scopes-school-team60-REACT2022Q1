@@ -15,7 +15,6 @@ interface ILogin {
   isLoading: boolean;
   error: string | null;
   token?: string;
-  name?: string;
   login?: string;
 }
 
@@ -23,7 +22,6 @@ const initialState: ILogin = {
   isLoading: false,
   error: '',
   token: getToken(),
-  name: '',
   login: '',
 };
 
@@ -65,6 +63,12 @@ const authSlice = createSlice({
       state.token = '';
       removeToken();
     },
+    resetError: (state) => {
+      state.error = '';
+    },
+    resetLogin: (state) => {
+      state.login = '';
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -83,7 +87,6 @@ const authSlice = createSlice({
       })
       .addCase(signUp.fulfilled, (state, action) => {
         state.login = action.payload.login;
-        state.name = action.payload.name;
         state.isLoading = false;
         state.error = null;
       })
@@ -94,6 +97,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { signOut } = authSlice.actions;
+export const { signOut, resetError, resetLogin } = authSlice.actions;
 
 export default authSlice.reducer;
