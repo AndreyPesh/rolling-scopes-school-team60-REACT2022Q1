@@ -30,21 +30,6 @@
   width: 30%;
 }
 
-// @media screen and (max-width: $screen-max-width-medium) {
-//   .welcome__intro {
-//     // font-size: 1.375em;
-//     gap: 10vh;
-//   }
-
-//   // .welcome__intro_title {
-//   //   font-size: 1.3em;
-//   // }
-
-//   .welcome__intro_img {
-//     width: 300px;
-//   }
-// }
-
 @media screen and (max-width: $screen-max-width-small) {
   .welcome__intro {
     flex-direction: column;
