@@ -1,0 +1,31 @@
+@import '../../style/variables.scss';
+.input-header {
+  display: flex;
+  flex-direction: row !important;
+  flex-wrap: nowrap;
+  &__field {
+    width: 50%;
+  }
+  &__buttons {
+    width: 50%;
+    text-align: center;
+    & > * {
+      margin: 3px;
+      &:disabled {
+        cursor: none !important;
+      }
+    }
+  }
+}
+
+.input-header-title {
+  cursor: text !important;
+  margin: 1px;
+  padding: 4px;
+  &:hover {
+    margin: 0px;
+    border: 1px solid $red;
+    border-radius: 3px;
+    box-shadow: 0 0 4px $red;
+  }
+}
