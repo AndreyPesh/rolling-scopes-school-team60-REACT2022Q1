@@ -20,7 +20,12 @@ const Task: React.FC<{ columnId: string; dataTask: TaskData; index: number }> = 
   const showTask = (event: MouseEvent<HTMLDivElement>) => {
     const { target } = event;
     if ((target as Element).getAttribute(NAME_DATA_ATRR_SHOW_TASK)) {
-      dispatch(openModal({ open: true, contentModal: <ShowTask /> }));
+      dispatch(
+        openModal({
+          open: true,
+          contentModal: <ShowTask columnId={columnId} dataTask={dataTask} />,
+        })
+      );
     }
   };
   return (
