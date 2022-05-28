@@ -1,95 +1,201 @@
 import { Button, TextField, Grid, Box, Typography, Container } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
+import Spinner from '../../components/Spinner/Spinner';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { Path } from '../../router/routes';
-import { signUp } from '../../store/slices/authSlice';
+import { resetError, signUp, signIn, resetLogin } from '../../store/slices/authSlice';
+import { closeModal, openModal } from '../../store/slices/modalSlice';
+import { DataFormSignIn, DataFormSignUp } from '../../utils/types/types';
 
 const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isLoading, error, name, login } = useAppSelector((state) => state.auth);
+  const { isLoading, error, login, token } = useAppSelector((state) => state.auth);
 
   const { t } = useTranslation();
 
-  const [inputName, setName] = useState('');
-  const [inputLogin, setLogin] = useState('');
-  const [password, setPassword] = useState('');
+  const [signInData, setSignInData] = useState<DataFormSignIn>({
+    login: '',
+    password: '',
+  });
 
-  useEffect(() => {}, [name, navigate]);
+  useEffect(() => {
+    if (token) {
+      navigate(`/${Path.main}`);
+    }
+  }, [token, navigate]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  useEffect(() => {
+    if (error) {
+      dispatch(
+        openModal({
+          open: true,
+          contentModal: (
+            <Typography component="h1" variant="h5">
+              {error}
+              <Button
+                onClick={() => {
+                  dispatch(closeModal(false));
+                  dispatch(resetError());
+                }}
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                OK
+              </Button>
+            </Typography>
+          ),
+        })
+      );
+    }
+  }, [error, dispatch]);
 
-    const data = {
-      name: inputName,
-      login: inputLogin,
-      password,
-    };
+  useEffect(() => {
+    if (login) {
+      dispatch(
+        openModal({
+          open: true,
+          contentModal: (
+            <Typography component="h1" variant="h5">
+              You successfully create an account and will be redirected to main page
+              <Button
+                onClick={() => {
+                  dispatch(closeModal(false));
+                  dispatch(signIn(signInData));
+                  dispatch(resetLogin());
+                }}
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                OK
+              </Button>
+            </Typography>
+          ),
+        })
+      );
+    }
+  }, [login, dispatch, signInData]);
 
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors, isValid },
+  } = useForm<DataFormSignUp>({ mode: 'onChange' });
+
+  const onSubmit = handleSubmit((data) => {
     dispatch(signUp(data));
-
-    setName('');
-    setLogin('');
-    setPassword('');
-  };
+    setSignInData({
+      login: data.login,
+      password: data.password,
+    });
+    reset();
+  });
 
   return (
-    <Container component="main" maxWidth="xs">
-      {isLoading && <Typography>Loading...</Typography>}
-      {error && <Typography>{error}</Typography>}
-      {name && login && (
-        <Typography>
-          you successfully created an account login: {login}, name: {name}
-        </Typography>
-      )}
-      <Typography component="h1" variant="h5">
-        {t('signUpPage.signup')}
-      </Typography>
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="name"
-          label={t('form.name')}
-          name="name"
-          value={inputName}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="login"
-          label={t('form.login')}
-          name="login"
-          value={inputLogin}
-          onChange={(e) => setLogin(e.target.value)}
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label={t('form.password')}
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-          {t('signUpPage.signup')}
-        </Button>
-        <Grid container>
-          <Grid item>
-            <Link to={`/${Path.login}`}>{t('signUpPage.link')}</Link>
+    <>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <Container component="main" maxWidth="xs">
+          <Typography component="h1" variant="h5">
+            {t('signUpPage.signup')}
+          </Typography>
+          <Box sx={{ m: 1 }}>
+            <form onSubmit={onSubmit} noValidate>
+              <Controller
+                name="name"
+                control={control}
+                rules={{
+                  required: 'Name is required',
+                }}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    type="text"
+                    label={t('form.name')}
+                    variant="outlined"
+                    fullWidth
+                    error={!!errors?.name}
+                    helperText={errors?.name?.message}
+                    sx={{ mb: 1 }}
+                  />
+                )}
+              />
+              <Controller
+                name="login"
+                control={control}
+                rules={{
+                  required: 'Login is required',
+                  minLength: {
+                    value: 8,
+                    message: 'minimum 8 characters',
+                  },
+                }}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    type="text"
+                    label={t('form.login')}
+                    variant="outlined"
+                    fullWidth
+                    error={!!errors?.login}
+                    helperText={errors?.login?.message}
+                    sx={{ mb: 1 }}
+                  />
+                )}
+              />
+              <Controller
+                name="password"
+                control={control}
+                rules={{
+                  required: 'Password is required',
+                  minLength: {
+                    value: 8,
+                    message: 'minimum 8 characters',
+                  },
+                }}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    type="password"
+                    label={t('form.password')}
+                    variant="outlined"
+                    fullWidth
+                    error={!!errors?.password}
+                    helperText={errors?.password?.message}
+                    sx={{ mb: 1 }}
+                  />
+                )}
+              />
+              <Button
+                disabled={!isValid}
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                {t('signUpPage.signup')}
+              </Button>
+            </form>
+          </Box>
+          <Grid container>
+            <Grid item>
+              <Link to={`/${Path.signup}`}>{t('signUpPage.link')}</Link>
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
-    </Container>
+        </Container>
+      )}
+    </>
   );
 };
 
