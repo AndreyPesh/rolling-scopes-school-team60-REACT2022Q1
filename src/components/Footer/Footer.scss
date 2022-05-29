@@ -43,8 +43,11 @@
 }
 
 @media screen and (max-width: $screen-max-width-biggest) {
+  .footer {
+    padding: 10px 0;
+  }
   .team__link {
-    font-size: 18px;
+    font-size: 14px;
   }
 }
 
