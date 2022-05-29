@@ -57,6 +57,8 @@ export type TaskData = {
   files: Array<FileData>;
 };
 
+export type TaskDataForm = Pick<TaskData, 'title' | 'description'>;
+
 export type FileData = {
   filename: string;
   fileSize: number;

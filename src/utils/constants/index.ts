@@ -54,3 +54,5 @@ export const TEAM: Array<Developer> = [
     description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   },
 ];
+
+export const NAME_DATA_ATRR_SHOW_TASK = 'data-show';
