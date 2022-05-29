@@ -58,7 +58,10 @@
   "dashboardPage": {
     "h2_1": "Доска",
     "h2_2":"Список Колонок",
-    "isEmpty": "Список Колонок пуст"
+    "isEmpty": "Список Колонок пуст",
+    "column": "Колонка",
+    "task": "Задача",
+    "description": "Описание"
   },
   "confirm": {
     "removeBoardTitle": "Удалить доску",

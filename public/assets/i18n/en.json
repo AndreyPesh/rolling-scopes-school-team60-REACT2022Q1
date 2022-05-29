@@ -58,7 +58,10 @@
   "dashboardPage": {
     "h2_1": "Board",
     "h2_2":"List columns",
-    "isEmpty": "Column list is empty"
+    "isEmpty": "Column list is empty",
+    "column": "Column",
+    "task": "Task",
+    "description": "Description"
   },
   "confirm": {
     "removeBoardTitle": "Remove board",
