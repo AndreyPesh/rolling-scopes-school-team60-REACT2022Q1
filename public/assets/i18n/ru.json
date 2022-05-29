@@ -25,6 +25,8 @@
     "password": "Пароль",
     "addBoard": "Добавить доску",
     "addColumn": "Добавить колонку",
+    "nameColumn": "Имя колонки",
+    "addTask": "Добавить задачу",
     "title": "Название",
     "description": "Описание"
   },

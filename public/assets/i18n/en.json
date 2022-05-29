@@ -25,6 +25,8 @@
     "password": "Password",
     "addBoard": "Add board",
     "addColumn": "Add column",
+    "nameColumn": "Name column",
+    "addTask": "Add task",
     "title": "Title",
     "description": "Description"
   },
