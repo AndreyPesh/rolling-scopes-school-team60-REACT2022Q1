@@ -59,5 +59,9 @@
     "h2_1": "Board",
     "h2_2":"List columns",
     "isEmpty": "Column list is empty"
+  },
+  "confirm": {
+    "removeColumnTitle": "Remove column",
+    "removeColumnQuestion": "Are you sure you want to delete the column "
   }
 }
