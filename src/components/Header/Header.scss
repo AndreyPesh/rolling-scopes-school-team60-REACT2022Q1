@@ -5,7 +5,6 @@
   position: sticky;
   top: 0;
   z-index: 10;
-
   &__container {
     flex: 1;
     padding: 0 10vw;
@@ -64,5 +63,13 @@
 
   .header__nav {
     display: none;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-biggest) {
+  .header {
+    &__nav_list {
+      gap: 1vw;
+    }
   }
 }
