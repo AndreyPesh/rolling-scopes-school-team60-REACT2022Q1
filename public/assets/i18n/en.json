@@ -24,6 +24,7 @@
     "login": "Login",
     "password": "Password",
     "addBoard": "Add board",
+    "addColumn": "Add column",
     "title": "Title",
     "description": "Description"
   },
