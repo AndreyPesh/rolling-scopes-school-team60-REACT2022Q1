@@ -6,7 +6,7 @@
     "Sign Up": "Sign Up",
     "Edit profile": "Edit profile",
     "goToMainPage": "Go to main page"
-  },  
+  },
   "buttons": {
     "createBoard": "Create new board",
     "signout": "Sign Out",
@@ -24,7 +24,7 @@
     "login": "Login",
     "password": "Password"
   },
-  "signInPage" : {
+  "signInPage": {
     "signin": "Sign In",
     "link": "Don't hane an account? Sign Up"
   },
@@ -47,11 +47,16 @@
     "p": "Our project really useful? It is a terrific tool for managing and collaborating with team members on work projects and tasks. Visually, our's Kanban boards are organizational bliss. You can pack a ton of detail into each card, and they let you know who's working on what, at any given time.",
     "btn": "Get started!",
     "cardTitle": "Development Contribution",
-    "aboutUs": "About Us"
+    "aboutUs": "About Us",
+    "teamLeader": "Team leader",
+    "frontDev": "Frontend-developer",
+    "AndreyPesh": "Router, main and board pages, CI/CD",
+    "mielomanka": "Welcome page, header/footer, edit profile",
+    "umidullo": "Sign in/sing up, localization, validation forms"
   },
   "dashboardPage": {
     "h2_1": "Board",
-    "h2_2":"List columns",
+    "h2_2": "List columns",
     "isEmpty": "Column list is empty"
   }
 }
