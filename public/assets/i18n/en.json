@@ -22,7 +22,10 @@
   "form": {
     "name": "Name",
     "login": "Login",
-    "password": "Password"
+    "password": "Password",
+    "addBoard": "Add board",
+    "title": "Title",
+    "description": "Description"
   },
   "signInPage" : {
     "signin": "Sign In",

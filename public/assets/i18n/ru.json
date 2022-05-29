@@ -22,7 +22,10 @@
   "form": {
     "name": "Имя",
     "login": "Логин",
-    "password": "Пароль"
+    "password": "Пароль",
+    "addBoard": "Добавить доску",
+    "title": "Название",
+    "description": "Описание"
   },
   "signInPage" : {
     "signin": "Войти",
