@@ -61,6 +61,8 @@
     "isEmpty": "Column list is empty"
   },
   "confirm": {
+    "removeBoardTitle": "Remove board",
+    "removeBoardQuestion": "Are you sure you want to delete the board ",
     "removeColumnTitle": "Remove column",
     "removeColumnQuestion": "Are you sure you want to delete the column ",
     "removeTaskTitle": "Remove task",

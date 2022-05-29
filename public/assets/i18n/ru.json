@@ -61,6 +61,8 @@
     "isEmpty": "Список Колонок пуст"
   },
   "confirm": {
+    "removeBoardTitle": "Удалить доску",
+    "removeBoardQuestion": "Вы уверены, что хотите удалить доску ",
     "removeColumnTitle": "Удалить колонку",
     "removeColumnQuestion": "Вы уверены, что хотите удалить колонку ",
     "removeTaskTitle": "Удалить задачу",
