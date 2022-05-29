@@ -107,7 +107,7 @@ const CreateTaskForm = () => {
             variant="contained"
             type="submit"
             color="success"
-            disabled={dataTask.description.length < 4 || dataTask.title.length < 4}
+            disabled={dataTask.description.length < 4 || dataTask.title.length < 4 || !selectColumn}
           >
             Create
           </Button>
