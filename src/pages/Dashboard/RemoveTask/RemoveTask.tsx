@@ -1,4 +1,5 @@
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { RootState } from '../../../store';
 import { removeTaskById } from '../../../utils/functions/api';
@@ -6,14 +7,14 @@ import { fetchBoardDataById } from '../../../store/slices/currentBoardSlice';
 import { open } from '../../../store/slices/confirmSlice';
 import { TaskData } from '../../../utils/types/types';
 
-const TITLE_REMOVE_COLUMN = 'Remove task';
-const QUESTION_REMOVE_COLUMN = 'Are you sure you want to delete the task ';
-
 const RemoveTask: React.FC<{ columnId: string; dataTask: TaskData }> = ({ columnId, dataTask }) => {
   const {
     auth: { token },
     currentBoard: { boardData },
   } = useAppSelector((state: RootState) => state);
+  const { t } = useTranslation();
+  const TITLE_REMOVE_COLUMN = t('confirm.removeTaskTitle');
+  const QUESTION_REMOVE_COLUMN = t('confirm.removeTaskQuestion');
   const dispatch = useAppDispatch();
   const openConfirm = () => {
     dispatch(

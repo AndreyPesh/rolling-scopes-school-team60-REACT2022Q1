@@ -62,6 +62,8 @@
   },
   "confirm": {
     "removeColumnTitle": "Remove column",
-    "removeColumnQuestion": "Are you sure you want to delete the column "
+    "removeColumnQuestion": "Are you sure you want to delete the column ",
+    "removeTaskTitle": "Remove task",
+    "removeTaskQuestion": "Are you sure you want to delete the task "
   }
 }
