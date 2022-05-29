@@ -38,8 +38,21 @@
   margin-top: 10px;
 }
 
+@media screen and (max-width: $screen-max-width-biggest) {
+  .developers__card {
+    min-height: 240px;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-biggest) {
+  .developers__card {
+    min-height: 286px;
+  }
+}
+
 @media screen and (max-width: $screen-max-width-medium) {
   .developers__card {
+    min-height: 200px;
     width: 60vw;
   }
 }

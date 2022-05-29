@@ -58,5 +58,9 @@
     "h2_1": "Board",
     "h2_2": "List columns",
     "isEmpty": "Column list is empty"
+  },
+  "confirm": {
+    "deleteProfile": "Delete profile",
+    "deleteProfileQuestion": "Are you sure want to delete the profile"
   }
 }

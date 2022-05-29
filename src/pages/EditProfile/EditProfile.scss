@@ -1,3 +1,5 @@
+@import '../../style/variables.scss';
+
 .edit-profile {
   height: calc(100vh - 181px);
   display: flex !important;
@@ -8,4 +10,10 @@
 .edit-profile__buttons {
   display: flex;
   justify-content: space-between;
+}
+
+@media screen and (max-width: $screen-min-width-smallest) {
+  .edit-profile__buttons {
+    flex-direction: column;
+  }
 }
