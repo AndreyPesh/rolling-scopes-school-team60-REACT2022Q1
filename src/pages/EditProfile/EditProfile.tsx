@@ -15,9 +15,6 @@ import { signOut } from '../../store/slices/authSlice';
 import './EditProfile.scss';
 import { useTranslation } from 'react-i18next';
 
-const TITLE_DELETE_PROFILE = 'Delete profile';
-const QUESTION_DELETE_PROFILE = 'Are you sure want to delete the profile';
-
 const EditProfile = () => {
   const [userId, setUserId] = useState<string>('');
   const [name, setName] = useState<string>('');
@@ -28,6 +25,8 @@ const EditProfile = () => {
   const openModalSuccess = useAppSelector((state) => state.modal.open);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const TITLE_DELETE_PROFILE = t('confirm.deleteProfile');
+  const QUESTION_DELETE_PROFILE = t('confirm.deleteProfileQuestion');
 
   useEffect(() => {
     const fetchUser = async () => {
