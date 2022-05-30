@@ -53,5 +53,10 @@
     "h2_1": "Board",
     "h2_2":"List columns",
     "isEmpty": "Column list is empty"
+  },
+  "popupMsgs": {
+    "dataUpdate": "Data updated successfully!",
+    "deleteProfileTitle": "Delete profile",
+    "deleteProfile": "Are you sure want to delete the profile?"
   }
 }
