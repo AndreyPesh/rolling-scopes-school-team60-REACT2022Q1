@@ -18,7 +18,7 @@ export const WelcomeIntro = () => {
         <h1 className="welcome__intro_title">{t('welcomePage.h1')}</h1>
         <span className="welcome__intro_span">{t('welcomePage.span')}</span>
         <p className="welcome__intro_description">{t('welcomePage.p')}</p>
-        <Button variant="contained" onClick={() => navigate(`/${Path.main}`, { replace: true })}>
+        <Button variant="contained" onClick={() => navigate(`/${Path.login}`, { replace: true })}>
           {t('welcomePage.btn')}
         </Button>
       </div>
