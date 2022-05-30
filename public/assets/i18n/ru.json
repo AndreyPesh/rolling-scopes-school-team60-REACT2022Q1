@@ -22,7 +22,13 @@
   "form": {
     "name": "Имя",
     "login": "Логин",
-    "password": "Пароль"
+    "password": "Пароль",
+    "addBoard": "Добавить доску",
+    "addColumn": "Добавить колонку",
+    "nameColumn": "Имя колонки",
+    "addTask": "Добавить задачу",
+    "title": "Название",
+    "description": "Описание"
   },
   "signInPage": {
     "signin": "Войти",
@@ -57,9 +63,18 @@
   "dashboardPage": {
     "h2_1": "Доска",
     "h2_2": "Список Колонок",
-    "isEmpty": "Список Колонок пуст"
+    "isEmpty": "Список Колонок пуст",
+    "column": "Колонка",
+    "task": "Задача",
+    "description": "Описание"
   },
   "confirm": {
+    "removeBoardTitle": "Удалить доску",
+    "removeBoardQuestion": "Вы уверены, что хотите удалить доску ",
+    "removeColumnTitle": "Удалить колонку",
+    "removeColumnQuestion": "Вы уверены, что хотите удалить колонку ",
+    "removeTaskTitle": "Удалить задачу",
+    "removeTaskQuestion": "Вы уверены, что хотите удалить задачу ",
     "deleteProfile": "Удалить профиль",
     "deleteProfileQuestion": "Вы уверены, что хотите удалить профиль"
   }

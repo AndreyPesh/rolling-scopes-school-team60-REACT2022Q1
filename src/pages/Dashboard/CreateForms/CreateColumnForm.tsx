@@ -1,5 +1,6 @@
 import { Box, Button, FormControl, TextField } from '@mui/material';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { RootState } from '../../../store';
 import { fetchAddColumn } from '../../../store/slices/currentBoardSlice';
@@ -15,6 +16,7 @@ const CreateColumnForm = () => {
     },
   } = useAppSelector((state: RootState) => state);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   const [nameColumn, setNameColumn] = useState<string>(EMPTY_STRING);
 
   const handleNameColumn = (event: ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +37,7 @@ const CreateColumnForm = () => {
 
   return (
     <>
-      <h2>Add column</h2>
+      <h2>{t('form.addColumn')}</h2>
       <Box component="form" onSubmit={handleForm}>
         <FormControl
           sx={{
@@ -44,7 +46,7 @@ const CreateColumnForm = () => {
         >
           <TextField
             id="outlined-basic"
-            label="Name column"
+            label={t('form.title')}
             variant="outlined"
             size="small"
             name="name_column"
@@ -56,7 +58,7 @@ const CreateColumnForm = () => {
             color="success"
             disabled={nameColumn.length < 4}
           >
-            Create
+            {t('buttons.create')}
           </Button>
         </FormControl>
       </Box>

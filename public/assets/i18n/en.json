@@ -22,7 +22,13 @@
   "form": {
     "name": "Name",
     "login": "Login",
-    "password": "Password"
+    "password": "Password",
+    "addBoard": "Add board",
+    "addColumn": "Add column",
+    "nameColumn": "Name column",
+    "addTask": "Add task",
+    "title": "Title",
+    "description": "Description"
   },
   "signInPage": {
     "signin": "Sign In",
@@ -57,9 +63,18 @@
   "dashboardPage": {
     "h2_1": "Board",
     "h2_2": "List columns",
-    "isEmpty": "Column list is empty"
+    "isEmpty": "Column list is empty",
+    "column": "Column",
+    "task": "Task",
+    "description": "Description"
   },
   "confirm": {
+    "removeBoardTitle": "Remove board",
+    "removeBoardQuestion": "Are you sure you want to delete the board ",
+    "removeColumnTitle": "Remove column",
+    "removeColumnQuestion": "Are you sure you want to delete the column ",
+    "removeTaskTitle": "Remove task",
+    "removeTaskQuestion": "Are you sure you want to delete the task ",
     "deleteProfile": "Delete profile",
     "deleteProfileQuestion": "Are you sure want to delete the profile"
   }

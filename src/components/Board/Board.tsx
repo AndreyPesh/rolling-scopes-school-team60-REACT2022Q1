@@ -13,14 +13,14 @@ import { Path } from '../../router/routes';
 import { TAG_NAME_BUTTON } from '../../utils/constants';
 import { useTranslation } from 'react-i18next';
 
-const TITLE_REMOVE_BOARD = 'Remove board';
-const QUESTION_REMOVE_BOARD = 'Are you sure want to delete the board ';
-
 const Board: React.FC<DataBoard> = ({ id, title, description }) => {
   const navigate = useNavigate();
   const token = getToken();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const TITLE_REMOVE_BOARD = t('confirm.removeBoardTitle');
+  const QUESTION_REMOVE_BOARD = t('confirm.removeBoardQuestion');
+
   const openConfirm = () => {
     dispatch(
       open({

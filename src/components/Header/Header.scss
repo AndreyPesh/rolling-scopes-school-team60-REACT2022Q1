@@ -68,3 +68,11 @@
     display: none;
   }
 }
+
+@media screen and (max-width: $screen-max-width-biggest) {
+  .header {
+    &__nav_list {
+      gap: 1vw;
+    }
+  }
+}

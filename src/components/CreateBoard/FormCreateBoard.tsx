@@ -2,6 +2,7 @@ import { Box, Button, TextField } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Path } from '../../router/routes';
 import { RootState } from '../../store';
@@ -19,6 +20,7 @@ const FormCreateBoard = () => {
     description: EMPTY_STRING,
   });
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleDataBoard = (event: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -39,7 +41,7 @@ const FormCreateBoard = () => {
 
   return (
     <>
-      <h2>Add board</h2>
+      <h2>{t('form.addBoard')}</h2>
       <Box component="form" onSubmit={handleForm}>
         <FormControl
           sx={{
@@ -48,7 +50,7 @@ const FormCreateBoard = () => {
         >
           <TextField
             id="outlined-basic"
-            label="Name board"
+            label={t('form.title')}
             variant="outlined"
             size="small"
             name="title"
@@ -56,7 +58,7 @@ const FormCreateBoard = () => {
           />
           <TextField
             id="outlined-basic"
-            label="Description"
+            label={t('form.description')}
             variant="outlined"
             size="small"
             name="description"
@@ -68,7 +70,7 @@ const FormCreateBoard = () => {
             color="success"
             disabled={dataBoard.title.length < 4 || dataBoard.description.length < 4}
           >
-            Create
+            {t('buttons.create')}
           </Button>
         </FormControl>
       </Box>
