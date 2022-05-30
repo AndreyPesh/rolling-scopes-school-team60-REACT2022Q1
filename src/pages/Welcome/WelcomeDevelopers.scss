@@ -1,0 +1,28 @@
+@import '../../style/variables.scss';
+
+.developers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.developers__title {
+  font-size: 32px;
+  margin-bottom: 2vh;
+  text-align: center;
+}
+
+.developers__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0 3vw;
+}
+
+@media screen and (max-width: $screen-max-width-medium) {
+  .developers__content {
+    flex-direction: column;
+    gap: 3vh 0;
+  }
+}

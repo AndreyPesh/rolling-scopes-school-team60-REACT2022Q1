@@ -1,0 +1,38 @@
+@import '../../style/variables.scss';
+
+.welcome__intro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  gap: 5vw;
+
+  @media screen and (max-width: $screen-max-width-biggest) {
+    font-size: 18px;
+  }
+
+  @media screen and (max-width: $screen-max-width-small) {
+    font-size: 16px;
+  }
+}
+
+.welcome__intro_title {
+  font-size: 1.5em;
+  margin-bottom: 2vh;
+  text-align: left;
+}
+
+.welcome__intro_description {
+  margin: 2vh 0;
+  max-width: 600px;
+}
+
+.welcome__intro_img {
+  width: 30%;
+}
+
+@media screen and (max-width: $screen-max-width-small) {
+  .welcome__intro {
+    flex-direction: column;
+  }
+}

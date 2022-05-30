@@ -1,0 +1,91 @@
+{
+  "navLinks": {
+    "Main": "Main",
+    "Dashboard": "Dashboard",
+    "Sign In": "Sign In",
+    "Sign Up": "Sign Up",
+    "Edit profile": "Edit profile",
+    "goToMainPage": "Go to main page"
+  },
+  "buttons": {
+    "createBoard": "Create new board",
+    "signout": "Sign Out",
+    "addCol": "ADD COLUMN",
+    "addTask": "ADD TASK",
+    "create": "Create",
+    "remove": "remove",
+    "agree": "agree",
+    "cancel": "cancel",
+    "update": "Update",
+    "delete": "Delete Profile"
+  },
+  "form": {
+    "name": "Name",
+    "login": "Login",
+    "password": "Password",
+    "addBoard": "Add board",
+    "addColumn": "Add column",
+    "nameColumn": "Name column",
+    "addTask": "Add task",
+    "title": "Title",
+    "description": "Description",
+    "validation": {
+      "required": "This field is required!",
+      "length": "Minimum 8 characters"
+    }
+  },
+  "signInPage": {
+    "signin": "Sign In",
+    "link": "Don't hane an account? Sign Up"
+  },
+  "signUpPage": {
+    "signup": "Sign Up",
+    "link": "Already have an account? Sign In"
+  },
+  "mainPage": {
+    "title": "List boards",
+    "isEmpty": "List boards is empty"
+  },
+  "noMatchPage": {
+    "title": "Nothing to see here!",
+    "link": "Go to the home page"
+  },
+  "editProfile": {},
+  "welcomePage": {
+    "h1": "Welcome to our project!",
+    "span": "Plan your affairs and reach your goals!",
+    "p": "Our project really useful? It is a terrific tool for managing and collaborating with team members on work projects and tasks. Visually, our's Kanban boards are organizational bliss. You can pack a ton of detail into each card, and they let you know who's working on what, at any given time.",
+    "btn": "Get started!",
+    "cardTitle": "Development Contribution",
+    "aboutUs": "About Us",
+    "teamLeader": "Team leader",
+    "frontDev": "Frontend-developer",
+    "AndreyPesh": "Router, main and board pages, CI/CD",
+    "mielomanka": "Welcome page, header/footer, edit profile",
+    "umidullo": "Sign in/sing up, localization, validation forms"
+  },
+  "dashboardPage": {
+    "h2_1": "Board",
+    "h2_2": "List columns",
+    "isEmpty": "Column list is empty",
+    "column": "Column",
+    "task": "Task",
+    "description": "Description"
+  },
+  "popupMsgs": {
+    "dataUpdate": "Data updated successfully!",
+    "deleteProfileTitle": "Delete profile",
+    "deleteProfile": "Are you sure want to delete the profile?",
+    "success": "You have successfully created a profile and will be redirected to the mainpage"
+  },
+  "confirm": {
+    "removeBoardTitle": "Remove board",
+    "removeBoardQuestion": "Are you sure you want to delete the board ",
+    "removeColumnTitle": "Remove column",
+    "removeColumnQuestion": "Are you sure you want to delete the column ",
+    "removeTaskTitle": "Remove task",
+    "removeTaskQuestion": "Are you sure you want to delete the task ",
+    "deleteProfile": "Delete profile",
+    "deleteProfileQuestion": "Are you sure want to delete the profile"
+  }
+}

@@ -1,0 +1,11 @@
+@import '../../style/variables.scss';
+
+.welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2vh;
+  text-align: left;
+  padding: 3vh 1.5vw;
+}

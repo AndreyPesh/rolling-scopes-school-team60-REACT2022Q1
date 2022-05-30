@@ -1,0 +1,78 @@
+@import '../../style/variables.scss';
+
+.header {
+  background: $green;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  transition: all 0.3s;
+
+  &__container {
+    flex: 1;
+    padding: 0 10vw;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  &__nav_list {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 3vw;
+  }
+
+  &__nav_item {
+    list-style: none;
+  }
+
+  &__nav_item a {
+    color: $white;
+    text-decoration: none;
+    font-size: 24px;
+  }
+
+  &__nav_item a:hover {
+    text-shadow: $white 1px 0 10px;
+  }
+
+  &__lang {
+    background-color: $brown;
+    color: white;
+    font-size: 14px;
+    border: none;
+    outline: none;
+    padding: 6px 16px;
+    border-radius: 4px;
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%),
+      0px 1px 5px 0px rgb(0 0 0 / 12%);
+    cursor: pointer;
+  }
+
+  &__lang:hover {
+    background-color: $dark-brown;
+  }
+}
+
+.burger__wrap {
+  display: none;
+}
+
+@media screen and (max-width: $screen-max-width-small) {
+  .burger__wrap {
+    display: block;
+  }
+
+  .header__nav {
+    display: none;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-biggest) {
+  .header {
+    &__nav_list {
+      gap: 1vw;
+    }
+  }
+}

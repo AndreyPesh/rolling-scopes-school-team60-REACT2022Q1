@@ -1,0 +1,48 @@
+@import '../../style/variables.scss';
+
+.dashboard-main {
+  width: 100%;
+  padding: 20px 2vw;
+  align-self: start;
+}
+
+.columns {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.wrap-column {
+  margin: 10px;
+  min-width: 300px;
+}
+
+.dashboard-buttons {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2vw;
+  height: 90px;
+  & > * {
+    width: 200px;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-biggest) {
+  .dashboard-main {
+    padding: 10px 2vw;
+  }
+  .dashboard-buttons {
+    padding: 10px;
+    height: 32px;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-small) {
+  .dashboard-buttons {
+    height: auto;
+  }
+}
