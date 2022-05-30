@@ -47,19 +47,6 @@ export const BurgerMenu = () => {
         <ul className="burger__list">
           {!token ? <UnAuthLinks /> : <AuthLinks />}
           <Switcher />
-          {/* <li
-            className="header__nav_item"
-            style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
-          >
-            <select
-              className="header__lang"
-              value={localStorage.getItem('i18nextLng') || 'en'}
-              onChange={handleLangChange}
-            >
-              <option value="en">EN</option>
-              <option value="ru">RU</option>
-            </select>
-          </li> */}
         </ul>
       </Menu>
     </div>
