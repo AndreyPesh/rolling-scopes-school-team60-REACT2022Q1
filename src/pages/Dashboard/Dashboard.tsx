@@ -46,6 +46,7 @@ export default function Dashboard() {
   const [fetchMoveTaskBetweenColumn, setFetchMoveTaskBetweenColumn] = useState<RequestMoveTask>();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const TEXT_EMPTY_COLUMN = t('dashboardPage.isEmpty');
   const { id } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
@@ -227,7 +228,7 @@ export default function Dashboard() {
         <Droppable droppableId="all-columns" direction="horizontal" type={NameDragAction.COLUMN}>
           {(provided) => (
             <div className="columns" ref={provided.innerRef} {...provided.droppableProps}>
-              {!listColumns.length ? 'Column list is empty' : listColumns}
+              {!listColumns.length ? TEXT_EMPTY_COLUMN : listColumns}
               {provided.placeholder}
             </div>
           )}

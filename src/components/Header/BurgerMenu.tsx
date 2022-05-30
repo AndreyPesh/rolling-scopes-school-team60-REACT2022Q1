@@ -9,6 +9,7 @@ import { getToken } from '../../utils/functions/localStorage';
 import './BurgerMenu.scss';
 import UnAuthLinks from './UnAuthLinks';
 import AuthLinks from './AuthLinks';
+import Switcher from '../Switcher';
 
 export const BurgerMenu = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -43,7 +44,10 @@ export const BurgerMenu = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <ul className="burger__list">{!token ? <UnAuthLinks /> : <AuthLinks />}</ul>
+        <ul className="burger__list">
+          {!token ? <UnAuthLinks /> : <AuthLinks />}
+          <Switcher />
+        </ul>
       </Menu>
     </div>
   );

@@ -9,6 +9,7 @@ import {
   TextField,
 } from '@mui/material';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { RootState } from '../../../store';
 import { fetchBoardDataById } from '../../../store/slices/currentBoardSlice';
@@ -25,6 +26,7 @@ const CreateTaskForm = () => {
       boardData: { id, columns },
     },
   } = useAppSelector((state: RootState) => state);
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [dataTask, setDataTask] = useState({
     columnId: EMPTY_STRING,
@@ -68,19 +70,19 @@ const CreateTaskForm = () => {
 
   return (
     <>
-      <h2>Create task</h2>
+      <h2>{t('form.addTask')}</h2>
       <Box component="form" onSubmit={handleForm}>
         <FormControl
           sx={{
             '& > :not(style)': { m: 1 },
           }}
         >
-          <InputLabel id="simple-select-label">Column</InputLabel>
+          <InputLabel id="simple-select-label">{t('form.nameColumn')}</InputLabel>
           <Select
             labelId="simple-select-label"
             id="simple-select"
             value={selectColumn}
-            label="Column"
+            label={t('form.nameColumn')}
             size="small"
             name="columnId"
             onChange={handleSelectColumn}
@@ -89,7 +91,7 @@ const CreateTaskForm = () => {
           </Select>
           <TextField
             id="outlined-basic"
-            label="Title"
+            label={t('form.title')}
             variant="outlined"
             size="small"
             name="title"
@@ -97,7 +99,7 @@ const CreateTaskForm = () => {
           />
           <TextField
             id="outlined-basic"
-            label="Description"
+            label={t('form.description')}
             variant="outlined"
             size="small"
             name="description"
@@ -109,7 +111,7 @@ const CreateTaskForm = () => {
             color="success"
             disabled={dataTask.description.length < 4 || dataTask.title.length < 4 || !selectColumn}
           >
-            Create
+            {t('buttons.create')}
           </Button>
         </FormControl>
       </Box>

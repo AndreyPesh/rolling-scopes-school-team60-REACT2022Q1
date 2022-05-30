@@ -62,7 +62,7 @@ const SignUp = () => {
           open: true,
           contentModal: (
             <Typography component="h1" variant="h5">
-              You successfully create an account and will be redirected to main page
+              {t('popupMsgs.success')}
               <Button
                 onClick={() => {
                   dispatch(closeModal(false));
@@ -80,7 +80,7 @@ const SignUp = () => {
         })
       );
     }
-  }, [login, dispatch, signInData]);
+  }, [login, dispatch, signInData, t]);
 
   const {
     handleSubmit,
@@ -103,7 +103,7 @@ const SignUp = () => {
       {isLoading ? (
         <Spinner />
       ) : (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" style={{ padding: '20px 2vw' }}>
           <Typography component="h1" variant="h5">
             {t('signUpPage.signup')}
           </Typography>
@@ -190,7 +190,7 @@ const SignUp = () => {
           </Box>
           <Grid container>
             <Grid item>
-              <Link to={`/${Path.signup}`}>{t('signUpPage.link')}</Link>
+              <Link to={`/${Path.login}`}>{t('signUpPage.link')}</Link>
             </Grid>
           </Grid>
         </Container>

@@ -56,7 +56,6 @@ export default function Layout() {
       }
     }
   }, [location, token, navigate, dispatch]);
-
   return (
     <>
       <Header />

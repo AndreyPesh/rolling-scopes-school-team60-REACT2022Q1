@@ -19,8 +19,8 @@ import {
 } from '../types/types';
 
 const logErrors = (nameRequest: string, errorMessage: string) => {
-  console.log(`Can't complete request: ${nameRequest} `);
-  console.log(`Error: ${errorMessage}`);
+  nameRequest;
+  errorMessage;
 };
 
 export const getUser = async () => {
