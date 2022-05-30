@@ -80,7 +80,7 @@ const SignUp = () => {
         })
       );
     }
-  }, [login, dispatch, signInData]);
+  }, [login, dispatch, signInData, t]);
 
   const {
     handleSubmit,
