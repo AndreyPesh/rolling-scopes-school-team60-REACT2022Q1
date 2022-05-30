@@ -7,11 +7,5 @@
   justify-content: center;
   gap: 2vh;
   text-align: left;
-}
-
-@media screen and (max-width: $screen-max-width-medium) {
-  .welcome {
-    height: 100%;
-    padding: 3vh 2vw;
-  }
+  padding: 3vh 2vw;
 }

@@ -1,4 +1,6 @@
 import logoMielo from '../../assets/image/logo-mielo.png';
+import AndreyPesh from '../../assets/image/AndreyPesh.png';
+import umidullo from '../../assets/image/umidullo.png';
 import { Developer } from '../interfaces/interfaces';
 
 export const RESET_TOKEN = '';
@@ -22,18 +24,18 @@ export const TEAM: Array<Developer> = [
   {
     name: 'Mentor: Maryna Rastargueva',
     github: 'https://github.com/maryna-js',
-    avatarUrl: logoMielo,
-    nickname: 'AndreyPesh',
+    avatarUrl: '',
+    nickname: 'maryna-js',
     jobStatus: 'Team leader, Frontend-developer',
     description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   },
   {
     name: 'Andrey Peshko',
     github: 'https://github.com/AndreyPesh',
-    avatarUrl: logoMielo,
+    avatarUrl: AndreyPesh,
     nickname: 'AndreyPesh',
     jobStatus: 'Team leader, Frontend-developer',
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    description: 'Router, main and board pages, CI/CD',
   },
   {
     name: 'Nataliya Belyaeva',
@@ -41,15 +43,15 @@ export const TEAM: Array<Developer> = [
     avatarUrl: logoMielo,
     nickname: 'MielomankA',
     jobStatus: 'Frontend-developer',
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    description: 'Welcome page, header/footer, edit profile',
   },
   {
     name: 'Umidullo Suyunov',
     github: 'https://github.com/umidullo',
-    avatarUrl: logoMielo,
+    avatarUrl: umidullo,
     nickname: 'umidullo',
     jobStatus: 'Frontend-developer',
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    description: 'Sign in/sing up, localization, validation forms',
   },
 ];
 

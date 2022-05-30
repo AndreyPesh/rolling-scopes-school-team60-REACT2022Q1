@@ -10,7 +10,7 @@ import EditProfileForm from './EditProfileForm';
 const EditProfile = () => {
   const [userId, setUserId] = useState<string>('');
   const [formData, setFormData] = useState<DataFormSignUp | null>(null);
-
+    
   useEffect(() => {
     const fetchUser = async () => {
       const response: ResponseSignUp = await getUser();

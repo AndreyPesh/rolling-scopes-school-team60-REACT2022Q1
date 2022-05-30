@@ -103,7 +103,7 @@ const SignUp = () => {
       {isLoading ? (
         <Spinner />
       ) : (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" style={{ padding: '20px 2vw' }}>
           <Typography component="h1" variant="h5">
             {t('signUpPage.signup')}
           </Typography>
