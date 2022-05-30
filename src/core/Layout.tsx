@@ -7,12 +7,11 @@ import Modal from '../components/Modal/Modal';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { RootState } from '../store';
 import { isTokenExpire } from '../utils/functions/api';
-import { removeToken, getToken } from '../utils/functions/localStorage';
+import { getToken } from '../utils/functions/localStorage';
 import { getUserPending, getUserSuccess } from '../store/slices/userSlice';
 import { getUser } from '../utils/functions/api';
 import { Path } from '../router/routes';
 import { signOut } from '../store/slices/authSlice';
-import { Welcome } from '../pages/Welcome/Welcome';
 
 export default function Layout() {
   const dispatch = useAppDispatch();
