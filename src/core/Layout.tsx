@@ -7,10 +7,11 @@ import Modal from '../components/Modal/Modal';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { RootState } from '../store';
 import { isTokenExpire } from '../utils/functions/api';
-import { removeToken, getToken } from '../utils/functions/localStorage';
+import { getToken } from '../utils/functions/localStorage';
 import { getUserPending, getUserSuccess } from '../store/slices/userSlice';
 import { getUser } from '../utils/functions/api';
 import { Path } from '../router/routes';
+import { signOut } from '../store/slices/authSlice';
 
 export default function Layout() {
   const dispatch = useAppDispatch();
@@ -42,19 +43,19 @@ export default function Layout() {
       }
       const isExpire = await isTokenExpire(token);
       if (!isExpire) {
-        removeToken();
-        navigate(`${Path.home}`);
+        dispatch(signOut());
+        navigate(`${Path.home}`, { replace: true });
       }
     }
     if (tokenStorage || token) {
       if (token !== tokenStorage) {
-        removeToken();
-        navigate(`${Path.home}`);
+        dispatch(signOut());
+        navigate(`${Path.home}`, { replace: true });
       } else {
         checkToken();
       }
     }
-  }, [location, token, navigate]);
+  }, [location, token, navigate, dispatch]);
   return (
     <>
       <Header />
