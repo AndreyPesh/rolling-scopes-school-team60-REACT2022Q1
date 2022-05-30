@@ -54,7 +54,7 @@ export default function Layout() {
         checkToken();
       }
     }
-  }, [location, token]);
+  }, [location, token, navigate]);
   return (
     <>
       <Header />
