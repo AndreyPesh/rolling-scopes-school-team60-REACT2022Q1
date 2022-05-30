@@ -9,6 +9,7 @@ import { getToken } from '../../utils/functions/localStorage';
 import './BurgerMenu.scss';
 import UnAuthLinks from './UnAuthLinks';
 import AuthLinks from './AuthLinks';
+import Switcher from '../Switcher';
 
 export const BurgerMenu = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -43,7 +44,23 @@ export const BurgerMenu = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <ul className="burger__list">{!token ? <UnAuthLinks /> : <AuthLinks />}</ul>
+        <ul className="burger__list">
+          {!token ? <UnAuthLinks /> : <AuthLinks />}
+          <Switcher />
+          {/* <li
+            className="header__nav_item"
+            style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+          >
+            <select
+              className="header__lang"
+              value={localStorage.getItem('i18nextLng') || 'en'}
+              onChange={handleLangChange}
+            >
+              <option value="en">EN</option>
+              <option value="ru">RU</option>
+            </select>
+          </li> */}
+        </ul>
       </Menu>
     </div>
   );
