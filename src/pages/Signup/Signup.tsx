@@ -190,7 +190,7 @@ const SignUp = () => {
           </Box>
           <Grid container>
             <Grid item>
-              <Link to={`/${Path.signup}`}>{t('signUpPage.link')}</Link>
+              <Link to={`/${Path.login}`}>{t('signUpPage.link')}</Link>
             </Grid>
           </Grid>
         </Container>

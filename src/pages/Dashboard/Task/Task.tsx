@@ -39,7 +39,7 @@ const Task: React.FC<{ columnId: string; dataTask: TaskData; index: number }> = 
           data-show="task"
           onClick={showTask}
         >
-          <h2 data-show="task">{title}</h2>
+          <h3 data-show="task">{title}</h3>
           <span>
             <EditTask columnId={columnId} dataTask={dataTask} />
             <RemoveTask columnId={columnId} dataTask={dataTask} />

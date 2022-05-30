@@ -1,3 +1,5 @@
+@import '../../style/variables.scss';
+
 .dashboard-main {
   width: 100%;
   padding: 20px 2vw;
@@ -26,5 +28,21 @@
   height: 90px;
   & > * {
     width: 200px;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-biggest) {
+  .dashboard-main {
+    padding: 10px 2vw;
+  }
+  .dashboard-buttons {
+    padding: 10px;
+    height: 32px;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-small) {
+  .dashboard-buttons {
+    height: auto;
   }
 }
