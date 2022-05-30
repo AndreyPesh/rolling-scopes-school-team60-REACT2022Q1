@@ -11,6 +11,8 @@ import { removeToken, getToken } from '../utils/functions/localStorage';
 import { getUserPending, getUserSuccess } from '../store/slices/userSlice';
 import { getUser } from '../utils/functions/api';
 import { Path } from '../router/routes';
+import { signOut } from '../store/slices/authSlice';
+import { Welcome } from '../pages/Welcome/Welcome';
 
 export default function Layout() {
   const dispatch = useAppDispatch();
@@ -42,19 +44,20 @@ export default function Layout() {
       }
       const isExpire = await isTokenExpire(token);
       if (!isExpire) {
-        removeToken();
-        navigate(`${Path.home}`);
+        dispatch(signOut());
+        navigate(`${Path.home}`, { replace: true });
       }
     }
     if (tokenStorage || token) {
       if (token !== tokenStorage) {
-        removeToken();
-        navigate(`${Path.home}`);
+        dispatch(signOut());
+        navigate(`${Path.home}`, { replace: true });
       } else {
         checkToken();
       }
     }
-  }, [location, token]);
+  }, [location, token, navigate, dispatch]);
+
   return (
     <>
       <Header />
