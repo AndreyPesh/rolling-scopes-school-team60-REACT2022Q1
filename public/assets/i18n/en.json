@@ -57,6 +57,7 @@
   "popupMsgs": {
     "dataUpdate": "Data updated successfully!",
     "deleteProfileTitle": "Delete profile",
-    "deleteProfile": "Are you sure want to delete the profile?"
+    "deleteProfile": "Are you sure want to delete the profile?",
+    "success": "You have successfully created a profile and will be redirected to the mainpage"
   }
 }

@@ -62,7 +62,7 @@ const SignUp = () => {
           open: true,
           contentModal: (
             <Typography component="h1" variant="h5">
-              You successfully create an account and will be redirected to main page
+              {t('popupMsgs.success')}
               <Button
                 onClick={() => {
                   dispatch(closeModal(false));
