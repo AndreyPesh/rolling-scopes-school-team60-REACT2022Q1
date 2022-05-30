@@ -78,7 +78,7 @@ const EditProfileForm = ({ formData, userId }: IEditProfile) => {
           fullWidth
           id="name"
           label={t('form.name')}
-          {...register('name', { required: 'this field is required' })}
+          {...register('name', { required: `${t('form.validation.required')}` })}
           error={!!errors?.name}
           helperText={errors?.name?.message}
         />
@@ -88,10 +88,10 @@ const EditProfileForm = ({ formData, userId }: IEditProfile) => {
           id="login"
           label={t('form.login')}
           {...register('login', {
-            required: 'this field is required',
+            required: `${t('form.validation.required')}`,
             minLength: {
               value: 8,
-              message: 'min 8 char',
+              message: `${t('form.validation.length')}`,
             },
           })}
           error={!!errors?.login}
@@ -107,10 +107,10 @@ const EditProfileForm = ({ formData, userId }: IEditProfile) => {
           id="password"
           autoComplete="on"
           {...register('password', {
-            required: 'this field is required',
+            required: `${t('form.validation.required')}`,
             minLength: {
               value: 8,
-              message: 'min 8 char',
+              message: `${t('form.validation.length')}`,
             },
           })}
           error={!!errors?.password}
