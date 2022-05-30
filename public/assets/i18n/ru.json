@@ -28,7 +28,11 @@
     "nameColumn": "Имя колонки",
     "addTask": "Добавить задачу",
     "title": "Название",
-    "description": "Описание"
+    "description": "Описание",
+    "validation": {
+      "required": "Это поле обязательно к заполнению!",
+      "length": "Минимум 8 символов"
+    }
   },
   "signInPage": {
     "signin": "Войти",

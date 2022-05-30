@@ -28,7 +28,11 @@
     "nameColumn": "Name column",
     "addTask": "Add task",
     "title": "Title",
-    "description": "Description"
+    "description": "Description",
+    "validation": {
+      "required": "This field is required!",
+      "length": "Minimum 8 characters"
+    }
   },
   "signInPage": {
     "signin": "Sign In",

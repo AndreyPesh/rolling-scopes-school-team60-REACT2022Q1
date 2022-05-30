@@ -76,10 +76,10 @@ const Login = () => {
                 name="login"
                 control={control}
                 rules={{
-                  required: 'Login is required',
+                  required: `${t('form.validation.required')}`,
                   minLength: {
                     value: 8,
-                    message: 'minimum 8 characters',
+                    message: `${t('form.validation.length')}`,
                   },
                 }}
                 defaultValue=""
@@ -100,10 +100,10 @@ const Login = () => {
                 name="password"
                 control={control}
                 rules={{
-                  required: 'Password is required',
+                  required: `${t('form.validation.required')}`,
                   minLength: {
                     value: 8,
-                    message: 'minimum 8 characters',
+                    message: `${t('form.validation.length')}`,
                   },
                 }}
                 defaultValue=""
