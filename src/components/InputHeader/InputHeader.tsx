@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, Button, TextField } from '@mui/material';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import SendIcon from '@mui/icons-material/Send';
@@ -15,6 +16,7 @@ const InputHeaderTag: React.FC<ColumnData> = ({ title, order, id }) => {
     currentBoard: { boardData },
   } = useAppSelector((state: RootState) => state);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   const [value, setValue] = useState<string>(title);
   const [loading, setLoading] = useState<boolean>(false);
   const [toggle, setToggle] = useState<boolean>(false);
@@ -74,7 +76,7 @@ const InputHeaderTag: React.FC<ColumnData> = ({ title, order, id }) => {
         id="outlined-basic"
         className="input-header__field"
         autoFocus={toggle}
-        label="Name column"
+        label={t('form.nameColumn')}
         variant="outlined"
         size="small"
         value={value}

@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Box, Button, FormControl, TextField } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import './edit-task-form.scss';
 import { RequestUpdateTask, TaskData, TaskDataForm } from '../../../utils/types/types';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
@@ -18,6 +19,7 @@ const EditTaskForm: React.FC<{ columnId: string; dataTask: TaskData }> = ({
     currentBoard: { boardData },
   } = useAppSelector((state: RootState) => state);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   const [dataForm, setDataForm] = useState<TaskDataForm>({
     title,
     description,
@@ -60,7 +62,7 @@ const EditTaskForm: React.FC<{ columnId: string; dataTask: TaskData }> = ({
         }}
       >
         <div className="row-edit">
-          <h3>Title: </h3>
+          <h3>{t('form.title')}: </h3>
           <TextField
             variant="outlined"
             size="small"
@@ -70,7 +72,7 @@ const EditTaskForm: React.FC<{ columnId: string; dataTask: TaskData }> = ({
           />
         </div>
         <div className="row-edit">
-          <h3>Description: </h3>
+          <h3>{t('form.description')}: </h3>
           <TextField
             id="outlined-multiline-static"
             multiline
@@ -84,10 +86,10 @@ const EditTaskForm: React.FC<{ columnId: string; dataTask: TaskData }> = ({
         <Button
           variant="contained"
           type="submit"
-          color="success"
+          color="primary"
           disabled={dataForm.description.length < 4 || dataForm.title.length < 4}
         >
-          Update
+          {t('buttons.update')}
         </Button>
       </FormControl>
     </Box>
